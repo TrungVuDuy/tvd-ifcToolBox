@@ -34,10 +34,13 @@ namespace IfcToolbox.Tools.Processors
                 if (consoleMode)
                     Marslogger.Step("Processing...");
 
+                // With UseExternalResource the caller supplies its own IfcConvert in
+                // ExternalWorkingDirectory; otherwise the embedded one is written out.
+                // IfcConvert.ResolveExecutable applies the same order either way.
                 if (!config.UseExternalResource)
-                    ReflectionUtility.CopyEmbeddedResource(typeof(IfcConvert).GetTypeInfo().Assembly, IfcConvert.ExecutableName);
+                    IfcConvert.EnsureExecutable();
 
-                string targetFilePath = Path.ChangeExtension(filePath, "." + config.TargetFormat.ToString().ToLower());
+                string targetFilePath = Path.ChangeExtension(filePath, ConvertFormatInfo.GetExtension(config.TargetFormat));
                 string logFilePath = Path.ChangeExtension(filePath, ".txt");
                 // Log file need clean up each time.
                 if (File.Exists(logFilePath))

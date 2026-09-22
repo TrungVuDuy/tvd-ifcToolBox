@@ -1,6 +1,7 @@
 using IfcToolbox.Core.Bsdd.Models;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -209,21 +210,59 @@ namespace IfcToolbox.Core.Bsdd
         private async Task<T> GetAsync<T>(string path, QueryBuilder query, CancellationToken cancellationToken)
         {
             var requestUri = path + query.Build();
-            using var response = await _http.GetAsync(requestUri, cancellationToken).ConfigureAwait(false);
 
-            if (!response.IsSuccessStatusCode)
+            for (int attempt = 0; ; attempt++)
             {
-                var body = await ReadAsStringAsync(response, cancellationToken).ConfigureAwait(false);
+                using var response = await _http.GetAsync(requestUri, cancellationToken).ConfigureAwait(false);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    using var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+                    return await JsonSerializer.DeserializeAsync<T>(stream, JsonOptions, cancellationToken).ConfigureAwait(false);
+                }
+
+                if (attempt < _options.MaxRetries && IsRetryable(response.StatusCode))
+                {
+                    await Task.Delay(GetRetryDelay(response, attempt), cancellationToken).ConfigureAwait(false);
+                    continue;
+                }
+
+                var body = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 throw new BsddException(response.StatusCode, requestUri, body);
             }
-
-            using var stream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
-            return await JsonSerializer.DeserializeAsync<T>(stream, JsonOptions, cancellationToken).ConfigureAwait(false);
         }
 
-        private static Task<string> ReadAsStringAsync(HttpResponseMessage response, CancellationToken cancellationToken)
+        /// <summary>
+        /// 429 is bSDD throttling us; 5xx of this kind are transient. Anything else is a
+        /// real answer and retrying would only hide it.
+        /// </summary>
+        private static bool IsRetryable(HttpStatusCode statusCode)
         {
-            return response.Content.ReadAsStringAsync();
+            return statusCode == HttpStatusCode.TooManyRequests
+                || statusCode == HttpStatusCode.RequestTimeout
+                || statusCode == HttpStatusCode.BadGateway
+                || statusCode == HttpStatusCode.ServiceUnavailable
+                || statusCode == HttpStatusCode.GatewayTimeout;
+        }
+
+        /// <summary>
+        /// Honours Retry-After when the service sends one, otherwise backs off exponentially.
+        /// </summary>
+        private TimeSpan GetRetryDelay(HttpResponseMessage response, int attempt)
+        {
+            var retryAfter = response.Headers.RetryAfter;
+            if (retryAfter != null)
+            {
+                if (retryAfter.Delta.HasValue)
+                    return retryAfter.Delta.Value;
+                if (retryAfter.Date.HasValue)
+                {
+                    var wait = retryAfter.Date.Value - DateTimeOffset.UtcNow;
+                    if (wait > TimeSpan.Zero)
+                        return wait;
+                }
+            }
+            return TimeSpan.FromTicks(_options.RetryDelay.Ticks * (1L << attempt));
         }
 
         public void Dispose()

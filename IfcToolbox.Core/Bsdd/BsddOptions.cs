@@ -32,5 +32,18 @@ namespace IfcToolbox.Core.Bsdd
         /// Sent as User-Agent so bSDD can see which tool the traffic comes from.
         /// </summary>
         public string UserAgent { get; set; } = "IfcToolbox";
+
+        /// <summary>
+        /// How often to retry a request that bSDD throttled (429) or that hit a transient
+        /// server error. bSDD rate limits per client, and walking a class's properties is
+        /// exactly the pattern that trips it.
+        /// </summary>
+        public int MaxRetries { get; set; } = 3;
+
+        /// <summary>
+        /// Base delay between retries. Doubled on each attempt, and overridden whenever the
+        /// response carries a Retry-After header.
+        /// </summary>
+        public TimeSpan RetryDelay { get; set; } = TimeSpan.FromSeconds(2);
     }
 }

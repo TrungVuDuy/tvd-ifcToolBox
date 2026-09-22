@@ -1,15 +1,31 @@
-﻿using IfcToolbox.Core.Utilities;
+using IfcToolbox.Core.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 
 namespace IfcToolbox.Core.Convert
 {
     public class IfcConvert
     {
+        private static IfcConvertVersion _detectedVersion;
+        private static string _detectedFor;
+
+        /// <summary>
+        /// Environment variable pointing at an IfcConvert executable to use instead of the
+        /// bundled one. This is how to move to IfcConvert 0.8, which adds glTF in ECEF
+        /// coordinates as well as the JSON, TTL and H5 serializers.
+        /// </summary>
+        public const string ExecutablePathVariable = "IFCTOOLBOX_IFCCONVERT";
+
+        /// <summary>
+        /// Explicit path to an IfcConvert executable. Takes precedence over everything else.
+        /// </summary>
+        public static string ExecutablePathOverride { get; set; }
+
         public static void Convert(string source, IConvertOptionsWrap optionsWrap, ConvertTargetFormat format, bool logDetail = false)
         {
-            string target = Path.ChangeExtension(source, $".{format.ToString().ToLower()}");
+            string target = Path.ChangeExtension(source, ConvertFormatInfo.GetExtension(format));
             string logFilePath = Path.ChangeExtension(source, ".txt");
             Convert(source, target, optionsWrap, format, logFilePath, logDetail);
         }
@@ -17,13 +33,20 @@ namespace IfcToolbox.Core.Convert
         public static IEnumerable<string> Convert(string source, string target, IConvertOptionsWrap optionsWrap, ConvertTargetFormat format,
             string logFilePath = null, bool logDetail = false, string workingDirectory = null)
         {
-            string executableName = ExecutableName;
             if (string.IsNullOrEmpty(workingDirectory))
                 workingDirectory = ReflectionUtility.GetExecutingAssemblyDirectory;
-            EnsureExecutable();
-            var optionPrompt = ConvertOptionService.GeneratePrompt(optionsWrap, format, logFilePath, true);
 
-            ProcessUtility.ProcessStart(source, target, workingDirectory, executableName, optionPrompt, logDetail);
+            string executablePath = ResolveExecutable(workingDirectory);
+            var version = GetVersion(executablePath);
+
+            if (!ConvertFormatInfo.IsSupportedBy(format, version))
+                throw new NotSupportedException(
+                    $"IfcConvert {version} cannot write {format}; it needs {ConvertFormatInfo.GetMinimumVersion(format)} or newer. " +
+                    $"Point {ExecutablePathVariable} at a newer IfcConvert to enable it.");
+
+            var optionPrompt = ConvertOptionService.GeneratePrompt(optionsWrap, format, version, logFilePath, true);
+
+            var run = ProcessUtility.Run(source, target, workingDirectory, executablePath, optionPrompt, logDetail);
 
             var finalFiles = new List<string>();
             if (File.Exists(target))
@@ -43,7 +66,44 @@ namespace IfcToolbox.Core.Convert
                 else
                     File.Delete(logFilePath);
             }
+
+            if (!run.Success && finalFiles.Count == 0)
+                throw new IfcConvertException(format, run.ExitCode, run.StandardError);
+
             return finalFiles;
+        }
+
+        /// <summary>
+        /// Locates the IfcConvert executable, in order:
+        /// <list type="number">
+        /// <item><see cref="ExecutablePathOverride"/>, set in code;</item>
+        /// <item>the <see cref="ExecutablePathVariable"/> environment variable;</item>
+        /// <item><paramref name="workingDirectory"/>, which is how a caller points at its own build;</item>
+        /// <item>a copy next to the application;</item>
+        /// <item>the executable embedded in this assembly, written out on first use.</item>
+        /// </list>
+        /// </summary>
+        public static string ResolveExecutable(string workingDirectory = null)
+        {
+            if (!string.IsNullOrWhiteSpace(ExecutablePathOverride) && File.Exists(ExecutablePathOverride))
+                return ExecutablePathOverride;
+
+            var fromEnvironment = Environment.GetEnvironmentVariable(ExecutablePathVariable);
+            if (!string.IsNullOrWhiteSpace(fromEnvironment) && File.Exists(fromEnvironment))
+                return fromEnvironment;
+
+            if (!string.IsNullOrWhiteSpace(workingDirectory))
+            {
+                var inWorkingDirectory = Path.Combine(workingDirectory, ExecutableName);
+                if (File.Exists(inWorkingDirectory))
+                    return inWorkingDirectory;
+            }
+
+            var besideApplication = Path.Combine(ReflectionUtility.GetExecutingAssemblyDirectory, ExecutableName);
+            if (File.Exists(besideApplication))
+                return besideApplication;
+
+            return EnsureExecutable() ?? besideApplication;
         }
 
         /// <summary>
@@ -67,6 +127,52 @@ namespace IfcToolbox.Core.Convert
             }
         }
 
+        /// <summary>
+        /// Version of the IfcConvert build in use, cached per executable path.
+        /// </summary>
+        public static IfcConvertVersion GetVersion(string executablePath = null)
+        {
+            executablePath ??= ResolveExecutable();
+            if (_detectedVersion != null && _detectedFor == executablePath)
+                return _detectedVersion;
+
+            _detectedFor = executablePath;
+            _detectedVersion = ReadVersion(executablePath);
+            return _detectedVersion;
+        }
+
+        /// <summary>Formats the IfcConvert build in use can write.</summary>
+        public static IEnumerable<ConvertTargetFormat> SupportedFormats() =>
+            ConvertFormatInfo.SupportedFormats(GetVersion());
+
+        private static IfcConvertVersion ReadVersion(string executablePath)
+        {
+            if (!File.Exists(executablePath))
+                return IfcConvertVersion.Unknown;
+
+            try
+            {
+                var info = new ProcessStartInfo
+                {
+                    FileName = executablePath,
+                    Arguments = "--version",
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                };
+                using var proc = Process.Start(info);
+                string output = proc.StandardOutput.ReadToEnd() + proc.StandardError.ReadToEnd();
+                proc.WaitForExit();
+                return IfcConvertVersion.Parse(output);
+            }
+            catch (Exception ex)
+            {
+                Serilog.Log.Warning(ex, "Could not read the IfcConvert version from {Path}", executablePath);
+                return IfcConvertVersion.Unknown;
+            }
+        }
+
         public static string GetExcludeEntitiesDefault(ConvertTargetFormat format)
         {
             if (format == ConvertTargetFormat.SVG)
@@ -75,5 +181,20 @@ namespace IfcToolbox.Core.Convert
                 return "IfcOpeningElement IfcSpace";
         }
     }
-}
 
+    /// <summary>Raised when IfcConvert fails and produces no output at all.</summary>
+    public class IfcConvertException : Exception
+    {
+        public IfcConvertException(ConvertTargetFormat format, int exitCode, string standardError)
+            : base($"IfcConvert failed to produce {format} output (exit code {exitCode}). {standardError}")
+        {
+            Format = format;
+            ExitCode = exitCode;
+            StandardError = standardError;
+        }
+
+        public ConvertTargetFormat Format { get; }
+        public int ExitCode { get; }
+        public string StandardError { get; }
+    }
+}

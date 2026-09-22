@@ -17,6 +17,21 @@ namespace IfcToolbox.Examples.Samples
             ConverterProcessor.Process(filePath, config, true);
         }
 
+        /// <summary>
+        /// Binary glTF, the format web viewers consume. Supported by the bundled IfcConvert
+        /// already; it was simply missing from ConvertTargetFormat.
+        /// </summary>
+        public static void ConvertToGlb(string filePath)
+        {
+            Log.Information($"IfcConverter - Start ({IfcConvert.GetVersion()})");
+            var convertOptions = new ConvertOptionsWrap();
+            convertOptions.UseElementGuids = true;
+            convertOptions.CenterModel = true;
+            convertOptions.ExcludeEntities = IfcConvert.GetExcludeEntitiesDefault(ConvertTargetFormat.GLB);
+            IConfigConvert config = ConfigFactory.CreateConfigConvert(convertOptions, ConvertTargetFormat.GLB);
+            ConverterProcessor.Process(filePath, config, true);
+        }
+
         public static void ConvertToSvg(string filePath)
         {
             Log.Information($"IfcConverter - Start");

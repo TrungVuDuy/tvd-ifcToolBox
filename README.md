@@ -33,7 +33,7 @@ IfcToolbox is one of the proposals in [openBIM Marketplace - buildingSMART Techn
 ## Tools in the box
 
 - IFC Optimizer – Reduce the size of large IFC files by optimizing the IFC resource layer instance, and eliminate floating-point offsets through FPR geometric optimization.
-- IFC Converter – Easily convert IFC to OBJ(.obj), Collada(.dae), STEP(.stp), IGES(.igs), XML(.xml) and SVG(.svg).
+- IFC Converter – Easily convert IFC to glTF(.glb), OBJ(.obj), Collada(.dae), STEP(.stp), IGES(.igs), XML(.xml), SVG(.svg) and IFC-SPF(.ifc). Point `IFCTOOLBOX_IFCCONVERT` at an IfcConvert 0.8 build to also get xeokit JSON(.json), RDF Turtle(.ttl) and HDF(.h5).
 - IFC Splitter – Split IFC files by type/container (site, building, level) or simply split selected objects in the hierarchy.
 - IFC Relocator – Relocate the IFC world coordinate system and the project coordinate system. Align the origin of the two models.
 - IFC Anonymizer – Anonymous user-related information and specific product-related information. Simplify model submission in bidding activities or design competitions.
