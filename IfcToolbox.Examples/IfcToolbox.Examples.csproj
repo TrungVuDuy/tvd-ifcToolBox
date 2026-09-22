@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IfcToolbox.Tests\IfcToolbox.Tests.csproj" />
+    <ProjectReference Include="..\IfcToolbox.Tools\IfcToolbox.Tools.csproj" />
+  </ItemGroup>
+
+</Project>

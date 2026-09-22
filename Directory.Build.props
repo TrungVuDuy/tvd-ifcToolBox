@@ -1,0 +1,20 @@
+<Project>
+
+  <!--
+    Shared build properties for all IfcToolbox projects.
+    Keeping the xbim version in one place makes future schema upgrades (e.g. IFC4x3)
+    a single-line change instead of one edit per project file.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <XbimVersion>6.1.605</XbimVersion>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="33.1.0" />
+    <PackageReference Include="Xbim.Essentials" Version="$(XbimVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IfcToolbox.Core\IfcToolbox.Core.csproj" />
+  </ItemGroup>
+
+</Project>
