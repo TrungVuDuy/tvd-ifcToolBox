@@ -1,10 +1,12 @@
-﻿using IfcToolbox.Core.Hierarchy;
+﻿using IfcToolbox.Core.Bsdd;
+using IfcToolbox.Core.Hierarchy;
 using IfcToolbox.Tools.Processors;
 using IfcToolbox.Tools.Helper;
 using Serilog;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Threading.Tasks;
 using IfcToolbox.Core.Validate;
 using IfcToolbox.Core.Utilities;
 
@@ -12,10 +14,38 @@ namespace IfcToolbox.Examples.Samples
 {
     public class IfcValidatorSample
     {
+        /// <summary>
+        /// Checks a model against a requirement set written out by hand.
+        /// </summary>
         public static void ValidatePropertyExistence(string filePath)
         {
             Log.Information($"IfcValidator - Start");
             var nodes = SamplePropertyHierarchyNodes();
+            Report(filePath, nodes);
+        }
+
+        /// <summary>
+        /// Same check, but the requirements are pulled straight from the buildingSMART Data
+        /// Dictionary instead of being typed out: pass the bSDD uri of each class to check.
+        /// </summary>
+        /// <example>
+        /// ValidateAgainstBsddAsync(path,
+        ///     "https://identifier.buildingsmart.org/uri/buildingsmart/ifc/4.3/class/IfcWall");
+        /// </example>
+        public static async Task ValidateAgainstBsddAsync(string filePath, params string[] classUris)
+        {
+            Log.Information($"IfcValidator (bSDD) - Start");
+            using var client = new BsddClient();
+            var nodes = await BsddHierarchy.BuildClassNodesAsync(client, classUris);
+
+            foreach (var node in nodes)
+                Marslogger.Mark($"Requirements from bSDD: {node.Name} - {node.Children.Count} property sets");
+
+            Report(filePath, nodes);
+        }
+
+        private static void Report(string filePath, IList<HierarchyNode> nodes)
+        {
             var result = ValidatorProcessor.Process(filePath, nodes, true);
             var tables = result.Value as IList<DataTable>;
             foreach (var table in tables)

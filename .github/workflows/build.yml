@@ -26,6 +26,10 @@ jobs:
 
       - name: Test
         run: dotnet test IfcToolbox.sln --configuration Release --no-build --logger "trx;LogFileName=test-results.trx"
+        env:
+          # The bSDD tests call the live service. Set this to 1 to skip them instead of
+          # failing the build when api.bsdd.buildingsmart.org is unreachable.
+          IFCTOOLBOX_SKIP_NETWORK_TESTS: '0'
 
       - name: Upload test results
         if: always()

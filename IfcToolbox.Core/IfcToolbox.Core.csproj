@@ -11,10 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- RestSharp is pinned to the last 106.x release: the generated bSDD client in
-         Bsdd/ targets that API surface. It goes away with the bSDD rewrite. -->
-    <PackageReference Include="RestSharp" Version="106.15.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <!-- The bSDD client uses HttpClient + System.Text.Json, both in-box on net8,
+         so RestSharp and Newtonsoft.Json are no longer needed. -->
     <PackageReference Include="Serilog" Version="4.4.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
     <PackageReference Include="Xbim.Essentials" Version="$(XbimVersion)" />

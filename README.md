@@ -37,7 +37,7 @@ IfcToolbox is one of the proposals in [openBIM Marketplace - buildingSMART Techn
 - IFC Splitter – Split IFC files by type/container (site, building, level) or simply split selected objects in the hierarchy.
 - IFC Relocator – Relocate the IFC world coordinate system and the project coordinate system. Align the origin of the two models.
 - IFC Anonymizer – Anonymous user-related information and specific product-related information. Simplify model submission in bidding activities or design competitions.
-- IFC Validator – Validate the existence of the properties of classifications in the IFC file. Powered by buildingSMART Data Dictionary - bSDD OpenAPI.
+- IFC Validator – Validate the existence of the properties of classes in the IFC file. Requirements can be pulled directly from the buildingSMART Data Dictionary (bSDD) instead of being written out by hand.
 
 ## GUI App in Microsoft Store 
 
@@ -111,12 +111,11 @@ IFC Toolbox GUI App is a free software, if you like it, please consider:
 
 ## Third Party Licences
 
-- bSDD OpenAPI https://github.com/buildingSMART/bSDD - [buildingSMART International](https://www.buildingsmart.org/users/services/buildingsmart-data-dictionary/)
+- bSDD API https://github.com/buildingSMART/bSDD - [buildingSMART International](https://www.buildingsmart.org/users/services/buildingsmart-data-dictionary/)
 - Xbim.Essentials https://docs.xbim.net/ - [CDDL License](https://docs.xbim.net/license/license.html)
 - IfcOpenShell http://ifcopenshell.org/ - [LGPL-3.0 License](https://github.com/IfcOpenShell/IfcOpenShell/blob/v0.6.0/COPYING)
-- RestSharp https://restsharp.dev/ - [Apache-2.0 License](https://licenses.nuget.org/Apache-2.0)
 - Serilog https://serilog.net/ - [Apache-2.0 License](https://licenses.nuget.org/Apache-2.0)
-- Newtonsoft.Json https://www.newtonsoft.com/json - [MIT Licence](https://licenses.nuget.org/MIT)
+- CsvHelper https://joshclose.github.io/CsvHelper/ - [MS-PL / Apache-2.0](https://licenses.nuget.org/MS-PL%20OR%20Apache-2.0)
 
 ## License
 
