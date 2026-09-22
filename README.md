@@ -38,6 +38,7 @@ IfcToolbox is one of the proposals in [openBIM Marketplace - buildingSMART Techn
 - IFC Relocator – Relocate the IFC world coordinate system and the project coordinate system. Align the origin of the two models.
 - IFC Anonymizer – Anonymous user-related information and specific product-related information. Simplify model submission in bidding activities or design competitions.
 - IFC Validator – Validate the existence of the properties of classes in the IFC file. Requirements can be pulled directly from the buildingSMART Data Dictionary (bSDD) instead of being written out by hand.
+- IDS Validator – Check a model against an [Information Delivery Specification](https://www.buildingsmart.org/standards/bsi-standards/information-delivery-specification-ids/) (IDS 1.0, the official buildingSMART standard since June 2024). Reads and writes `.ids` files and checks entity, attribute, property, classification, material and partOf facets, with restrictions, cardinality and unit conversion. Verified against all 307 runnable cases of the official buildingSMART test suite.
 
 ## GUI App in Microsoft Store 
 

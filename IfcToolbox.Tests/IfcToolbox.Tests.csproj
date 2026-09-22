@@ -28,6 +28,9 @@
     <!-- Replaces the previous per-file list: any sample model dropped into TestFiles
          is now copied automatically. -->
     <None Update="TestFiles\**\*.ifc" CopyToOutputDirectory="Always" />
+    <!-- Official buildingSMART IDS test cases, copied from
+         buildingSMART/IDS Documentation/ImplementersDocumentation/TestCases. -->
+    <None Update="IdsTestCases\**\*.*" CopyToOutputDirectory="PreserveNewest" />
     <None Update="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
