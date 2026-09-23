@@ -28,9 +28,13 @@
 
   <ItemGroup>
     <!-- Project references (the CLI, local builds): copied to the output of whoever references this. -->
+    <!-- Published too, and kept out of single-file bundles: it is started as a separate process,
+         so it has to exist as a real file beside the application. -->
     <None Include="..\IfcToolbox.Core\Convert\Resources\IfcConvert_x64.exe"
           Link="IfcConvert_x64.exe"
           CopyToOutputDirectory="PreserveNewest"
+          CopyToPublishDirectory="PreserveNewest"
+          ExcludeFromSingleFile="true"
           Pack="true"
           PackagePath="tools\IfcConvert_x64.exe" />
 

@@ -266,6 +266,34 @@ namespace IfcToolbox.Tests
         #region georef
 
         [Fact]
+        public void GeorefShowsTheConversion()
+        {
+            // The plain form, with no options: this crashed in the published exe, because an
+            // array option that is not given comes back as an empty array, not null.
+            var (exit, output, err) = Run("georef", LocalFiles.Ifc4x3_Building);
+            Assert.True(exit == ExitCodes.Success, err);
+            Assert.Contains("EPSG:32760", output);
+            Assert.Contains("rotation  60", output);
+
+            var (jsonExit, json, _) = Run("georef", LocalFiles.Ifc4x3_Building, "--json");
+            Assert.Equal(ExitCodes.Success, jsonExit);
+            var root = JsonDocument.Parse(json).RootElement;
+            Assert.True(root.GetProperty("georeferenced").GetBoolean());
+            Assert.False(root.TryGetProperty("point", out _));
+        }
+
+        [Fact]
+        public void GeorefOnAModelWithoutConversion()
+        {
+            var (exit, output, _) = Run("georef", LocalFiles.Ifc4_SampleHouse);
+            Assert.Equal(ExitCodes.Success, exit);
+            Assert.Contains("not georeferenced", output);
+
+            // Asking for a point with nothing to apply is an error, not a silent success.
+            Assert.Equal(ExitCodes.Error, Run("georef", LocalFiles.Ifc4_SampleHouse, "--to-map", "0", "0", "0").Exit);
+        }
+
+        [Fact]
         public void GeorefTransformsAPoint()
         {
             // 1000 mm along x on a 60 degree rotated, millimetre model is (0.5, 0.866) m on the map.

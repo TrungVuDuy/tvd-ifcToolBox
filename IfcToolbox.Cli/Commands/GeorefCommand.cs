@@ -50,7 +50,12 @@ namespace IfcToolbox.Cli.Commands
                 var modelFile = result.GetValue(model);
 
                 if (result.GetValue(crs) == null)
-                    return Show(writer, modelFile, result.GetValue(toMap), result.GetValue(json));
+                {
+                    // System.CommandLine hands back an empty array, not null, for an array
+                    // option that was not given.
+                    var point = result.GetValue(toMap);
+                    return Show(writer, modelFile, point == null || point.Length == 0 ? null : point, result.GetValue(json));
+                }
 
                 if (!result.GetValue(eastings).HasValue || !result.GetValue(northings).HasValue)
                     throw new CliUsageException("--crs needs --eastings and --northings.");

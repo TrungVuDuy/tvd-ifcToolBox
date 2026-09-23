@@ -61,3 +61,23 @@ jobs:
         with:
           name: packages
           path: artifacts/*
+
+      # A standalone ifctoolbox.exe (no .NET needed on the target machine) with IfcConvert
+      # beside it, downloadable from the run's artifacts for manual testing.
+      - name: Publish standalone executable
+        run: dotnet publish IfcToolbox.Cli/IfcToolbox.Cli.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:IfcToolboxEmbedIfcConvert=false -p:DebugType=none -o publish/ifctoolbox-win-x64
+
+      - name: Smoke test the standalone executable
+        shell: pwsh
+        run: |
+          ./publish/ifctoolbox-win-x64/ifctoolbox.exe georef IfcToolbox.Tests/TestFiles/Ifc4x3/Building-Architecture.ifc
+          if ($LASTEXITCODE -ne 0) { throw "georef failed" }
+          Copy-Item IfcToolbox.Tests/TestFiles/Ifc4_SampleHouse.ifc standalone.ifc
+          ./publish/ifctoolbox-win-x64/ifctoolbox.exe convert standalone.ifc --format glb
+          if ($LASTEXITCODE -ne 0 -or -not (Test-Path standalone.glb)) { throw "convert failed" }
+
+      - name: Upload standalone executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: ifctoolbox-win-x64
+          path: publish/ifctoolbox-win-x64/*

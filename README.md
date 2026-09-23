@@ -57,6 +57,12 @@ ifctoolbox anonymize model.ifc
 ifctoolbox georef model.ifc --crs EPSG:25832 --eastings 333000 --northings 5800000
 ```
 
+Or build a standalone `ifctoolbox.exe` that needs no .NET installation, with IfcConvert beside it (every CI run also uploads one as the `ifctoolbox-win-x64` artifact):
+
+```
+dotnet publish IfcToolbox.Cli -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:IfcToolboxEmbedIfcConvert=false -p:DebugType=none -o publish/ifctoolbox-win-x64
+```
+
 Exit codes: `0` success, `1` the model failed validation, `2` usage error, `3` error. `validate` exiting with `1` lets it gate a CI pipeline; add `--json` to `info`, `validate` or `georef` for machine readable output.
 
 ### Supported IFC versions
