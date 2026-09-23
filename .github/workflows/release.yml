@@ -2,6 +2,11 @@ name: release
 
 # Publishes the NuGet packages when a version tag is pushed, e.g. v2.0.0-preview.1.
 # Needs a NUGET_API_KEY repository secret; without it the push step fails and nothing is published.
+#
+# BEFORE THE FIRST RELEASE: the IDs IfcToolbox.Core and IfcToolbox.Tools are already owned
+# on nuget.org by an unrelated account, so pushing them is refused. Rename the PackageId in
+# IfcToolbox.Core.csproj, IfcToolbox.Tools.csproj (and, for consistency, IfcToolbox.Cli.csproj
+# and IfcToolbox.IfcConvert.csproj) to a prefix you control first.
 on:
   push:
     tags: ['v*']

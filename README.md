@@ -19,6 +19,8 @@
   </a>
 </p>
 
+> **About this repository.** This is a modified continuation of [IfcToolbox](https://github.com/youshengCode/IfcToolbox) by Yousheng Wang, which is no longer maintained upstream. It was imported from upstream version 1.2.1 and modified from September 2026 onwards: moved to .NET 8 and xbim 6, added IDS 1.0 validation, IFC 4.3 support, glTF output, a rewritten bSDD client and the `ifctoolbox` command line tool. The git history records every change. The Microsoft Store app, its releases and the badges above belong to the original project; this repository does not publish the desktop app.
+
 
 
 
@@ -149,4 +151,4 @@ dotnet pack IfcToolbox.sln -c Release -p:IfcToolboxEmbedIfcConvert=false -o arti
 
 ## License
 
-[GPL-3.0 License](https://github.com/youshengCode/IfcToolbox/blob/master/LICENSE) © 2021 [Yousheng Wang](https://github.com/youshengCode)
+[GPL-3.0 License](LICENSE) © 2021 [Yousheng Wang](https://github.com/youshengCode). Modifications from 2026 by their respective contributors, under the same licence.
