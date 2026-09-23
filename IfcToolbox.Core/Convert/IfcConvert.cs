@@ -38,6 +38,11 @@ namespace IfcToolbox.Core.Convert
                 workingDirectory = ReflectionUtility.GetExecutingAssemblyDirectory;
 
             string executablePath = ResolveExecutable(workingDirectory);
+            if (!File.Exists(executablePath))
+                throw new FileNotFoundException(
+                    $"IfcConvert was not found (looked for {Path.GetFileName(executablePath)}). Reference the IfcToolbox.IfcConvert " +
+                    $"package, which ships the Windows x64 build, or point {ExecutablePathVariable} at an IfcConvert executable.",
+                    executablePath);
             var version = GetVersion(executablePath);
 
             if (!ConvertFormatInfo.IsSupportedBy(format, version))

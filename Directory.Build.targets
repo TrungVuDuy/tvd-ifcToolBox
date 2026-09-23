@@ -1,0 +1,9 @@
+<Project>
+
+  <!-- Evaluated after each project file, so IsPackable already reflects the project's choice. -->
+  <ItemGroup Condition="'$(IsPackable)' == 'true'">
+    <None Include="$(MSBuildThisFileDirectory)LICENSE" Pack="true" PackagePath="\" Visible="false" />
+    <None Include="$(MSBuildThisFileDirectory)PACKAGE.md" Pack="true" PackagePath="\" Visible="false" />
+  </ItemGroup>
+
+</Project>

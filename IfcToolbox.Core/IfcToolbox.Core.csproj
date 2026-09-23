@@ -1,13 +1,32 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <PackageId>IfcToolbox.Core</PackageId>
+    <Description>IFC building blocks for IfcToolbox: IDS 1.0 validation, bSDD client, IFC 4.3 facilities and georeferencing, point optimisation, sub-model extraction, anonymisation and IfcConvert integration. IFC2X3, IFC4 and IFC 4.3, on xbim 6.</Description>
+
+    <!--
+      Whether IfcConvert is embedded in this assembly (the original design, which the
+      desktop app relies on) or shipped beside it through the IfcToolbox.IfcConvert package.
+      Local builds keep embedding; packing turns it off:
+        dotnet pack -p:IfcToolboxEmbedIfcConvert=false
+    -->
+    <IfcToolboxEmbedIfcConvert Condition="'$(IfcToolboxEmbedIfcConvert)' == ''">true</IfcToolboxEmbedIfcConvert>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="Convert\Resources\IfcConvert_x32.exe" />
     <None Remove="Convert\Resources\IfcConvert_x64.exe" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(IfcToolboxEmbedIfcConvert)' == 'true'">
     <EmbeddedResource Include="Convert\Resources\IfcConvert_x32.exe" />
     <EmbeddedResource Include="Convert\Resources\IfcConvert_x64.exe" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IfcToolboxEmbedIfcConvert)' != 'true'">
+    <!-- PrivateAssets none: the executable has to reach whoever uses this package, not stop here. -->
+    <ProjectReference Include="..\IfcToolbox.IfcConvert\IfcToolbox.IfcConvert.csproj" PrivateAssets="none" />
   </ItemGroup>
 
   <ItemGroup>

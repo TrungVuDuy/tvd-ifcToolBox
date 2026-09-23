@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Carries IfcOpenShell's IfcConvert executable, separately from the code that uses it, so
+    that the converter can be upgraded on its own (e.g. to 0.8 for IFC 4.3) and so that
+    IfcToolbox.Core stays small for anyone who only needs IDS, bSDD or the editors.
+
+    Consumers get the executable copied next to their application at build time, which is
+    one of the places IfcConvert.ResolveExecutable looks.
+  -->
+  <PropertyGroup>
+    <IsPackable>true</IsPackable>
+    <PackageId>IfcToolbox.IfcConvert</PackageId>
+    <Version>0.6.0-ifctoolbox.1</Version>
+    <Description>IfcOpenShell IfcConvert 0.6.0b0 for Windows x64, as used by IfcToolbox for format conversion. Copied next to the consuming application at build time. Point IFCTOOLBOX_IFCCONVERT at a newer IfcConvert for IFC 4.3.</Description>
+    <PackageTags>IFC;IfcOpenShell;IfcConvert;glTF</PackageTags>
+
+    <!-- A carrier package: no assembly of its own to ship. -->
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <IncludeSymbols>false</IncludeSymbols>
+    <NoWarn>$(NoWarn);NU5128;NU5100</NoWarn>
+
+    <!-- IfcOpenShell is LGPL, not the GPL of the rest of the toolbox. -->
+    <PackageLicenseFile></PackageLicenseFile>
+    <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
+    <PackageProjectUrl>https://ifcopenshell.org/</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Project references (the CLI, local builds): copied to the output of whoever references this. -->
+    <None Include="..\IfcToolbox.Core\Convert\Resources\IfcConvert_x64.exe"
+          Link="IfcConvert_x64.exe"
+          CopyToOutputDirectory="PreserveNewest"
+          Pack="true"
+          PackagePath="tools\IfcConvert_x64.exe" />
+
+    <!-- Package references: the targets file copies it to the consumer's output. -->
+    <None Include="build\IfcToolbox.IfcConvert.targets" Pack="true" PackagePath="build\;buildTransitive\" />
+  </ItemGroup>
+
+</Project>

@@ -17,4 +17,21 @@
     <XbimVersion>6.1.605</XbimVersion>
   </PropertyGroup>
 
+  <!--
+    NuGet package metadata. Projects opt in with IsPackable=true; the license and readme
+    are attached in Directory.Build.targets, which runs after each project has decided.
+  -->
+  <PropertyGroup>
+    <Version>2.0.0-preview.1</Version>
+    <Authors>Yousheng Wang and contributors</Authors>
+    <Copyright>Copyright (c) 2021 Yousheng Wang and contributors</Copyright>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>PACKAGE.md</PackageReadmeFile>
+    <PackageProjectUrl>https://github.com/youshengCode/IfcToolbox</PackageProjectUrl>
+    <PackageTags>IFC;BIM;openBIM;IDS;buildingSMART;IFC4x3;xbim</PackageTags>
+    <IsPackable>false</IsPackable>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
 </Project>

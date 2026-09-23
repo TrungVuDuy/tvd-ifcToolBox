@@ -40,6 +40,23 @@ IfcToolbox is one of the proposals in [openBIM Marketplace - buildingSMART Techn
 - IFC Validator – Validate the existence of the properties of classes in the IFC file. Requirements can be pulled directly from the buildingSMART Data Dictionary (bSDD) instead of being written out by hand.
 - IDS Validator – Check a model against an [Information Delivery Specification](https://www.buildingsmart.org/standards/bsi-standards/information-delivery-specification-ids/) (IDS 1.0, the official buildingSMART standard since June 2024). Reads and writes `.ids` files and checks entity, attribute, property, classification, material and partOf facets, with restrictions, cardinality and unit conversion. Verified against all 307 runnable cases of the official buildingSMART test suite.
 
+## Command line
+
+```
+dotnet tool install -g IfcToolbox.Cli --prerelease
+
+ifctoolbox info model.ifc
+ifctoolbox validate model.ifc --ids requirements.ids --report findings.csv
+ifctoolbox convert model.ifc --format glb
+ifctoolbox split road.ifc --by facility --list
+ifctoolbox split road.ifc --by part --item "#146"
+ifctoolbox optimize model.ifc --precision 4 --output small.ifc
+ifctoolbox anonymize model.ifc
+ifctoolbox georef model.ifc --crs EPSG:25832 --eastings 333000 --northings 5800000
+```
+
+Exit codes: `0` success, `1` the model failed validation, `2` usage error, `3` error. `validate` exiting with `1` lets it gate a CI pipeline; add `--json` to `info`, `validate` or `georef` for machine readable output.
+
 ### Supported IFC versions
 
 IFC2X3, IFC4 and IFC 4.3 (IFC4X3_ADD2, ISO 16739-1:2024) for every tool. Converting IFC 4.3 models needs IfcConvert 0.8 or newer: the bundled IfcConvert 0.6 predates IFC 4.3, so point the `IFCTOOLBOX_IFCCONVERT` environment variable at a newer build.
@@ -109,8 +126,16 @@ IFC Toolbox GUI App is a free software, if you like it, please consider:
 
 - IfcToolbox.Core - Lower extension for IFC processing.
 - IfcToolbox.Tools - Higher implementation for each tool in IfcToolbox. 
-- IfcToolbox.Test - Unit tests with xUnit for Core and Tools.
+- IfcToolbox.Cli - The `ifctoolbox` command line tool.
+- IfcToolbox.IfcConvert - Packaging only: carries the IfcConvert executable for the NuGet packages.
+- IfcToolbox.Tests - Unit tests with xUnit for Core, Tools and the CLI.
 - IfcToolbox.Examples - .Net core console app for tools example.
+
+Local builds embed IfcConvert in IfcToolbox.Core, as the desktop app expects. The NuGet packages ship it separately instead, which keeps IfcToolbox.Core at about 0.1 MB:
+
+```
+dotnet pack IfcToolbox.sln -c Release -p:IfcToolboxEmbedIfcConvert=false -o artifacts
+```
 
 [Documentation of IFC Toolbox](https://youshengcode.github.io/IfcToolbox.Doc/#/)
 

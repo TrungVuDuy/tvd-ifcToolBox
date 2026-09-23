@@ -1,6 +1,7 @@
-﻿using Serilog;
+using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 using System;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Xbim.Common;
@@ -10,6 +11,15 @@ namespace IfcToolbox.Core.Utilities
 {
     public class Marslogger
     {
+        /// <summary>
+        /// Where progress messages go. Console by default; a command line tool sets it to
+        /// <see cref="TextWriter.Null"/> or to stderr so that its standard output stays
+        /// machine readable (every processor reports its run time through here).
+        /// </summary>
+        public static TextWriter Output { get; set; } = Console.Out;
+
+        private static bool IsConsole => ReferenceEquals(Output, Console.Out);
+
         public static void ConfigureConsoleLogger()
         {
             Log.Logger = new LoggerConfiguration()
@@ -20,29 +30,28 @@ namespace IfcToolbox.Core.Utilities
 
         public static void Mark(object info)
         {
-            Console.BackgroundColor = ConsoleColor.DarkBlue;
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.Write($"[{DateTime.Now.ToString("HH:mm:ss")} MAK] {info} ");
-            Console.ResetColor();
-            Console.WriteLine();
+            SetColors(ConsoleColor.White, ConsoleColor.DarkBlue);
+            Output.Write($"[{DateTime.Now.ToString("HH:mm:ss")} MAK] {info} ");
+            ResetColors();
+            Output.WriteLine();
         }
 
         public static void Action(string action, string className = null)
         {
-            Console.ForegroundColor = ConsoleColor.Cyan;
+            SetColors(ConsoleColor.Cyan);
             if (className == null)
-                Console.WriteLine($"[{DateTime.Now.ToString("HH:mm:ss")} ACT] {action}");
+                Output.WriteLine($"[{DateTime.Now.ToString("HH:mm:ss")} ACT] {action}");
             else
-                Console.WriteLine($"[{DateTime.Now.ToString("HH:mm:ss")} ACT] {action} >>> {className}");
-            Console.ResetColor();
+                Output.WriteLine($"[{DateTime.Now.ToString("HH:mm:ss")} ACT] {action} >>> {className}");
+            ResetColors();
         }
 
         public static void Step(string action, bool finalStep = false)
         {
-            Console.ForegroundColor = ConsoleColor.DarkCyan;
-            Console.WriteLine($"[{DateTime.Now.ToString("HH:mm:ss")} STP] {action}");
-            Console.ResetColor();
-            if (finalStep)
+            SetColors(ConsoleColor.DarkCyan);
+            Output.WriteLine($"[{DateTime.Now.ToString("HH:mm:ss")} STP] {action}");
+            ResetColors();
+            if (finalStep && IsConsole)
             {
                 while (Console.ReadKey().Key != ConsoleKey.Enter) { }
             }
@@ -58,21 +67,21 @@ namespace IfcToolbox.Core.Utilities
                     switch (change.ChangeType)
                     {
                         case ChangeType.New:
-                            Console.ForegroundColor = ConsoleColor.White;
-                            Console.WriteLine(@"New entity: {0}", change.CurrentEntity);
-                            Console.ResetColor();
+                            SetColors(ConsoleColor.White);
+                            Output.WriteLine(@"New entity: {0}", change.CurrentEntity);
+                            ResetColors();
                             break;
                         case ChangeType.Deleted:
-                            Console.ForegroundColor = ConsoleColor.DarkGray;
-                            Console.WriteLine(@"Deleted entity: {0}", change.OriginalEntity);
-                            Console.ResetColor();
+                            SetColors(ConsoleColor.DarkGray);
+                            Output.WriteLine(@"Deleted entity: {0}", change.OriginalEntity);
+                            ResetColors();
                             break;
                         case ChangeType.Modified:
-                            Console.ForegroundColor = ConsoleColor.DarkYellow;
-                            Console.WriteLine(@"Changed Entity: #{0}={1}", change.Entity.EntityLabel, change.Entity.ExpressType.ExpressNameUpper);
+                            SetColors(ConsoleColor.DarkYellow);
+                            Output.WriteLine(@"Changed Entity: #{0}={1}", change.Entity.EntityLabel, change.Entity.ExpressType.ExpressNameUpper);
                             foreach (var prop in change.ChangedProperties)
-                                Console.WriteLine(@"        Property '{0}' changed from {1} to {2}", prop.Name, prop.OriginalValue, prop.CurrentValue);
-                            Console.ResetColor();
+                                Output.WriteLine(@"        Property '{0}' changed from {1} to {2}", prop.Name, prop.OriginalValue, prop.CurrentValue);
+                            ResetColors();
                             break;
                         default:
                             break;
@@ -113,6 +122,22 @@ namespace IfcToolbox.Core.Utilities
                 }
             }
             return logContent;
+        }
+
+        // Colours only make sense on the real console.
+        private static void SetColors(ConsoleColor foreground, ConsoleColor? background = null)
+        {
+            if (!IsConsole)
+                return;
+            Console.ForegroundColor = foreground;
+            if (background.HasValue)
+                Console.BackgroundColor = background.Value;
+        }
+
+        private static void ResetColors()
+        {
+            if (IsConsole)
+                Console.ResetColor();
         }
     }
 }

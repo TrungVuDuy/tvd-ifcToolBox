@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\IfcToolbox.Tools\IfcToolbox.Tools.csproj" />
+    <ProjectReference Include="..\IfcToolbox.Cli\IfcToolbox.Cli.csproj" />
   </ItemGroup>
 
   <ItemGroup>

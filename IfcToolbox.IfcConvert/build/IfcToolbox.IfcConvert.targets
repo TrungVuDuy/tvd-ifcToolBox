@@ -1,0 +1,10 @@
+<Project>
+  <!-- Copies IfcConvert next to the application that (directly or transitively) uses IfcToolbox. -->
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)..\tools\IfcConvert_x64.exe"
+          Link="IfcConvert_x64.exe"
+          CopyToOutputDirectory="PreserveNewest"
+          CopyToPublishDirectory="PreserveNewest"
+          Visible="false" />
+  </ItemGroup>
+</Project>

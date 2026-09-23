@@ -37,3 +37,27 @@ jobs:
         with:
           name: test-results
           path: '**/TestResults/*.trx'
+
+      # Packages ship IfcConvert in its own package instead of embedded in IfcToolbox.Core.
+      - name: Pack
+        run: dotnet pack IfcToolbox.sln --configuration Release -p:IfcToolboxEmbedIfcConvert=false --output artifacts
+
+      # Install the tool from the packages just built and run it, so a broken package
+      # layout (e.g. IfcConvert not reaching the tool) fails the build.
+      - name: Smoke test the packaged tool
+        shell: pwsh
+        run: |
+          $version = (Select-Xml -Path Directory.Build.props -XPath "//Version").Node.InnerText
+          dotnet tool install IfcToolbox.Cli --version $version --tool-path tools --add-source artifacts
+          ./tools/ifctoolbox --version
+          ./tools/ifctoolbox info IfcToolbox.Tests/TestFiles/Ifc4x3/Infra-Road.ifc --json | Out-Null
+          if ($LASTEXITCODE -ne 0) { throw "info failed" }
+          Copy-Item IfcToolbox.Tests/TestFiles/Ifc4_SampleHouse.ifc smoke.ifc
+          ./tools/ifctoolbox convert smoke.ifc --format glb
+          if ($LASTEXITCODE -ne 0 -or -not (Test-Path smoke.glb)) { throw "convert failed" }
+
+      - name: Upload packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: packages
+          path: artifacts/*
