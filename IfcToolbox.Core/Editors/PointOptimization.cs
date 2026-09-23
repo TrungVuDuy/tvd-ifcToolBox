@@ -105,34 +105,20 @@ namespace IfcToolbox.Core.Editors
             return entityMap;
         }
 
-        private static Xbim.Ifc4.GeometricModelResource.IfcCartesianPointList3D CreatePointList3D(IModel model, List<List<double>> table)
+        // Created through the model's own schema: IfcCartesianPointList is IFC4 onwards, and
+        // IFC4X3 needs its own class, not the IFC4 one.
+        private static IIfcCartesianPointList3D CreatePointList3D(IModel model, List<List<double>> table)
         {
-            Xbim.Ifc4.GeometricModelResource.IfcCartesianPointList3D pointList = model.Instances.New<Xbim.Ifc4.GeometricModelResource.IfcCartesianPointList3D>(cpl =>
-            {
-                for (int i = 0; i < table.Count; i++)
-                {
-                    var values = table[i];
-                    Xbim.Ifc4.MeasureResource.IfcLengthMeasure[] measures = new Xbim.Ifc4.MeasureResource.IfcLengthMeasure[values.Count];
-                    for (int j = 0; j < values.Count; j++)
-                        measures[j] = new Xbim.Ifc4.MeasureResource.IfcLengthMeasure(values[j]);
-                    cpl.CoordList.GetAt(i).AddRange(measures);
-                }
-            });
+            var pointList = SchemaEntityFactory.New<IIfcCartesianPointList3D>(model, "IfcCartesianPointList3D");
+            for (int i = 0; i < table.Count; i++)
+                pointList.CoordList.GetAt(i).AddRange(table[i].Select(v => new Xbim.Ifc4.MeasureResource.IfcLengthMeasure(v)));
             return pointList;
         }
-        private static Xbim.Ifc4.GeometricModelResource.IfcCartesianPointList2D CreatePointList2D(IModel model, List<List<double>> table)
+        private static IIfcCartesianPointList2D CreatePointList2D(IModel model, List<List<double>> table)
         {
-            Xbim.Ifc4.GeometricModelResource.IfcCartesianPointList2D pointList = model.Instances.New<Xbim.Ifc4.GeometricModelResource.IfcCartesianPointList2D>(cpl =>
-            {
-                for (int i = 0; i < table.Count; i++)
-                {
-                    var values = table[i];
-                    Xbim.Ifc4.MeasureResource.IfcLengthMeasure[] measures = new Xbim.Ifc4.MeasureResource.IfcLengthMeasure[values.Count];
-                    for (int j = 0; j < values.Count; j++)
-                        measures[j] = new Xbim.Ifc4.MeasureResource.IfcLengthMeasure(values[j]);
-                    cpl.CoordList.GetAt(i).AddRange(measures);
-                }
-            });
+            var pointList = SchemaEntityFactory.New<IIfcCartesianPointList2D>(model, "IfcCartesianPointList2D");
+            for (int i = 0; i < table.Count; i++)
+                pointList.CoordList.GetAt(i).AddRange(table[i].Select(v => new Xbim.Ifc4.MeasureResource.IfcLengthMeasure(v)));
             return pointList;
         }
 
@@ -143,7 +129,8 @@ namespace IfcToolbox.Core.Editors
             {
                 foreach (var coordList in pointList3d.CoordList)
                 {
-                    var values = coordList.Select(x => double.Parse(x.Value.ToString())).ToList();
+                    // Cast rather than parse the string form, which depends on the machine's culture.
+                    var values = coordList.Select(x => (double)x.Value).ToList();
                     table.Add(PointPrecision.Optimize(precision, values));
                 }
             }
@@ -151,7 +138,7 @@ namespace IfcToolbox.Core.Editors
             {
                 foreach (var coordList in pointList2d.CoordList)
                 {
-                    var values = coordList.Select(x => double.Parse(x.Value.ToString())).ToList();
+                    var values = coordList.Select(x => (double)x.Value).ToList();
                     table.Add(PointPrecision.Optimize(precision, values));
                 }
             }

@@ -54,11 +54,10 @@ namespace IfcToolbox.Core.Ids.Model
                 case Xbim.Common.Step21.XbimSchemaVersion.Ifc4:
                 case Xbim.Common.Step21.XbimSchemaVersion.Ifc4x1:
                     return Ifc4;
+                case Xbim.Common.Step21.XbimSchemaVersion.Ifc4x3:
+                    return Ifc4X3Add2;
                 default:
-                    // Ifc4x3 and anything newer report as IFC4X3_ADD2 to IDS.
-                    return schemaVersion.ToString().StartsWith("Ifc4x3", StringComparison.OrdinalIgnoreCase)
-                        ? Ifc4X3Add2
-                        : null;
+                    return null;
             }
         }
     }

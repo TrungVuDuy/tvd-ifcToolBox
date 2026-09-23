@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 namespace IfcToolbox.Core.Convert
 {
@@ -43,6 +44,12 @@ namespace IfcToolbox.Core.Convert
                 throw new NotSupportedException(
                     $"IfcConvert {version} cannot write {format}; it needs {ConvertFormatInfo.GetMinimumVersion(format)} or newer. " +
                     $"Point {ExecutablePathVariable} at a newer IfcConvert to enable it.");
+
+            var fileSchema = ReadFileSchema(source);
+            if (!CanRead(version, fileSchema))
+                throw new NotSupportedException(
+                    $"IfcConvert {version} cannot read {fileSchema} models. IFC 4.3 support arrived after the " +
+                    $"0.6 release bundled with IfcToolbox; point {ExecutablePathVariable} at IfcConvert 0.8 or newer.");
 
             var optionPrompt = ConvertOptionService.GeneratePrompt(optionsWrap, format, version, logFilePath, true);
 
@@ -139,6 +146,42 @@ namespace IfcToolbox.Core.Convert
             _detectedFor = executablePath;
             _detectedVersion = ReadVersion(executablePath);
             return _detectedVersion;
+        }
+
+        /// <summary>
+        /// Whether the given IfcConvert build can open a file of that schema. Only what has been
+        /// checked is refused: 0.6 reports "No schema named IFC4X3_ADD2". Anything newer, or an
+        /// unknown version, is allowed to try, and a failure then surfaces as IfcConvertException.
+        /// </summary>
+        public static bool CanRead(IfcConvertVersion version, string fileSchema)
+        {
+            if (string.IsNullOrEmpty(fileSchema) || version == null || version.IsUnknown)
+                return true;
+            bool isIfc4x3 = fileSchema.StartsWith("IFC4X3", StringComparison.OrdinalIgnoreCase);
+            return !isIfc4x3 || version >= new IfcConvertVersion(0, 7);
+        }
+
+        /// <summary>
+        /// Schema named in the file's FILE_SCHEMA header, read without parsing the model.
+        /// Returns null for anything that is not a readable STEP file.
+        /// </summary>
+        public static string ReadFileSchema(string path)
+        {
+            try
+            {
+                foreach (var line in File.ReadLines(path).Take(50))
+                {
+                    int index = line.IndexOf("FILE_SCHEMA", StringComparison.OrdinalIgnoreCase);
+                    if (index < 0)
+                        continue;
+                    var match = System.Text.RegularExpressions.Regex.Match(line.Substring(index), @"'([^']+)'");
+                    return match.Success ? match.Groups[1].Value : null;
+                }
+            }
+            catch (IOException)
+            {
+            }
+            return null;
         }
 
         /// <summary>Formats the IfcConvert build in use can write.</summary>

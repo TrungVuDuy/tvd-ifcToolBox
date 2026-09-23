@@ -41,6 +41,10 @@ namespace IfcToolbox.Tools.Helper
                         case Xbim.Common.Step21.XbimSchemaVersion.Ifc2X3:
                             supported = true;
                             break;
+                        // IFC 4.3 ADD2, ISO 16739-1:2024.
+                        case Xbim.Common.Step21.XbimSchemaVersion.Ifc4x3:
+                            supported = true;
+                            break;
                         case Xbim.Common.Step21.XbimSchemaVersion.Cobie2X4:
                             break;
                         default:

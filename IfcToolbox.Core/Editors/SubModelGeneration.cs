@@ -1,4 +1,5 @@
 ﻿using IfcToolbox.Core.Analyse;
+using IfcToolbox.Core.Hierarchy;
 using IfcToolbox.Core.Utilities;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,17 +91,44 @@ namespace IfcToolbox.Core.Editors
         /// </summary>
         public static List<string> SplitBySite(IfcStore model, bool keepLable, string sourceFilePath, IEnumerable<string> entitiyLables, string placeholder = "Site")
         {
-            var project = model.Instances.OfType<IIfcProject>().FirstOrDefault();
-            var roots = new List<IIfcRoot>();
-            foreach (var site in project.Sites)
-                if (site is IIfcRoot root)
-                    if (entitiyLables.Contains(site.EntityLabel.ToString()))
-                        roots.Add(root);
+            // Every site, not only those directly under the project: IFC 4.3 models commonly
+            // nest sites (an "environment" site holding a site per structure), and
+            // IfcProject.Sites only reaches the first level.
+            var roots = model.Instances.OfType<IIfcSite>()
+                .Where(site => entitiyLables.Contains(site.EntityLabel.ToString()))
+                .Cast<IIfcRoot>()
+                .ToList();
             return SplitByIfcRoot(model, keepLable, sourceFilePath, roots, placeholder);
         }
 
         /// <summary>
-        /// Sub method for IfcBuilding and IfcSite.
+        /// One file per selected IFC 4.3 facility: a road, railway, bridge, marine facility or
+        /// building, with everything aggregated into it and contained in it.
+        /// </summary>
+        public static List<string> SplitByFacility(IfcStore model, bool keepLable, string sourceFilePath, IEnumerable<string> entitiyLables, string placeholder = "Facility")
+        {
+            var roots = Facilities.AllFacilities(model)
+                .Where(f => entitiyLables.Contains(f.EntityLabel.ToString()))
+                .Cast<IIfcRoot>()
+                .ToList();
+            return SplitByIfcRoot(model, keepLable, sourceFilePath, roots, placeholder);
+        }
+
+        /// <summary>
+        /// One file per selected IFC 4.3 facility part, e.g. a single carriageway or track.
+        /// Nested parts come along with their parent.
+        /// </summary>
+        public static List<string> SplitByFacilityPart(IfcStore model, bool keepLable, string sourceFilePath, IEnumerable<string> entitiyLables, string placeholder = "Part")
+        {
+            var roots = Facilities.AllFacilityParts(model)
+                .Where(p => entitiyLables.Contains(p.EntityLabel.ToString()))
+                .Cast<IIfcRoot>()
+                .ToList();
+            return SplitByIfcRoot(model, keepLable, sourceFilePath, roots, placeholder);
+        }
+
+        /// <summary>
+        /// Sub method for IfcBuilding, IfcSite and the IFC 4.3 facilities.
         /// </summary>
         private static List<string> SplitByIfcRoot(IfcStore model, bool keepLable, string sourceFilePath, IList<IIfcRoot> roots, string placeholder)
         {

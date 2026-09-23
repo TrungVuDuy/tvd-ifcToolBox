@@ -13,6 +13,7 @@ namespace IfcToolbox.Tools.Configurations
         public bool AlignProjectCoordinates { get; set; }
         public IGeoPlacement WorldPlacement { get; set; }
         public List<IGeoPlacement> ProjectPlacements { get; set; } = new List<IGeoPlacement>();
+        public GeoMapConversion MapConversion { get; set; }
 
         public string Suffix { get; set; } = "Moved";
     }

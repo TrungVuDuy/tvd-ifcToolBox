@@ -148,6 +148,36 @@ namespace IfcToolbox.Core.Hierarchy
             return node;
         }
 
+        /// <summary>
+        /// Spatial structure only, from the project down, stopping below any element for which
+        /// <paramref name="isTerminal"/> holds. Built for the IFC 4.3 structure, where the depth
+        /// of the tree varies: sites nest in sites, facility parts in facility parts.
+        /// </summary>
+        public static HierarchyNode GetSpatialHierarchy(IModel model, System.Func<IIfcObjectDefinition, bool> isTerminal)
+        {
+            return GetSpatialHierarchy(model.Instances.FirstOrDefault<IIfcProject>(), isTerminal, isRoot: true);
+        }
+        private static HierarchyNode GetSpatialHierarchy(IIfcObjectDefinition objectDef, System.Func<IIfcObjectDefinition, bool> isTerminal, bool isRoot = false)
+        {
+            if (objectDef == null)
+                return null;
+            // The project is the root whatever the predicate says: it is not a spatial element,
+            // so a predicate such as "stop at anything non-spatial" would otherwise end the tree
+            // before it started.
+            bool terminal = !isRoot && isTerminal(objectDef);
+            var node = new HierarchyNode(GetProductName(objectDef), objectDef.EntityLabel.ToString(), objectDef.GetType().Name, !terminal);
+            if (terminal)
+                return node;
+
+            foreach (var item in objectDef.IsDecomposedBy.SelectMany(r => r.RelatedObjects).OfType<IIfcSpatialStructureElement>())
+            {
+                var child = GetSpatialHierarchy(item, isTerminal);
+                child.AddParentId(node.Id);
+                node.Children.Add(child);
+            }
+            return node;
+        }
+
         private static string GetEntityCountText<T>(IEnumerable<T> enumerable)
         {
             string countText = enumerable.Count() > 1 ? $"{enumerable.Count()} entities" : $"{enumerable.Count()} entity";

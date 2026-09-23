@@ -10,5 +10,7 @@ namespace IfcToolbox.Tools.Configurations
         string BuildingStoreyPlaceholder { get; set; }
         string BuildingPlaceholder { get; set; }
         string SitePlaceholder { get; set; }
+        string FacilityPlaceholder { get; set; }
+        string FacilityPartPlaceholder { get; set; }
     }
 }

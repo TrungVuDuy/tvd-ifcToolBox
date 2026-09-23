@@ -202,6 +202,13 @@ namespace IfcToolbox.Core.Geo
 
                     geoInfo.Scale = (map.Scale.HasValue) ? map.Scale.Value : 1;
 
+                    if (map is Xbim.Ifc4x3.RepresentationResource.IfcMapConversionScaled scaled)
+                    {
+                        geoInfo.FactorX = scaled.FactorX;
+                        geoInfo.FactorY = scaled.FactorY;
+                        geoInfo.FactorZ = scaled.FactorZ;
+                    }
+
                     var mapCRS = (IIfcProjectedCRS)map.TargetCRS;
                     if (mapCRS != null)
                     {

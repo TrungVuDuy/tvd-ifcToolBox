@@ -15,6 +15,12 @@ namespace IfcToolbox.Core.Hierarchy
         public List<HierarchyNode> BuildingNodes { get; set; } = new List<HierarchyNode>();
         public List<HierarchyNode> LevelNodes { get; set; } = new List<HierarchyNode>();
 
+        /// <summary>IFC 4.3 spatial tree down to facilities (road, railway, bridge, building...). Empty before IFC 4.3.</summary>
+        public List<HierarchyNode> FacilityNodes { get; set; } = new List<HierarchyNode>();
+
+        /// <summary>IFC 4.3 spatial tree down to facility parts, nested parts included. Empty before IFC 4.3.</summary>
+        public List<HierarchyNode> FacilityPartNodes { get; set; } = new List<HierarchyNode>();
+
     }
 
     public static class SpatialTreesExtention

@@ -1,4 +1,5 @@
 ﻿using IfcToolbox.Core.Editors;
+using IfcToolbox.Core.Geo;
 using IfcToolbox.Core.Utilities;
 using IfcToolbox.Tools.Configurations;
 using Serilog;
@@ -46,6 +47,9 @@ namespace IfcToolbox.Tools.Processors
         {
             PointAlignment.AlignCoordinates(model, config.AlignWorldCoordinates, config.AlignProjectCoordinates,
                 config.WorldPlacement, config.ProjectPlacements, config.LogDetail);
+
+            if (config.MapConversion != null)
+                MapConversionService.Write(model, config.MapConversion);
         }
     }
 }

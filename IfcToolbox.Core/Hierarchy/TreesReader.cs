@@ -1,4 +1,6 @@
-﻿using Xbim.Common;
+﻿using System.Linq;
+using Xbim.Common;
+using Xbim.Ifc4.Interfaces;
 
 namespace IfcToolbox.Core.Hierarchy
 {
@@ -12,6 +14,13 @@ namespace IfcToolbox.Core.Hierarchy
             result.SiteNodes.Add(HierarchyReader.GetSpatialHierarchy(model, "IfcSite"));
             result.BuildingNodes.Add(HierarchyReader.GetSpatialHierarchy(model, "IfcBuilding"));
             result.LevelNodes.Add(HierarchyReader.GetSpatialHierarchy(model, "IfcBuildingStorey"));
+
+            // IFC 4.3 only; left empty for older schemas so the UI can hide the options.
+            if (Facilities.AllFacilities(model).Any())
+                result.FacilityNodes.Add(HierarchyReader.GetSpatialHierarchy(model, Facilities.IsFacility));
+            if (Facilities.AllFacilityParts(model).Any())
+                result.FacilityPartNodes.Add(HierarchyReader.GetSpatialHierarchy(model,
+                    o => !(o is IIfcSpatialStructureElement)));
             return result;
         }
 

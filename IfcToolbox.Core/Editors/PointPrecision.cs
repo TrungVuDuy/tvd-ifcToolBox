@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace IfcToolbox.Core.Editors
@@ -37,18 +38,32 @@ namespace IfcToolbox.Core.Editors
             }
             return false;
         }
-        private static int GetDoublePlaces(double value)
+        /// <summary>
+        /// Number of decimal places needed to write the value exactly.
+        /// <para>
+        /// Formats with the invariant culture: the previous version used the machine's culture
+        /// and looked for '.', so on a system using a decimal comma (vi-VN, de-DE, fr-FR...) it
+        /// always found zero places and the optimizer silently never rounded anything.
+        /// Scientific notation (1E-05) is handled as well.
+        /// </para>
+        /// </summary>
+        public static int GetDoublePlaces(double value)
         {
-            bool start = false;
-            int count = 0;
-            foreach (var s in value.ToString())
+            if (double.IsNaN(value) || double.IsInfinity(value))
+                return 0;
+
+            var text = value.ToString("R", CultureInfo.InvariantCulture);
+            int exponent = 0;
+            int e = text.IndexOfAny(new[] { 'E', 'e' });
+            if (e >= 0)
             {
-                if (s == '.')
-                    start = true;
-                else if (start)
-                    count++;
+                exponent = int.Parse(text.Substring(e + 1), CultureInfo.InvariantCulture);
+                text = text.Substring(0, e);
             }
-            return count;
+
+            int dot = text.IndexOf('.');
+            int decimals = dot < 0 ? 0 : text.Length - dot - 1;
+            return Math.Max(0, decimals - exponent);
         }
     }
 }

@@ -77,6 +77,11 @@ namespace IfcToolbox.Core.Geo
         public double? XAxisAbscissa { get; set; } = null;
         public double? XAxisOrdinate { get; set; } = null;
 
+        /// <summary>IFC 4.3 IfcMapConversionScaled factors; null for a plain IfcMapConversion.</summary>
+        public double? FactorX { get; set; } = null;
+        public double? FactorY { get; set; } = null;
+        public double? FactorZ { get; set; } = null;
+
         public string CRS_Name { get; set; }
         public string CRS_Description { get; set; }
         public string CRS_GeodeticDatum { get; set; }

@@ -57,6 +57,10 @@ namespace IfcToolbox.Tools.Processors
                     return SubModelGeneration.SplitByBuilding(model, config.KeepLabel, sourceFilePath, config.SelectedItems, config.BuildingPlaceholder);
                 case SplitStrategy.BySite:
                     return SubModelGeneration.SplitBySite(model, config.KeepLabel, sourceFilePath, config.SelectedItems, config.SitePlaceholder);
+                case SplitStrategy.ByFacility:
+                    return SubModelGeneration.SplitByFacility(model, config.KeepLabel, sourceFilePath, config.SelectedItems, config.FacilityPlaceholder);
+                case SplitStrategy.ByFacilityPart:
+                    return SubModelGeneration.SplitByFacilityPart(model, config.KeepLabel, sourceFilePath, config.SelectedItems, config.FacilityPartPlaceholder);
                 default:
                     return new List<string>();
             }

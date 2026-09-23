@@ -34,11 +34,15 @@ IfcToolbox is one of the proposals in [openBIM Marketplace - buildingSMART Techn
 
 - IFC Optimizer – Reduce the size of large IFC files by optimizing the IFC resource layer instance, and eliminate floating-point offsets through FPR geometric optimization.
 - IFC Converter – Easily convert IFC to glTF(.glb), OBJ(.obj), Collada(.dae), STEP(.stp), IGES(.igs), XML(.xml), SVG(.svg) and IFC-SPF(.ifc). Point `IFCTOOLBOX_IFCCONVERT` at an IfcConvert 0.8 build to also get xeokit JSON(.json), RDF Turtle(.ttl) and HDF(.h5).
-- IFC Splitter – Split IFC files by type/container (site, building, level) or simply split selected objects in the hierarchy.
-- IFC Relocator – Relocate the IFC world coordinate system and the project coordinate system. Align the origin of the two models.
+- IFC Splitter – Split IFC files by type/container (site, building, level) or simply split selected objects in the hierarchy. For IFC 4.3 infrastructure models, also by facility (road, railway, bridge, marine facility) and facility part (carriageway, track, ...).
+- IFC Relocator – Relocate the IFC world coordinate system and the project coordinate system. Align the origin of the two models. Georeference IFC4 and IFC 4.3 models with a projected CRS and map conversion (IfcMapConversion, and IfcMapConversionScaled on IFC 4.3).
 - IFC Anonymizer – Anonymous user-related information and specific product-related information. Simplify model submission in bidding activities or design competitions.
 - IFC Validator – Validate the existence of the properties of classes in the IFC file. Requirements can be pulled directly from the buildingSMART Data Dictionary (bSDD) instead of being written out by hand.
 - IDS Validator – Check a model against an [Information Delivery Specification](https://www.buildingsmart.org/standards/bsi-standards/information-delivery-specification-ids/) (IDS 1.0, the official buildingSMART standard since June 2024). Reads and writes `.ids` files and checks entity, attribute, property, classification, material and partOf facets, with restrictions, cardinality and unit conversion. Verified against all 307 runnable cases of the official buildingSMART test suite.
+
+### Supported IFC versions
+
+IFC2X3, IFC4 and IFC 4.3 (IFC4X3_ADD2, ISO 16739-1:2024) for every tool. Converting IFC 4.3 models needs IfcConvert 0.8 or newer: the bundled IfcConvert 0.6 predates IFC 4.3, so point the `IFCTOOLBOX_IFCCONVERT` environment variable at a newer build.
 
 ## GUI App in Microsoft Store 
 

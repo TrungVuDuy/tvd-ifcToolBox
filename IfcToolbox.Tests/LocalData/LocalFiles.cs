@@ -36,5 +36,10 @@ namespace IfcToolbox.Tests
         public const string Ifc4_SampleHouse_IfcWallStandardCase = "TestFiles\\Ifc4_SampleHouse_IfcWallStandardCase.ifc";
         public const string Ifc4_SampleHouse_IfcWindow = "TestFiles\\Ifc4_SampleHouse_IfcWindow.ifc";
         public const string Ifc4_WallElementedCase = "TestFiles\\Ifc4_WallElementedCase.ifc";
+
+        // IFC 4.3 (IFC4X3_ADD2) samples from buildingSMART's Simple Scene set, see TestFiles\Ifc4x3\NOTICE.md.
+        public const string Ifc4x3_Road = "TestFiles\\Ifc4x3\\Infra-Road.ifc";
+        public const string Ifc4x3_Rail = "TestFiles\\Ifc4x3\\Infra-Rail.ifc";
+        public const string Ifc4x3_Building = "TestFiles\\Ifc4x3\\Building-Architecture.ifc";
     }
 }

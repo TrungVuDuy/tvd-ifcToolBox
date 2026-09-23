@@ -1,16 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using Xbim.Common;
-using Xbim.Common.Step21;
 using Xbim.Ifc4.Interfaces;
+using Xbim.Ifc4.MeasureResource;
 
 namespace IfcToolbox.Core.Editors
 {
     /// <summary>
-    /// Creates geometry resource entities.
-    /// Reading is schema agnostic (Xbim.Ifc4.Interfaces covers every schema in Xbim 6),
-    /// but creation needs a concrete type, so the public entry points dispatch on
-    /// <see cref="IModel.SchemaVersion"/>.
+    /// Creates geometry resource entities in whatever schema the model uses.
+    /// The concrete class comes from the model's own metadata (see
+    /// <see cref="SchemaEntityFactory"/>), so IFC2X3, IFC4 and IFC4X3 share one code path.
+    /// The previous version assumed "not IFC2X3 means IFC4" and failed on every IFC4X3 model.
     /// </summary>
     public class PointFactory
     {
@@ -29,9 +29,9 @@ namespace IfcToolbox.Core.Editors
         {
             if (locationXYZ == null)
                 return null;
-            if (model.SchemaVersion == XbimSchemaVersion.Ifc2X3)
-                return CreatePoint_Ifc2x3(model, locationXYZ);
-            return CreatePoint_Ifc4(model, locationXYZ);
+            var point = SchemaEntityFactory.New<IIfcCartesianPoint>(model, "IfcCartesianPoint");
+            point.Coordinates.AddRange(locationXYZ.Take(3).Select(v => new IfcLengthMeasure(v)));
+            return point;
         }
 
         public static Xbim.Ifc4.GeometryResource.IfcCartesianPoint CreatePoint_Ifc4(IModel model, IList<double> locationXYZ)
@@ -72,9 +72,9 @@ namespace IfcToolbox.Core.Editors
         {
             if (rotations == null)
                 return null;
-            if (model.SchemaVersion == XbimSchemaVersion.Ifc2X3)
-                return CreateDirection_Ifc2x3(model, rotations);
-            return CreateDirection_Ifc4(model, rotations);
+            var direction = SchemaEntityFactory.New<IIfcDirection>(model, "IfcDirection");
+            direction.DirectionRatios.AddRange(rotations.Take(3).Select(v => new IfcReal(v)));
+            return direction;
         }
 
         public static Xbim.Ifc4.GeometryResource.IfcDirection CreateDirection_Ifc4(IModel model, IList<double> rotations)
