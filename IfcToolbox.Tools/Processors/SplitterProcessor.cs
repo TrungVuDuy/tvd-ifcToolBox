@@ -16,7 +16,7 @@ namespace IfcToolbox.Tools.Processors
             if (consoleMode)
                 Marslogger.Step($"{filePath} in processing");
             using var watch = new Superwatch();
-            using var model = IfcStore.Open(filePath);
+            using var model = IfcToolbox.Core.Utilities.ToolboxFiles.Open(filePath);
             if (consoleMode)
                 Marslogger.Step("Processing...");
             var result = TreesReader.GetSpatialTrees(model);
@@ -29,7 +29,7 @@ namespace IfcToolbox.Tools.Processors
                 Marslogger.Step($"{filePath} in processing");
             var processorResult = ProcessorResultFactory.CreateNew();
             using (var watch = new Superwatch())
-            using (var model = IfcStore.Open(filePath))
+            using (var model = IfcToolbox.Core.Utilities.ToolboxFiles.Open(filePath))
             {
                 if (consoleMode)
                     Marslogger.Step("Processing...");

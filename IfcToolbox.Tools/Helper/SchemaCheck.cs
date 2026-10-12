@@ -26,7 +26,7 @@ namespace IfcToolbox.Tools.Helper
             bool supported = false;
             try
             {
-                using (var model = IfcStore.Open(filePath))
+                using (var model = IfcToolbox.Core.Utilities.ToolboxFiles.Open(filePath))
                 {
                     switch (model.SchemaVersion)
                     {

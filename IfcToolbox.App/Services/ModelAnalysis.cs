@@ -23,7 +23,7 @@ namespace IfcToolbox.App.Services
 
         public static SplitAnalysis Read(string path)
         {
-            using var model = IfcStore.Open(path);
+            using var model = IfcToolbox.Core.Utilities.ToolboxFiles.Open(path);
             var products = model.Instances.OfType<IIfcProduct>().ToList();
             return new SplitAnalysis
             {
@@ -77,7 +77,7 @@ namespace IfcToolbox.App.Services
 
         public static RelocateAnalysis Read(string path)
         {
-            using var model = IfcStore.Open(path);
+            using var model = IfcToolbox.Core.Utilities.ToolboxFiles.Open(path);
             var project = model.Instances.OfType<IIfcProject>().FirstOrDefault();
             // The same context the alignment moves: the one 3D "Model" context.
             var context = project?.RepresentationContexts.OfType<IIfcGeometricRepresentationContext>()
@@ -112,7 +112,7 @@ namespace IfcToolbox.App.Services
         /// <summary>Class name to count, spaces included, spatial containers (site, storey, ...) left out.</summary>
         public static Dictionary<string, int> ReadClasses(string path)
         {
-            using var model = IfcStore.Open(path);
+            using var model = IfcToolbox.Core.Utilities.ToolboxFiles.Open(path);
             return model.Instances.OfType<IIfcProduct>()
                 .Where(p => p is IIfcSpace || p is not IIfcSpatialStructureElement)
                 .GroupBy(p => p.ExpressType.Name)

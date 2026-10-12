@@ -10,7 +10,7 @@ namespace IfcToolbox.Core.Analyse
     {
         public static void AnalyseEntityFrequency(string filePath, bool logDetail = false, bool propsAndType = false)
         {
-            using (var model = IfcStore.Open(filePath))
+            using (var model = IfcToolbox.Core.Utilities.ToolboxFiles.Open(filePath))
             {
                 var entities = model.Instances.OfType<IPersistEntity>();
                 var frequencyAnalyse = new EntityFrequencyAnalyse();
@@ -26,7 +26,7 @@ namespace IfcToolbox.Core.Analyse
 
         public static void AnalyseHierarchy(string filePath, bool logDetail = false)
         {
-            using (var model = IfcStore.Open(filePath))
+            using (var model = IfcToolbox.Core.Utilities.ToolboxFiles.Open(filePath))
             {
                 Log.Information(HierarchyReader.GetFullHierarchy(model, true, true).Show(true));
                 Log.Information(HierarchyReader.GetTypedHierarchy(model, true).Show(true));

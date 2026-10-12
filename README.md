@@ -173,6 +173,8 @@ dotnet publish IfcToolbox.App -c Release -p:DebugType=none -o publish/IfcToolbox
 - Serilog https://serilog.net/ - [Apache-2.0 License](https://licenses.nuget.org/Apache-2.0)
 - CsvHelper https://joshclose.github.io/CsvHelper/ - [MS-PL / Apache-2.0](https://licenses.nuget.org/MS-PL%20OR%20Apache-2.0)
 
+The complete list for the desktop app and the command line tool, with copyright notices and where the source code is, is in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md); the licence texts are in [licenses](licenses). Both are shipped beside `IfcToolbox.exe` and `ifctoolbox.exe`.
+
 ## License
 
 [GPL-3.0 License](LICENSE) © 2021 [Yousheng Wang](https://github.com/youshengCode). Modifications from 2026 by their respective contributors, under the same licence.

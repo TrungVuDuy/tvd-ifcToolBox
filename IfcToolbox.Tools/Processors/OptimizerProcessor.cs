@@ -17,7 +17,7 @@ namespace IfcToolbox.Tools.Processors
                 Marslogger.Step($"{filePath} in processing");
             var processorResult = ProcessorResultFactory.CreateNew();
             using (var watch = new Superwatch())
-            using (var model = IfcStore.Open(filePath))
+            using (var model = IfcToolbox.Core.Utilities.ToolboxFiles.Open(filePath))
             {
                 using (var txn = model.BeginTransaction("Modification"))
                 {

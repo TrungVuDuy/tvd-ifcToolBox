@@ -23,6 +23,8 @@
     <SelfContained>true</SelfContained>
     <!-- The interface is English only for now; skip the runtime's resources for other languages. -->
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <!-- LICENSE, THIRD-PARTY-NOTICES.md and licenses beside the exe (Directory.Build.targets). -->
+    <IfcToolboxShipsNotices>true</IfcToolboxShipsNotices>
   </PropertyGroup>
 
   <ItemGroup>

@@ -68,7 +68,7 @@ namespace IfcToolbox.Cli.Commands
 
         public static ModelInfo Read(FileInfo file)
         {
-            using var model = IfcStore.Open(file.FullName);
+            using var model = IfcToolbox.Core.Utilities.ToolboxFiles.Open(file.FullName);
             var products = model.Instances.OfType<IIfcProduct>().ToList();
 
             var info = new ModelInfo

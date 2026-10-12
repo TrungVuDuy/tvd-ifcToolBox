@@ -62,7 +62,7 @@ namespace IfcToolbox.Cli.Commands
 
                 if (result.GetValue(list))
                 {
-                    using var listModel = IfcStore.Open(modelFile.FullName);
+                    using var listModel = IfcToolbox.Core.Utilities.ToolboxFiles.Open(modelFile.FullName);
                     var candidates = Candidates(listModel, strategy).ToList();
                     if (candidates.Count == 0)
                         output.WriteLine($"Nothing to select for --by {result.GetValue(by)} in this model.");
@@ -75,7 +75,7 @@ namespace IfcToolbox.Cli.Commands
                 if (strategy != SplitStrategy.DataOnly && requested.Length == 0)
                     throw new CliUsageException($"--by {result.GetValue(by)} needs at least one --item. Use --list to see the choices.");
 
-                using var ifcModel = IfcStore.Open(modelFile.FullName);
+                using var ifcModel = IfcToolbox.Core.Utilities.ToolboxFiles.Open(modelFile.FullName);
                 IEnumerable<string> selected = strategy == SplitStrategy.ByObjectType
                     ? requested
                     : Resolve(ifcModel, strategy, requested);

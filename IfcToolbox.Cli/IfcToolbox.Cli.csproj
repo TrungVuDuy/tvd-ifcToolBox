@@ -13,6 +13,8 @@
     <PackageId>IfcToolbox.Cli</PackageId>
     <Description>Command line IFC toolbox: validate models against IDS, convert to glTF and other formats, split IFC 4.3 infrastructure models by facility, optimise, anonymise and georeference. IFC2X3, IFC4 and IFC 4.3.</Description>
     <PackageTags>$(PackageTags);cli;dotnet-tool</PackageTags>
+    <!-- LICENSE, THIRD-PARTY-NOTICES.md and licenses\ beside the exe (Directory.Build.targets). -->
+    <IfcToolboxShipsNotices>true</IfcToolboxShipsNotices>
   </PropertyGroup>
 
   <ItemGroup>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Xbim.Common;
 using Xbim.Ifc;
+using IfcToolbox.Core.Utilities;
 using Xbim.IO;
 
 namespace IfcToolbox.Core.Editors
@@ -22,7 +23,7 @@ namespace IfcToolbox.Core.Editors
         /// </summary>
         public static void SaveAs(IfcStore model, string filePath, bool deleteOld = true, bool keepLabel = false)
         {
-            using (var iModel = IfcStore.Create(GetEditorCredentials(), ((IModel)model).SchemaVersion, CopyStoreType))
+            using (var iModel = IfcStore.Create(ToolboxFiles.Credentials(), ((IModel)model).SchemaVersion, CopyStoreType))
             {
                 using (var cache = model.BeginInverseCaching())
                 using (var txn = iModel.BeginTransaction("InsertCopy with caching"))
@@ -42,13 +43,13 @@ namespace IfcToolbox.Core.Editors
                     txn.Commit();
                 }
                 UpdateHeader(model, iModel);
-                iModel.SaveAs(filePath);
+                ToolboxFiles.Save(iModel, filePath);
             }
         }
 
         public static void CopyProducts(IfcStore model, string filePath, IEnumerable<Xbim.Ifc4.Interfaces.IIfcProduct> products, bool keepLabel = false)
         {
-            using (var iModel = IfcStore.Create(GetEditorCredentials(), ((IModel)model).SchemaVersion, CopyStoreType))
+            using (var iModel = IfcStore.Create(ToolboxFiles.Credentials(), ((IModel)model).SchemaVersion, CopyStoreType))
             {
                 using (model.BeginEntityCaching())
                 using (model.BeginInverseCaching())
@@ -59,13 +60,13 @@ namespace IfcToolbox.Core.Editors
                     txn.Commit();
                 }
                 UpdateHeader(model, iModel);
-                iModel.SaveAs(filePath);
+                ToolboxFiles.Save(iModel, filePath);
             }
         }
 
         public static void CopyOnlyProperties(IfcStore model, string filePath, bool keepLabel = false)
         {
-            using (var iModel = IfcStore.Create(GetEditorCredentials(), ((IModel)model).SchemaVersion, CopyStoreType))
+            using (var iModel = IfcStore.Create(ToolboxFiles.Credentials(), ((IModel)model).SchemaVersion, CopyStoreType))
             {
                 using (model.BeginEntityCaching())
                 using (model.BeginInverseCaching())
@@ -76,7 +77,7 @@ namespace IfcToolbox.Core.Editors
                     txn.Commit();
                 }
                 UpdateHeader(model, iModel);
-                iModel.SaveAs(filePath);
+                ToolboxFiles.Save(iModel, filePath);
             }
         }
 
@@ -87,19 +88,6 @@ namespace IfcToolbox.Core.Editors
             target.Header.FileSchema = source.Header.FileSchema;
             target.Header.FileName.OriginatingSystem = source.Header.FileName.OriginatingSystem;
         }
-
-        private static XbimEditorCredentials GetEditorCredentials()
-        {
-            return new XbimEditorCredentials
-            {
-                ApplicationDevelopersName = "BIM Mars",
-                ApplicationFullName = "IFC Toolbox",
-                ApplicationIdentifier = "Ifc.Toolbox",
-                ApplicationVersion = "1.2.0",
-                EditorsFamilyName = Environment.UserName,
-            };
-        }
-
     }
 }
 

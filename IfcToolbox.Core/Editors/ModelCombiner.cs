@@ -99,14 +99,14 @@ namespace IfcToolbox.Core.Editors
                 {
                     cancellationToken.ThrowIfCancellationRequested();
                     var path = sourcePaths[i];
-                    using var source = IfcStore.Open(path);
+                    using var source = IfcToolbox.Core.Utilities.ToolboxFiles.Open(path);
 
                     double sourceUnit = MapConversionService.LengthUnitInMetres(source);
                     if (i == 0)
                     {
                         schema = source.SchemaVersion;
                         unit = sourceUnit;
-                        target = IfcStore.Create(EditorCredentials(), schema, XbimStoreType.InMemoryModel);
+                        target = IfcStore.Create(Utilities.ToolboxFiles.Credentials(), schema, XbimStoreType.InMemoryModel);
                         target.Header.FileDescription = source.Header.FileDescription;
                     }
                     else if (source.SchemaVersion != schema)
@@ -176,8 +176,7 @@ namespace IfcToolbox.Core.Editors
                     txn.Commit();
                 }
 
-                target.Header.FileName.Name = Path.GetFileName(outputPath);
-                target.SaveAs(outputPath);
+                Utilities.ToolboxFiles.Save(target, outputPath);
                 return result;
             }
             finally
@@ -521,16 +520,6 @@ namespace IfcToolbox.Core.Editors
             _ when Math.Abs(metres - 0.3048) < 1e-12 => "feet",
             _ when Math.Abs(metres - 0.0254) < 1e-12 => "inches",
             _ => $"units of {metres} m",
-        };
-
-        private static XbimEditorCredentials EditorCredentials() => new()
-        {
-            ApplicationDevelopersName = "IfcToolbox contributors",
-            ApplicationFullName = "IFC Toolbox",
-            ApplicationIdentifier = "Ifc.Toolbox",
-            ApplicationVersion = typeof(ModelCombiner).Assembly.GetName().Version?.ToString(3) ?? "2.0",
-            // No user name: the combined file is shared, and the sources keep their own authors.
-            EditorsFamilyName = "IFC Toolbox",
         };
     }
 }

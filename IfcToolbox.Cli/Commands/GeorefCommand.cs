@@ -92,7 +92,7 @@ namespace IfcToolbox.Cli.Commands
 
         private static int Show(TextWriter writer, FileInfo modelFile, double[] point, bool json)
         {
-            using var ifcModel = IfcStore.Open(modelFile.FullName);
+            using var ifcModel = IfcToolbox.Core.Utilities.ToolboxFiles.Open(modelFile.FullName);
             var map = MapConversionService.Read(ifcModel);
             if (map == null)
             {
@@ -147,7 +147,7 @@ namespace IfcToolbox.Cli.Commands
         /// </summary>
         private static double DefaultScale(FileInfo modelFile)
         {
-            using var ifcModel = IfcStore.Open(modelFile.FullName);
+            using var ifcModel = IfcToolbox.Core.Utilities.ToolboxFiles.Open(modelFile.FullName);
             return MapConversionService.LengthUnitInMetres(ifcModel);
         }
     }

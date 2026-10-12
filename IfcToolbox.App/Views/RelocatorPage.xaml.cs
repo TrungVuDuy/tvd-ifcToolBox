@@ -322,14 +322,14 @@ namespace IfcToolbox.App.Views
             {
                 var conversion = await Task.Run(() =>
                 {
-                    using var model = Xbim.Ifc.IfcStore.Open(path);
+                    using var model = IfcToolbox.Core.Utilities.ToolboxFiles.Open(path);
                     Core.Editors.LengthUnitConversion result;
                     using (var txn = model.BeginTransaction("Convert length unit"))
                     {
                         result = Core.Editors.LengthUnitConverter.Convert(model, unit);
                         txn.Commit();
                     }
-                    model.SaveAs(output);
+                    Core.Utilities.ToolboxFiles.Save(model, output);
                     return result;
                 });
                 OutputView.Show("Done", new[] { output },

@@ -73,7 +73,8 @@
                     <TextBlock Text="GNU General Public License v3.0" />
                     <TextBlock Text="Copyright (c) 2021 Yousheng Wang. Modifications from 2026 by their respective contributors." TextWrapping="Wrap"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                    <HyperlinkButton Content="Read the license" NavigateUri="https://www.gnu.org/licenses/gpl-3.0.html" Padding="0" />
+                    <HyperlinkButton Content="Read the license" Click="OnOpenLicense" Tag="LICENSE.txt" Padding="0" />
+                    <HyperlinkButton Content="Third-party notices and licences" Click="OnOpenLicense" Tag="THIRD-PARTY-NOTICES.md" Padding="0" />
                 </StackPanel>
             </controls:Section>
         </StackPanel>

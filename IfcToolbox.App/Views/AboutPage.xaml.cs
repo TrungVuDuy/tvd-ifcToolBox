@@ -39,6 +39,15 @@ namespace IfcToolbox.App.Views
             }
         }
 
+        /// <summary>Opens a licence file shipped beside the app, or the GPL online when run from a build without it.</summary>
+        private void OnOpenLicense(object sender, RoutedEventArgs e)
+        {
+            var name = (sender as FrameworkElement)?.Tag as string ?? "LICENSE.txt";
+            var path = System.IO.Path.Combine(AppContext.BaseDirectory, name);
+            var target = System.IO.File.Exists(path) ? path : "https://www.gnu.org/licenses/gpl-3.0.html";
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo(target) { UseShellExecute = true });
+        }
+
         private void AddCell(FrameworkElement element, int row, int column)
         {
             Grid.SetRow(element, row);

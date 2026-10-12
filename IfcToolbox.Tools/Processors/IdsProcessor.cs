@@ -41,7 +41,7 @@ namespace IfcToolbox.Tools.Processors
             var processorResult = ProcessorResultFactory.CreateNew();
 
             using (var watch = new Superwatch())
-            using (var model = IfcStore.Open(filePath))
+            using (var model = IfcToolbox.Core.Utilities.ToolboxFiles.Open(filePath))
             {
                 if (consoleMode)
                 {
@@ -87,7 +87,7 @@ namespace IfcToolbox.Tools.Processors
             bool reportPassingEntities = false, CancellationToken cancellationToken = default)
         {
             var results = new List<IdsValidationResult>();
-            using (var model = IfcStore.Open(filePath))
+            using (var model = IfcToolbox.Core.Utilities.ToolboxFiles.Open(filePath))
             {
                 var validator = new IdsValidator { ReportPassingEntities = reportPassingEntities };
                 foreach (var idsFilePath in idsFilePaths)

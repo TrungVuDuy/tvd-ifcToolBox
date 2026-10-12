@@ -37,7 +37,7 @@ namespace IfcToolbox.Cli.Commands
                 var modelFile = result.GetValue(model);
                 var unit = result.GetValue(to);
 
-                using var ifcModel = IfcStore.Open(modelFile.FullName);
+                using var ifcModel = IfcToolbox.Core.Utilities.ToolboxFiles.Open(modelFile.FullName);
                 double metres = MapConversionService.LengthUnitInMetres(ifcModel);
                 if (unit == null)
                 {
@@ -57,7 +57,7 @@ namespace IfcToolbox.Cli.Commands
                 var target = result.GetValue(output)?.FullName
                              ?? Path.Combine(modelFile.DirectoryName ?? ".", Path.GetFileNameWithoutExtension(modelFile.Name) + "_" + unit + ".ifc");
                 Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(target)));
-                ifcModel.SaveAs(target);
+                IfcToolbox.Core.Utilities.ToolboxFiles.Save(ifcModel, target);
 
                 if (result.GetValue(json))
                 {

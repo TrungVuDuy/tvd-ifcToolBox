@@ -15,7 +15,7 @@ namespace IfcToolbox.Tools.Processors
             if (consoleMode)
                 Marslogger.Step($"{filePath} in processing");
             using var watch = new Superwatch();
-            using var model = IfcStore.Open(filePath);
+            using var model = IfcToolbox.Core.Utilities.ToolboxFiles.Open(filePath);
             if (consoleMode)
             {
                 Log.Information($"IFC Schema - {model.SchemaVersion}");

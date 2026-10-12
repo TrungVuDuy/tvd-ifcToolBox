@@ -75,6 +75,10 @@ jobs:
           Copy-Item IfcToolbox.Tests/TestFiles/Ifc4_SampleHouse.ifc standalone.ifc
           ./publish/ifctoolbox-win-x64/ifctoolbox.exe convert standalone.ifc --format glb
           if ($LASTEXITCODE -ne 0 -or -not (Test-Path standalone.glb)) { throw "convert failed" }
+          # The licences IfcConvert (LGPL) and the toolbox (GPL) need handed out with the exe.
+          foreach ($file in 'LICENSE.txt', 'THIRD-PARTY-NOTICES.md', 'licenses/LGPL-3.0.txt') {
+            if (-not (Test-Path "publish/ifctoolbox-win-x64/$file")) { throw "$file is missing from the standalone executable" }
+          }
 
       - name: Upload standalone executable
         uses: actions/upload-artifact@v4
@@ -92,7 +96,8 @@ jobs:
       - name: Check the desktop app folder
         shell: pwsh
         run: |
-          foreach ($file in 'IfcToolbox.exe', 'IfcToolbox.pri', 'IfcConvert_x64.exe', 'Assets/AppLogo.png', 'Microsoft.ui.xaml.dll') {
+          foreach ($file in 'IfcToolbox.exe', 'IfcToolbox.pri', 'IfcConvert_x64.exe', 'Assets/AppLogo.png', 'Microsoft.ui.xaml.dll',
+                           'LICENSE.txt', 'THIRD-PARTY-NOTICES.md', 'licenses/LGPL-3.0.txt', 'licenses/CDDL-1.0.txt') {
             if (-not (Test-Path "publish/IfcToolbox-app-win-x64/$file")) { throw "$file is missing from the published app" }
           }
 

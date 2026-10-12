@@ -48,7 +48,7 @@ namespace IfcToolbox.Tools.Helper
 
         public static int ProductCount(string filePath)
         {
-            using (var model = IfcStore.Open(filePath))
+            using (var model = IfcToolbox.Core.Utilities.ToolboxFiles.Open(filePath))
             {
                 // One interface layer covers every schema since Xbim 6, so no branching needed.
                 return model.Instances.OfType<Xbim.Ifc4.Interfaces.IIfcProduct>().Count();
@@ -56,7 +56,7 @@ namespace IfcToolbox.Tools.Helper
         }
         public static int EntityCount(string filePath)
         {
-            using (var model = IfcStore.Open(filePath))
+            using (var model = IfcToolbox.Core.Utilities.ToolboxFiles.Open(filePath))
             {
                 return model.Instances.OfType<IPersistEntity>().Count();
             }

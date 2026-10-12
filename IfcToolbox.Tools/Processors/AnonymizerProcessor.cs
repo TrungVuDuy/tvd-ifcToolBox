@@ -17,7 +17,7 @@ namespace IfcToolbox.Tools.Processors
             if (consoleMode)
                 Marslogger.Step($"{filePath} in processing");
             using var watch = new Superwatch();
-            using var model = IfcStore.Open(filePath);
+            using var model = IfcToolbox.Core.Utilities.ToolboxFiles.Open(filePath);
             if (consoleMode)
                 Marslogger.Step("Processing...");
             var result = TreesReader.GetOnlyTypedNodes(model, false);
@@ -31,7 +31,7 @@ namespace IfcToolbox.Tools.Processors
             var processorResult = ProcessorResultFactory.CreateNew();
             var generatedFilePath = ConsoleFile.AddSuffixToName(filePath, "_" + config.Suffix);
             using var watch = new Superwatch();
-            using var model = IfcStore.Open(filePath);
+            using var model = IfcToolbox.Core.Utilities.ToolboxFiles.Open(filePath);
             using (var txn = model.BeginTransaction("Modification"))
             {
                 if (consoleMode)
@@ -48,7 +48,7 @@ namespace IfcToolbox.Tools.Processors
                 var logFilePath = ConsoleFile.CreateLogFile(generatedFilePath, Marslogger.CreateLog(log).ToString());
                 processorResult.FilePaths.Add(logFilePath);
             }
-            model.SaveAs(generatedFilePath);
+            ToolboxFiles.Save(model, generatedFilePath);
             processorResult.FilePaths.Add(generatedFilePath);
             return processorResult;
         }

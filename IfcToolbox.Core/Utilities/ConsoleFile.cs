@@ -25,19 +25,19 @@ namespace IfcToolbox.Core.Utilities
 
         public static void CreateCopyIfcFile(string filePath, string outputFilePath)
         {
-            using (var model = IfcStore.Open(filePath))
+            using (var model = IfcToolbox.Core.Utilities.ToolboxFiles.Open(filePath))
             {
-                model.SaveAs(outputFilePath);
+                ToolboxFiles.Save(model, outputFilePath);
                 Marslogger.Action($"File Copied and Saved - {Path.GetFileName(outputFilePath)}");
             }
         }
 
         public static void CopyOriginalIfcFile(string filePath, string outputFilePath, string suffix = "_Original")
         {
-            using (var model = IfcStore.Open(filePath))
+            using (var model = IfcToolbox.Core.Utilities.ToolboxFiles.Open(filePath))
             {
                 outputFilePath = Path.Combine(Path.GetDirectoryName(outputFilePath), Path.GetFileNameWithoutExtension(filePath) + suffix + Path.GetExtension(filePath));
-                model.SaveAs(outputFilePath);
+                ToolboxFiles.Save(model, outputFilePath);
                 Marslogger.Action("Copied original file");
             }
         }

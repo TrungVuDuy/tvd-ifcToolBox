@@ -6,4 +6,18 @@
     <None Include="$(MSBuildThisFileDirectory)PACKAGE.md" Pack="true" PackagePath="\" Visible="false" />
   </ItemGroup>
 
+  <!--
+    The executables that are handed out (the desktop app, the command line tool) carry the
+    licence, the third-party notices and the licence texts beside them, as the GPL, the LGPL of
+    IfcConvert and the other licences require. Projects opt in with IfcToolboxShipsNotices.
+  -->
+  <ItemGroup Condition="'$(IfcToolboxShipsNotices)' == 'true'">
+    <None Include="$(MSBuildThisFileDirectory)LICENSE" Link="LICENSE.txt" Visible="false"
+          CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+    <None Include="$(MSBuildThisFileDirectory)THIRD-PARTY-NOTICES.md" Link="THIRD-PARTY-NOTICES.md" Visible="false"
+          CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+    <None Include="$(MSBuildThisFileDirectory)licenses\*" Link="licenses\%(Filename)%(Extension)" Visible="false"
+          CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
+  </ItemGroup>
+
 </Project>
