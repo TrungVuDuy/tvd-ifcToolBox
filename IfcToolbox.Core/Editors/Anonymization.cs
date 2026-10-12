@@ -72,12 +72,15 @@ namespace IfcToolbox.Core.Editors
         {
             foreach (var rule in rules)
             {
+                // An empty keyword would match everything, and string.Replace rejects it outright.
+                if (rule == null || string.IsNullOrEmpty(rule.Keyword) || string.IsNullOrEmpty(rule.ExpressTypeName))
+                    continue;
                 var typeProducts = model.Instances.OfType<IIfcProduct>()
                 .Where(x => !(x is IIfcSpatialStructureElement))
                 .Where(x => x.ExpressType.ExpressNameUpper == rule.ExpressTypeName.ToUpper());
                 if (!typeProducts.Any())
                     continue;
-                AnonymeProductInfo(typeProducts, rule.Keyword, rule.Replacement, inName, inObjectType, inTypeProps, inProductProps);
+                AnonymeProductInfo(typeProducts, rule.Keyword, rule.Replacement ?? string.Empty, inName, inObjectType, inTypeProps, inProductProps);
             }
         }
         private static void AnonymeProductInfo(IEnumerable<IIfcProduct> ifcProducts, string keyWord, string replacement,
@@ -96,7 +99,7 @@ namespace IfcToolbox.Core.Editors
                 if (inTypeProps)
                 {
                     var typeProps = PropertiesReader.GetTypeProperties(item)
-                        .Where(x => x.NominalValue.ToString().Contains(keyWord));
+                        .Where(x => x.NominalValue != null && x.NominalValue.ToString().Contains(keyWord));
                     foreach (var typeProp in typeProps)
                         PropertySingleValueReplace(typeProp, keyWord, replacement);
                 }
@@ -104,7 +107,7 @@ namespace IfcToolbox.Core.Editors
                 if (inProductProps)
                 {
                     var relatedProps = PropertiesReader.GetAllProperties(item).
-                        Where(x => x.NominalValue.ToString().Contains(keyWord));
+                        Where(x => x.NominalValue != null && x.NominalValue.ToString().Contains(keyWord));
                     foreach (var relatedProp in relatedProps)
                         PropertySingleValueReplace(relatedProp, keyWord, replacement);
                 }
@@ -112,10 +115,17 @@ namespace IfcToolbox.Core.Editors
         }
         private static void PropertySingleValueReplace(IIfcPropertySingleValue prop, string keyWord, string replacement)
         {
-            if (prop.NominalValue is IfcLabel)
-                prop.NominalValue = new IfcLabel(prop.NominalValue.ToString().Replace(keyWord, replacement));
-            else if (prop.NominalValue is IfcText)
-                prop.NominalValue = new IfcText(prop.NominalValue.ToString().Replace(keyWord, replacement));
+            // By name rather than "is IfcLabel": that class is IFC4 only, so IFC2X3 and IFC 4.3
+            // values were silently left alone. The interface setter converts to the model's schema.
+            switch (prop.NominalValue?.GetType().Name)
+            {
+                case "IfcLabel":
+                    prop.NominalValue = new IfcLabel(prop.NominalValue.ToString().Replace(keyWord, replacement));
+                    break;
+                case "IfcText":
+                    prop.NominalValue = new IfcText(prop.NominalValue.ToString().Replace(keyWord, replacement));
+                    break;
+            }
         }
         #endregion
     }

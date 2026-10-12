@@ -148,10 +148,7 @@ namespace IfcToolbox.Cli.Commands
         private static double DefaultScale(FileInfo modelFile)
         {
             using var ifcModel = IfcStore.Open(modelFile.FullName);
-            var length = ifcModel.Instances.OfType<IIfcUnitAssignment>().FirstOrDefault()?
-                .Units.OfType<IIfcNamedUnit>().FirstOrDefault(u => u.UnitType == IfcUnitEnum.LENGTHUNIT);
-            return length == null ? 1 : new IfcToolbox.Core.Ids.Validation.IdsUnitConverter(ifcModel)
-                .Convert(1, "IFCLENGTHMEASURE");
+            return MapConversionService.LengthUnitInMetres(ifcModel);
         }
     }
 }

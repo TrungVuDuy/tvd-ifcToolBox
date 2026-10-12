@@ -1,0 +1,139 @@
+<Page
+    x:Class="IfcToolbox.App.Views.AnonymizerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:IfcToolbox.App.Controls"
+    xmlns:models="using:IfcToolbox.App.Models">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ScrollViewer>
+            <StackPanel Padding="36,28,36,12" Spacing="12">
+                <controls:PageHeader x:Name="Header" Margin="0,0,0,4" />
+                <TextBlock x:Name="SummaryText" Style="{StaticResource SecondaryTextStyle}" Margin="0,0,0,8" />
+
+                <controls:Section Header="File to anonymize">
+                    <controls:FileDropZone x:Name="ModelZone" FilesChanged="OnModelChanged" />
+                </controls:Section>
+
+                <controls:Section Header="User and organisation information">
+                    <Border Style="{StaticResource CardStyle}">
+                        <StackPanel Spacing="6">
+                            <ToggleSwitch x:Name="UserSwitch" Header="Remove who made the model" IsOn="True" Toggled="OnOptionChanged"
+                                          AutomationProperties.Name="Remove who made the model" />
+                            <TextBlock Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap"
+                                       Text="Removes the owner history (who created or changed each object, with which application and when) and the ticked kinds of information." />
+                            <VariableSizedWrapGrid x:Name="UserOptions" Orientation="Horizontal" ItemWidth="300" Margin="0,4,0,0">
+                                <CheckBox x:Name="PersonCheck" Content="People (IfcPerson)" IsChecked="True" />
+                                <CheckBox x:Name="OrganizationCheck" Content="Organisations (IfcOrganization)" IsChecked="True" />
+                                <CheckBox x:Name="PersonAndOrganizationCheck" Content="People in organisations" IsChecked="True" />
+                                <CheckBox x:Name="ActorRoleCheck" Content="Roles (IfcActorRole)" IsChecked="True" />
+                                <CheckBox x:Name="PostalCheck" Content="Postal addresses" IsChecked="True" />
+                                <CheckBox x:Name="TelecomCheck" Content="Phone numbers and e-mail addresses" IsChecked="True" />
+                                <CheckBox x:Name="ApplicationCheck" Content="Authoring application" IsChecked="True" />
+                                <CheckBox x:Name="FileNameCheck" Content="File header: name, author, organisation, software, date" IsChecked="True" />
+                            </VariableSizedWrapGrid>
+                        </StackPanel>
+                    </Border>
+                </controls:Section>
+
+                <controls:Section Header="Advanced IfcProduct anonymization">
+                    <StackPanel Spacing="12">
+                        <Border Style="{StaticResource CardStyle}">
+                            <StackPanel Spacing="6">
+                                <ToggleSwitch x:Name="ProductSwitch" Header="Replace product names and brands" Toggled="OnOptionChanged"
+                                              AutomationProperties.Name="Replace product names and brands" />
+                                <TextBlock Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap"
+                                           Text="Replaces text such as a brand or a product name wherever it appears in products of a class: the name, the object type, and property values of the product and its type." />
+                                <StackPanel x:Name="ReplaceWhere" Orientation="Horizontal" Spacing="16">
+                                    <CheckBox x:Name="InNameCheck" Content="Name" IsChecked="True" />
+                                    <CheckBox x:Name="InObjectTypeCheck" Content="Object type" IsChecked="True" />
+                                    <CheckBox x:Name="InTypePropsCheck" Content="Type properties" IsChecked="True" />
+                                    <CheckBox x:Name="InProductPropsCheck" Content="Product properties" IsChecked="True" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <Grid x:Name="ProductPanel" ColumnSpacing="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="1.4*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Border Style="{StaticResource CardStyle}">
+                                <StackPanel Spacing="6">
+                                    <Border Style="{StaticResource CardTitleStyle}"><TextBlock Text="Object types in the model" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
+                                    <TextBlock x:Name="TypesHint" Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap" Text="Add a model to list its object types." />
+                                    <ProgressRing x:Name="TypesProgress" Width="20" Height="20" IsActive="False" HorizontalAlignment="Left" />
+                                    <TreeView x:Name="TypeTree" SelectionMode="Multiple" MaxHeight="420" AutomationProperties.Name="Object types" />
+                                    <Button x:Name="AddRulesButton" Click="OnAddRules" IsEnabled="False" AutomationProperties.Name="Add rules for the ticked object types">
+                                        <StackPanel Orientation="Horizontal" Spacing="8">
+                                            <FontIcon Glyph="&#xE710;" FontSize="12" />
+                                            <TextBlock Text="Add rules for the ticked object types" />
+                                        </StackPanel>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Column="1" Style="{StaticResource CardStyle}">
+                                <StackPanel Spacing="6">
+                                    <Grid>
+                                        <Border Style="{StaticResource CardTitleStyle}"><TextBlock Text="Replace rules" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
+                                        <HyperlinkButton x:Name="ClearRulesButton" Content="Clear" HorizontalAlignment="Right" Click="OnClearRules" IsEnabled="False" />
+                                    </Grid>
+                                    <TextBlock x:Name="RulesHint" Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap"
+                                               Text="Each rule replaces its text in products of its class. Edit the text to find or the replacement as needed." />
+                                    <Grid ColumnSpacing="8" Margin="0,4,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="110" />
+                                            <ColumnDefinition Width="2*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="32" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="Class" Style="{StaticResource SecondaryCaptionStyle}" />
+                                        <TextBlock Grid.Column="1" Text="Text to find" Style="{StaticResource SecondaryCaptionStyle}" />
+                                        <TextBlock Grid.Column="2" Text="Replace with" Style="{StaticResource SecondaryCaptionStyle}" />
+                                    </Grid>
+                                    <ItemsControl x:Name="RuleList">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate><StackPanel Spacing="4" /></ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="models:ReplaceRule">
+                                                <Grid ColumnSpacing="8">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="110" />
+                                                        <ColumnDefinition Width="2*" />
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="32" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Text="{x:Bind EntityType}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                                                    <TextBox Grid.Column="1" Text="{x:Bind Keyword, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutomationProperties.Name="Text to find" />
+                                                    <TextBox Grid.Column="2" Text="{x:Bind Replacement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutomationProperties.Name="Replace with" />
+                                                    <Button Grid.Column="3" Click="OnRemoveRule" Tag="{x:Bind}" Background="Transparent" BorderThickness="0" Padding="6"
+                                                            ToolTipService.ToolTip="Remove rule" AutomationProperties.Name="{x:Bind models:ImportedFile.Label('Remove rule', Keyword), Mode=OneWay}">
+                                                        <FontIcon Glyph="&#xE74D;" FontSize="12" />
+                                                    </Button>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                </controls:Section>
+
+                <controls:Section x:Name="OutputSection" Header="Anonymized file" Visibility="Collapsed">
+                    <controls:OutputFilesView x:Name="OutputView" />
+                </controls:Section>
+            </StackPanel>
+        </ScrollViewer>
+
+        <controls:RunBar x:Name="RunBar" Grid.Row="1" ActionText="Anonymize IFC" Run="OnAnonymize" />
+    </Grid>
+</Page>

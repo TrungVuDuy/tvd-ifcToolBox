@@ -1,4 +1,5 @@
-﻿using IfcToolbox.Core.Editors;
+using IfcToolbox.Core.Analyse;
+using IfcToolbox.Core.Editors;
 using IfcToolbox.Core.Utilities;
 using IfcToolbox.Tools.Configurations;
 using IfcToolbox.Tools.Processors;
@@ -71,6 +72,44 @@ namespace IfcToolbox.Tests
             Assert.True(!model.Instances.OfType<IIfcFurniture>().Where(x => x.Name.ToString().Contains("Furniture_Chair_Viper")).Any());
             Assert.True(!model.Instances.OfType<IIfcFurniture>().Where(x => x.Name.ToString().Contains("Chair - Dining")).Any());
             Assert.True(!model.Instances.OfType<IIfcFurniture>().Where(x => x.Name.ToString().Contains("Furniture_Table_Dining_w")).Any());
+        }
+
+        /// <summary>
+        /// Property values used to be replaced only in IFC4 models: the check was for the IFC4
+        /// IfcLabel class, which IFC2X3 and IFC 4.3 values are not.
+        /// </summary>
+        [Theory]
+        [InlineData(LocalFiles.Ifc2x3_Duplex_Architecture)]
+        [InlineData(LocalFiles.Ifc4_SampleHouse)]
+        [InlineData(LocalFiles.Ifc4x3_Building)]
+        public static void ReplacesPropertyValuesInEverySchema(string file)
+        {
+            using var model = IfcStore.Open(file);
+            // Any product with a label property to anonymize.
+            var (product, property) = model.Instances.OfType<IIfcProduct>()
+                .Where(p => !(p is IIfcSpatialStructureElement))
+                .SelectMany(p => PropertiesReader.GetAllProperties(p).Select(prop => (p, prop)))
+                .First(x => x.prop.NominalValue?.GetType().Name == "IfcLabel" && x.prop.NominalValue.ToString().Length > 3);
+            var keyword = property.NominalValue.ToString();
+
+            var config = ConfigFactory.CreateConfigAnonymize();
+            config.AnonymeProductInfo = true;
+            config.ReplaceAllInProductInfo();
+            // The empty rule must be ignored, not crash string.Replace.
+            config.Rules = new List<AnonymeRule>
+            {
+                new(product.ExpressType.Name, "", "Unknown"),
+                new(product.ExpressType.Name, keyword, "Unknown"),
+            };
+
+            using (var txn = model.BeginTransaction("Anonymize"))
+            {
+                AnonymizerProcessor.Anonymize(model, config);
+                txn.Commit();
+            }
+
+            Assert.Equal("Unknown", property.NominalValue.ToString());
+            Assert.Equal("IfcLabel", property.NominalValue.GetType().Name);
         }
     }
 }

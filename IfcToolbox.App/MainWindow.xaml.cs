@@ -77,7 +77,9 @@ namespace IfcToolbox.App
                 "validator" => (typeof(ValidatorPage), null),
                 "splitter" => (typeof(SplitterPage), null),
                 "converter" => (typeof(ConverterPage), null),
-                _ when tool != null => (typeof(ToolPage), tool),
+                "optimizer" => (typeof(OptimizerPage), null),
+                "relocator" => (typeof(RelocatorPage), null),
+                "anonymizer" => (typeof(AnonymizerPage), null),
                 _ => (typeof(ToolsPage), (object)null),
             };
             ContentFrame.Navigate(page, parameter, new SuppressNavigationTransitionInfo());

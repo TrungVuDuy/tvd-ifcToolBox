@@ -75,6 +75,18 @@ namespace IfcToolbox.Core.Geo
             return result;
         }
 
+        /// <summary>
+        /// One model length unit in metres, e.g. 0.001 for millimetres. That is what
+        /// IfcMapConversion.Scale has to be for the usual case of a projected CRS in metres.
+        /// 1 when the model declares no length unit.
+        /// </summary>
+        public static double LengthUnitInMetres(IModel model)
+        {
+            var length = model.Instances.OfType<IIfcUnitAssignment>().FirstOrDefault()?
+                .Units.OfType<IIfcNamedUnit>().FirstOrDefault(u => u.UnitType == IfcUnitEnum.LENGTHUNIT);
+            return length == null ? 1 : new Ids.Validation.IdsUnitConverter(model).Convert(1, "IFCLENGTHMEASURE");
+        }
+
         private static IIfcMapConversion FindMapConversion(IModel model)
         {
             var context = ModelContext(model);

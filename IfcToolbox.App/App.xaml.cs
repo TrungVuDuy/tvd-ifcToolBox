@@ -11,6 +11,23 @@ namespace IfcToolbox.App
         public App()
         {
             InitializeComponent();
+            UnhandledException += (_, e) => WriteCrashLog(e.Exception);
+        }
+
+        /// <summary>Where a crash is described, so a user can send it in.</summary>
+        public static string CrashLogPath => Path.Combine(AppSettings.Folder, "crash.log");
+
+        private static void WriteCrashLog(Exception exception)
+        {
+            try
+            {
+                Directory.CreateDirectory(AppSettings.Folder);
+                File.AppendAllText(CrashLogPath, $"{DateTime.Now:O} IFC Toolbox {typeof(App).Assembly.GetName().Version}{Environment.NewLine}{exception}{Environment.NewLine}{Environment.NewLine}");
+            }
+            catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
+            {
+                // Nothing more can be done while crashing.
+            }
         }
 
         public static MainWindow MainWindow { get; private set; }
@@ -21,9 +38,12 @@ namespace IfcToolbox.App
         /// <summary>IDS files to load into the validator, from --ids or .ids files opened with the app.</summary>
         public static List<string> StartupIds { get; } = new();
 
+        /// <summary>A model for the Relocator to align to, from --reference.</summary>
+        public static string StartupReference { get; set; }
+
         /// <summary>
         /// Command line:
-        ///   IfcToolbox.exe [model.ifc] [requirements.ids] [--ids file.ids] [--page tools|settings|about|validator|...] [--theme light|dark|system]
+        ///   IfcToolbox.exe [model.ifc] [requirements.ids] [--ids file.ids] [--reference other.ifc] [--page tools|settings|about|validator|...] [--theme light|dark|system]
         /// --theme applies to this run only; the saved setting is left alone.
         /// </summary>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
@@ -48,6 +68,10 @@ namespace IfcToolbox.App
                         break;
                     case "--import" when next != null:
                         StartupImport = next;
+                        i++;
+                        break;
+                    case "--reference" when next != null:
+                        StartupReference = next;
                         i++;
                         break;
                     case "--ids" when next != null:

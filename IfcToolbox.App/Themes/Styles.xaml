@@ -68,6 +68,20 @@
         </Setter>
     </Style>
 
+    <!-- A group of options, like "General" or "FPR Optimization" in the original app. -->
+    <Style x:Key="CardStyle" TargetType="Border">
+        <Setter Property="Background" Value="{ThemeResource CardBrush}" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="Padding" Value="16,14" />
+    </Style>
+    <!-- Card title with the red bar on its left. -->
+    <Style x:Key="CardTitleStyle" TargetType="Border">
+        <Setter Property="BorderBrush" Value="#94241E" />
+        <Setter Property="BorderThickness" Value="3,0,0,0" />
+        <Setter Property="Padding" Value="10,0,0,0" />
+        <Setter Property="Margin" Value="0,0,0,8" />
+    </Style>
+
     <!--
       Colours for text and icons made in code. A brush looked up in code follows the system
       theme, not the one picked in Settings; a style setter follows the element's theme.
