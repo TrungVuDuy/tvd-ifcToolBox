@@ -63,6 +63,9 @@ namespace IfcToolbox.App.Models
             };
         }
 
+        /// <summary>Screen reader name for a per-row button, e.g. "Remove House.ifc".</summary>
+        public static string Label(string action, string name) => $"{action} {name}";
+
         public static string FormatSize(long bytes)
         {
             string[] units = { "B", "KB", "MB", "GB" };

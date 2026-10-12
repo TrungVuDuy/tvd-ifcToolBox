@@ -30,6 +30,8 @@ namespace IfcToolbox.App
         {
             string page = null;
             var theme = AppSettings.Current.Theme;
+            if (!string.IsNullOrEmpty(AppSettings.Current.IfcConvertPath) && File.Exists(AppSettings.Current.IfcConvertPath))
+                IfcToolbox.Core.Convert.IfcConvert.ExecutablePathOverride = AppSettings.Current.IfcConvertPath;
             var arguments = Environment.GetCommandLineArgs();
             for (int i = 1; i < arguments.Length; i++)
             {

@@ -1,3 +1,4 @@
+using IfcToolbox.App.Controls;
 using IfcToolbox.App.Models;
 using IfcToolbox.App.Services;
 using IfcToolbox.Core.Bsdd;
@@ -38,7 +39,6 @@ namespace IfcToolbox.App.Views
         }
 
         private readonly List<ClassRequirement> _classes = new();
-        private CancellationTokenSource _run;
         private IList<IdsValidationResult> _results;
         private string _resultsModel;
         private bool _dictionariesRequested;
@@ -239,7 +239,7 @@ namespace IfcToolbox.App.Views
                 RequirementTree.SelectedNodes.Add(node);
             UpdateState();
             // The tree sits below the search results; show the user what was added.
-            RequirementTree.StartBringIntoView(new BringIntoViewOptions { VerticalAlignmentRatio = 0.1, AnimationDesired = true });
+            Ui.ScrollIntoView(RequirementTree, 0.1);
         }
 
         private static bool IsAttributes(string propertySet) =>
@@ -280,7 +280,7 @@ namespace IfcToolbox.App.Views
             if (path == null)
                 return;
             IdsWriter.Save(document, path);
-            StatusText.Text = $"Saved {Path.GetFileName(path)}. Open it with the IDS file option, or share it.";
+            RunBar.Status = $"Saved {Path.GetFileName(path)}. Open it with the IDS file option, or share it.";
         }
 
         #endregion
@@ -294,47 +294,45 @@ namespace IfcToolbox.App.Views
         /// <summary>Enables what can be used now and says what is still missing.</summary>
         private void UpdateState()
         {
-            if (RunButton == null)
+            if (RunBar == null)
                 return;
-            bool busy = _run != null;
             bool hasModel = ModelZone.Files.Count > 0;
             bool bsdd = BsddMode.IsChecked == true;
             bool hasRequirements = bsdd ? HasBsddSelection : IdsZone.Files.Count > 0;
 
-            RunButton.IsEnabled = !busy && hasModel && hasRequirements;
             SaveIdsButton.IsEnabled = HasBsddSelection;
             ClearClassesButton.IsEnabled = _classes.Count > 0;
             RequirementTree.Visibility = _classes.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
             NoClassesText.Visibility = _classes.Count > 0 ? Visibility.Collapsed : Visibility.Visible;
 
-            if (busy)
+            if (RunBar.IsBusy)
                 return;
-            StatusText.Text = !hasModel ? "Add the IFC model to validate."
+            RunBar.CanRun = hasModel && hasRequirements;
+            RunBar.Status = !hasModel ? "Add the IFC model to validate."
                 : !hasRequirements ? (bsdd ? "Pick at least one property from bSDD." : "Add an IDS file with the requirements.")
                 : string.Empty;
         }
 
-        private async void OnValidate(object sender, RoutedEventArgs e)
+        private async void OnValidate(object sender, EventArgs e)
         {
             var model = ModelZone.Files.FirstOrDefault()?.Path;
             if (model == null)
                 return;
-            RunError.IsOpen = false;
+            RunBar.ClearError();
 
             var unreadable = IdsZone.Files.FirstOrDefault(f => f.Problem != null);
             if (IdsMode.IsChecked == true && unreadable != null)
             {
-                ShowRunError("An IDS file cannot be read", $"{unreadable.Name}: {unreadable.Problem}");
+                RunBar.ShowError("An IDS file cannot be read", $"{unreadable.Name}: {unreadable.Problem}");
                 return;
             }
 
             var idsPaths = IdsZone.Files.Select(f => f.Path).ToList();
             var document = BsddMode.IsChecked == true ? BuildBsddDocument() : null;
 
-            _run = new CancellationTokenSource();
-            var token = _run.Token;
-            SetBusy(true, $"Validating {Path.GetFileName(model)}…");
+            var token = RunBar.Begin($"Validating {Path.GetFileName(model)}…");
             var watch = Stopwatch.StartNew();
+            string outcome = string.Empty;
             try
             {
                 IList<IdsValidationResult> results = document == null
@@ -346,49 +344,23 @@ namespace IfcToolbox.App.Views
                 ResultsView.Show(results);
                 ResultsSection.Visibility = Visibility.Visible;
                 ResultsSection.IsExpanded = true;
-                StatusText.Text = $"Checked in {watch.Elapsed.TotalSeconds:0.0} s.";
-                ResultsSection.StartBringIntoView(new BringIntoViewOptions { VerticalAlignmentRatio = 0, AnimationDesired = true });
+                outcome = $"Checked in {watch.Elapsed.TotalSeconds:0.0} s.";
+                Ui.ScrollIntoView(ResultsSection, 0);
             }
             catch (OperationCanceledException)
             {
-                StatusText.Text = "Validation cancelled.";
+                outcome = "Validation cancelled.";
             }
             catch (Exception ex)
             {
-                ShowRunError("Validation failed", ex.Message);
-                StatusText.Text = string.Empty;
+                RunBar.ShowError("Validation failed", ex.Message);
             }
             finally
             {
-                _run.Dispose();
-                _run = null;
-                SetBusy(false, null);
-            }
-        }
-
-        private void OnCancel(object sender, RoutedEventArgs e)
-        {
-            _run?.Cancel();
-            StatusText.Text = "Cancelling…";
-        }
-
-        private void SetBusy(bool busy, string status)
-        {
-            RunProgress.Visibility = busy ? Visibility.Visible : Visibility.Collapsed;
-            CancelButton.Visibility = busy ? Visibility.Visible : Visibility.Collapsed;
-            if (status != null)
-                StatusText.Text = status;
-            if (!busy)
-            {
-                var keep = StatusText.Text;
+                RunBar.End(outcome);
                 UpdateState();
-                // UpdateState would replace the outcome with a hint; keep the outcome.
-                if (!string.IsNullOrEmpty(keep))
-                    StatusText.Text = keep;
-            }
-            else
-            {
-                RunButton.IsEnabled = false;
+                if (!string.IsNullOrEmpty(outcome))
+                    RunBar.Status = outcome;
             }
         }
 
@@ -412,11 +384,11 @@ namespace IfcToolbox.App.Views
             try
             {
                 await File.WriteAllTextAsync(path, render(), Encoding.UTF8);
-                StatusText.Text = $"Report saved to {path}.";
+                RunBar.Status = $"Report saved to {path}.";
             }
             catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
             {
-                ShowRunError("The report could not be saved", ex.Message);
+                RunBar.ShowError("The report could not be saved", ex.Message);
             }
         }
 
@@ -432,13 +404,6 @@ namespace IfcToolbox.App.Views
                 ? "The request timed out. Check the internet connection and try again."
                 : e.Message;
             BsddError.IsOpen = true;
-        }
-
-        private void ShowRunError(string title, string message)
-        {
-            RunError.Title = title;
-            RunError.Message = message;
-            RunError.IsOpen = true;
         }
     }
 }

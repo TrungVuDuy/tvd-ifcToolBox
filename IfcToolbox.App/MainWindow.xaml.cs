@@ -75,6 +75,8 @@ namespace IfcToolbox.App
                 "settings" => (typeof(SettingsPage), null),
                 "about" => (typeof(AboutPage), null),
                 "validator" => (typeof(ValidatorPage), null),
+                "splitter" => (typeof(SplitterPage), null),
+                "converter" => (typeof(ConverterPage), null),
                 _ when tool != null => (typeof(ToolPage), tool),
                 _ => (typeof(ToolsPage), (object)null),
             };

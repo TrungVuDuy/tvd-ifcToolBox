@@ -41,8 +41,11 @@ namespace IfcToolbox.Tools.Processors
                     IfcConvert.EnsureExecutable();
 
                 string targetFilePath = Path.ChangeExtension(filePath, ConvertFormatInfo.GetExtension(config.TargetFormat));
-                string logFilePath = Path.ChangeExtension(filePath, ".txt");
-                // Log file need clean up each time.
+                // "model.log.txt", as the command line tool writes. This used to be "model.txt",
+                // which the clean up below then deleted: a user's own notes next to the model
+                // were lost on every conversion.
+                string logFilePath = Path.ChangeExtension(filePath, ".log.txt");
+                // A previous run's log would otherwise be appended to.
                 if (File.Exists(logFilePath))
                     File.Delete(logFilePath);
                 var finalFiles = IfcConvert.Convert(filePath, targetFilePath, config.ConvertOptions, config.TargetFormat, logFilePath, consoleMode, config.ExternalWorkingDirectory);

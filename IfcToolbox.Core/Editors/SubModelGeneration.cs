@@ -66,6 +66,8 @@ namespace IfcToolbox.Core.Editors
                         true, buildings[j].Name, buildings.Count() > 1, j, parentPlaceholder);
                     var generatedFilePath = ConsoleFile.AddSuffixToName(sourceFilePath, suffix);
                     var requiredProducts = ProductAnalyse.PrepareRequiredProducts(model, buildingStoreys[i]);
+                    if (requiredProducts.Count == 0)
+                        continue;
                     InsertCopy.CopyProducts(model, generatedFilePath, requiredProducts, keepLable);
                     newPaths.Add(generatedFilePath);
                 }
@@ -128,7 +130,8 @@ namespace IfcToolbox.Core.Editors
         }
 
         /// <summary>
-        /// Sub method for IfcBuilding, IfcSite and the IFC 4.3 facilities.
+        /// Sub method for IfcBuilding, IfcSite and the IFC 4.3 facilities. Elements that contain
+        /// nothing are skipped, so fewer paths than roots can come back.
         /// </summary>
         private static List<string> SplitByIfcRoot(IfcStore model, bool keepLable, string sourceFilePath, IList<IIfcRoot> roots, string placeholder)
         {
@@ -138,6 +141,11 @@ namespace IfcToolbox.Core.Editors
                 var suffix = ConsoleFile.CreateIndexedSuffix(roots[i].Name, roots.Count() > 1, i, placeholder);
                 var generatedFilePath = ConsoleFile.AddSuffixToName(sourceFilePath, suffix);
                 var requiredProducts = ProductAnalyse.PrepareRequiredProducts(model, roots[i]);
+                // Nothing is contained in it (an empty shoulder, a site with no elements): the copy
+                // would be a file with an empty DATA section, not even the project. Leave it out;
+                // the caller sees it missing from the returned paths.
+                if (requiredProducts.Count == 0)
+                    continue;
                 InsertCopy.CopyProducts(model, generatedFilePath, requiredProducts, keepLable);
                 newPaths.Add(generatedFilePath);
             }

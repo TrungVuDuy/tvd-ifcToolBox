@@ -147,20 +147,6 @@
             </StackPanel>
         </ScrollViewer>
 
-        <Grid Grid.Row="1" Margin="36,0,36,24" ColumnSpacing="12">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <StackPanel VerticalAlignment="Center" Spacing="4">
-                <InfoBar x:Name="RunError" Severity="Error" IsOpen="False" />
-                <TextBlock x:Name="StatusText" Style="{StaticResource SecondaryTextStyle}" />
-                <ProgressBar x:Name="RunProgress" IsIndeterminate="True" Visibility="Collapsed" />
-            </StackPanel>
-            <Button x:Name="CancelButton" Grid.Column="1" Content="Cancel" Click="OnCancel" Visibility="Collapsed" VerticalAlignment="Bottom" />
-            <Button x:Name="RunButton" Grid.Column="2" Content="Validate IFC" Padding="28,8" VerticalAlignment="Bottom"
-                    Style="{StaticResource AccentButtonStyle}" IsEnabled="False" Click="OnValidate" />
-        </Grid>
+        <controls:RunBar x:Name="RunBar" Grid.Row="1" ActionText="Validate IFC" Run="OnValidate" />
     </Grid>
 </Page>

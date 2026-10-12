@@ -1,10 +1,12 @@
 using IfcToolbox.App.Models;
 using IfcToolbox.App.Services;
+using IfcToolbox.Core.Convert;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace IfcToolbox.App.Views
 {
@@ -40,6 +42,53 @@ namespace IfcToolbox.App.Views
             _loading = false;
 
             ShowCacheSize();
+            _ = ShowIfcConvertAsync();
+        }
+
+        private async Task ShowIfcConvertAsync()
+        {
+            bool custom = !string.IsNullOrEmpty(IfcConvert.ExecutablePathOverride);
+            BundledIfcConvertButton.IsEnabled = custom;
+            IfcConvertText.Text = "Checking the IfcConvert version…";
+            // Starts IfcConvert to ask its version, so off the UI thread.
+            var (path, version) = await Task.Run(() =>
+            {
+                var executable = IfcConvert.ResolveExecutable();
+                return (executable, IfcConvert.GetVersion(executable));
+            });
+            IfcConvertText.Text = custom
+                ? $"In use: IfcConvert {version} at {path}"
+                : $"In use: the bundled IfcConvert {version}";
+        }
+
+        private async void OnPickIfcConvert(object sender, RoutedEventArgs e)
+        {
+            IfcConvertError.IsOpen = false;
+            var path = await Pickers.OpenFileAsync(".exe");
+            if (path == null)
+                return;
+
+            var version = await Task.Run(() => IfcConvert.GetVersion(path));
+            if (version.IsUnknown)
+            {
+                IfcConvertError.Message = $"{Path.GetFileName(path)} did not report an IfcConvert version.";
+                IfcConvertError.IsOpen = true;
+                return;
+            }
+
+            IfcConvert.ExecutablePathOverride = path;
+            AppSettings.Current.IfcConvertPath = path;
+            AppSettings.Current.Save();
+            await ShowIfcConvertAsync();
+        }
+
+        private async void OnBundledIfcConvert(object sender, RoutedEventArgs e)
+        {
+            IfcConvertError.IsOpen = false;
+            IfcConvert.ExecutablePathOverride = null;
+            AppSettings.Current.IfcConvertPath = null;
+            AppSettings.Current.Save();
+            await ShowIfcConvertAsync();
         }
 
         private void OnThemeChanged(object sender, SelectionChangedEventArgs e)

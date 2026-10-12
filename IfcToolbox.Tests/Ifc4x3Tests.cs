@@ -202,6 +202,26 @@ namespace IfcToolbox.Tests
         }
 
         [Fact]
+        public void SplitSkipsAFacilityPartThatContainsNothing()
+        {
+            // The sample's shoulders are bare IfcRoadParts. They used to come out as a file
+            // with an empty DATA section.
+            var source = Copy(LocalFiles.Ifc4x3_Road, "emptypart");
+            using var model = IfcStore.Open(source);
+            var parts = Facilities.AllFacilityParts(model).ToList();
+            var empty = parts.First(p => !ElementsUnder(p).Any());
+            var carriageway = parts.First(p => Facilities.UsageOf(p) == "CARRIAGEWAY");
+
+            var config = ConfigFactory.CreateConfigSplit();
+            config.SplitStrategy = SplitStrategy.ByFacilityPart;
+            config.SelectedItems = new List<string> { empty.EntityLabel.ToString(), carriageway.EntityLabel.ToString() };
+            var output = Assert.Single(SplitterProcessor.Split(model, config, source));
+
+            using var result = OpenOutput(output);
+            Assert.NotEmpty(result.Instances.OfType<IIfcElement>());
+        }
+
+        [Fact]
         public void FacilityTreesAreOfferedOnlyForIfc4x3()
         {
             using (var road = IfcStore.Open(LocalFiles.Ifc4x3_Road))

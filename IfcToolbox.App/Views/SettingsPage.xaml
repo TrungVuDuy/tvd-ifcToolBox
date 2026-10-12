@@ -25,6 +25,19 @@
                 </StackPanel>
             </controls:Section>
 
+            <controls:Section Header="IfcConvert">
+                <StackPanel Spacing="8">
+                    <TextBlock Style="{StaticResource SecondaryTextStyle}"
+                               Text="The IFC Converter runs IfcOpenShell's IfcConvert. The bundled version 0.6 cannot read IFC 4.3 models or write xeokit JSON, Turtle and HDF5; pick a newer IfcConvert (0.8 or later) to get them." />
+                    <TextBlock x:Name="IfcConvertText" TextWrapping="Wrap" IsTextSelectionEnabled="True" />
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Button Content="Use another IfcConvert…" Click="OnPickIfcConvert" />
+                        <Button x:Name="BundledIfcConvertButton" Content="Use the bundled one" Click="OnBundledIfcConvert" />
+                    </StackPanel>
+                    <InfoBar x:Name="IfcConvertError" Severity="Error" IsOpen="False" Title="That file is not a usable IfcConvert" />
+                </StackPanel>
+            </controls:Section>
+
             <controls:Section Header="Storage">
                 <StackPanel Orientation="Horizontal" Spacing="16">
                     <Button x:Name="ClearCacheButton" Content="Clear cache files" Click="OnClearCache" />

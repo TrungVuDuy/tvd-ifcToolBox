@@ -253,5 +253,25 @@ namespace IfcToolbox.Tests
             Assert.DoesNotContain("--auto-section", forObj); // SVG only
             Assert.DoesNotContain("--y-up", forGlb);
         }
+
+        [Fact]
+        public static void ProcessorLeavesTheUsersTextFileAlone()
+        {
+            // The processor used to log to model.txt and delete it first.
+            var folder = Path.Combine(LocalFiles.TestOutputFolder, "ProcessorLog");
+            Directory.CreateDirectory(folder);
+            var model = Path.Combine(folder, "House.ifc");
+            File.Copy(LocalFiles.Ifc4_SampleHouse, model, overwrite: true);
+            var notes = Path.ChangeExtension(model, ".txt");
+            File.WriteAllText(notes, "my notes");
+
+            var config = IfcToolbox.Tools.Configurations.ConfigFactory.CreateConfigConvert(new ConvertOptionsWrap(), ConvertTargetFormat.GLB);
+            var result = IfcToolbox.Tools.Processors.ConverterProcessor.Process(model, config);
+
+            Assert.True(result.Success);
+            Assert.Contains(Path.ChangeExtension(model, ".glb"), result.FilePaths);
+            Assert.Equal("my notes", File.ReadAllText(notes));
+            Assert.DoesNotContain(notes, result.FilePaths);
+        }
     }
 }

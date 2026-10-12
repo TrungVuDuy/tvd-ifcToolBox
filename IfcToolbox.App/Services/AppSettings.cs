@@ -29,6 +29,12 @@ namespace IfcToolbox.App.Services
         /// <summary>BCP 47 tag, e.g. "en-US". Only used when <see cref="UseCustomLanguage"/> is on.</summary>
         public string Language { get; set; } = "en-US";
 
+        /// <summary>
+        /// An IfcConvert executable to use instead of the bundled 0.6, which cannot read IFC 4.3
+        /// models or write xeokit JSON, Turtle or HDF5. Null for the bundled one.
+        /// </summary>
+        public string IfcConvertPath { get; set; }
+
         public static string Folder { get; } =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "IfcToolbox");
 

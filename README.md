@@ -135,7 +135,7 @@ IFC Toolbox GUI App is a free software, if you like it, please consider:
 - IfcToolbox.Core - Lower extension for IFC processing.
 - IfcToolbox.Tools - Higher implementation for each tool in IfcToolbox. 
 - IfcToolbox.Cli - The `ifctoolbox` command line tool.
-- IfcToolbox.App - A new WinUI 3 desktop app, rebuilt because the original app's source was never published. Work in progress: the shell, settings, file import and the IFC Validator (IDS files or bSDD, with CSV and text reports) are done; the other tool pages are wired up stage by stage.
+- IfcToolbox.App - A new WinUI 3 desktop app, rebuilt because the original app's source was never published. Work in progress: the shell, settings and file import are done, as are the IFC Validator (IDS files or bSDD, with CSV and text reports), the IFC Splitter (including IFC 4.3 facilities and facility parts) and the IFC Converter (with a setting to use a newer IfcConvert for IFC 4.3); the Optimizer, Relocator and Anonymizer pages come next.
 - IfcToolbox.IfcConvert - Packaging only: carries the IfcConvert executable for the NuGet packages.
 - IfcToolbox.Tests - Unit tests with xUnit for Core, Tools and the CLI.
 - IfcToolbox.Examples - .Net core console app for tools example.

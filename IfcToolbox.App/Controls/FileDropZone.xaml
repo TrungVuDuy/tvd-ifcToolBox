@@ -85,7 +85,7 @@
                         <TextBlock Grid.Column="3" VerticalAlignment="Center" Text="{x:Bind Modified}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                         <TextBlock Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Right" Text="{x:Bind Size}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                         <Button Grid.Column="5" Click="OnRemoveFile" Tag="{x:Bind}" Background="Transparent" BorderThickness="0"
-                                ToolTipService.ToolTip="Remove" AutomationProperties.Name="Remove">
+                                ToolTipService.ToolTip="Remove" AutomationProperties.Name="{x:Bind models:ImportedFile.Label('Remove', Name)}">
                             <FontIcon Glyph="{StaticResource GlyphDelete}" FontSize="14" />
                         </Button>
                     </Grid>
