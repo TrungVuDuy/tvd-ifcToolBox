@@ -19,7 +19,7 @@
   </a>
 </p>
 
-> **About this repository.** This is a modified continuation of [IfcToolbox](https://github.com/youshengCode/IfcToolbox) by Yousheng Wang, which is no longer maintained upstream. It was imported from upstream version 1.2.1 and modified from September 2026 onwards: moved to .NET 8 and xbim 6, added IDS 1.0 validation, IFC 4.3 support, glTF output, a rewritten bSDD client and the `ifctoolbox` command line tool. The git history records every change. The Microsoft Store app, its releases and the badges above belong to the original project; this repository does not publish the desktop app.
+> **About this repository.** This is a modified continuation of [IfcToolbox](https://github.com/youshengCode/IfcToolbox) by Yousheng Wang, which is no longer maintained upstream. It was imported from upstream version 1.2.1 and modified from September 2026 onwards: moved to .NET 8 and xbim 6, added IDS 1.0 validation, IFC 4.3 support, glTF output, a rewritten bSDD client and the `ifctoolbox` command line tool. The git history records every change. The Microsoft Store app, its releases and the badges above belong to the original project. This repository rebuilds the desktop app from scratch in WinUI 3 (`IfcToolbox.App`, work in progress) and does not publish to the Store.
 
 
 
@@ -135,6 +135,7 @@ IFC Toolbox GUI App is a free software, if you like it, please consider:
 - IfcToolbox.Core - Lower extension for IFC processing.
 - IfcToolbox.Tools - Higher implementation for each tool in IfcToolbox. 
 - IfcToolbox.Cli - The `ifctoolbox` command line tool.
+- IfcToolbox.App - A new WinUI 3 desktop app, rebuilt because the original app's source was never published. Work in progress: the shell, settings and file import are done; the tool pages are wired up stage by stage.
 - IfcToolbox.IfcConvert - Packaging only: carries the IfcConvert executable for the NuGet packages.
 - IfcToolbox.Tests - Unit tests with xUnit for Core, Tools and the CLI.
 - IfcToolbox.Examples - .Net core console app for tools example.
@@ -143,6 +144,12 @@ Local builds embed IfcConvert in IfcToolbox.Core, as the desktop app expects. Th
 
 ```
 dotnet pack IfcToolbox.sln -c Release -p:IfcToolboxEmbedIfcConvert=false -o artifacts
+```
+
+The desktop app publishes self-contained to a folder with `IfcToolbox.exe`, which runs without installing anything:
+
+```
+dotnet publish IfcToolbox.App -c Release -p:DebugType=none -o publish/IfcToolbox-app-win-x64
 ```
 
 [Documentation of IFC Toolbox](https://youshengcode.github.io/IfcToolbox.Doc/#/)

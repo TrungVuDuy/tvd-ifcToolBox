@@ -1,0 +1,75 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--
+      Colours of the original IFC Toolbox, sampled from its screenshots: a dark red accent on
+      a light grey (or near black) surface, with darker bars as section headers.
+    -->
+
+    <!-- The system accent drives the selection indicator, radio buttons, toggles and links. -->
+    <Color x:Key="SystemAccentColor">#A43F39</Color>
+    <Color x:Key="SystemAccentColorDark1">#94241E</Color>
+    <Color x:Key="SystemAccentColorDark2">#7A1D18</Color>
+    <Color x:Key="SystemAccentColorDark3">#5E1612</Color>
+    <Color x:Key="SystemAccentColorLight1">#B8564F</Color>
+    <Color x:Key="SystemAccentColorLight2">#D07A73</Color>
+    <Color x:Key="SystemAccentColorLight3">#E29E99</Color>
+
+    <!-- Tile behind the page header icons, the same in both themes as in the original. -->
+    <SolidColorBrush x:Key="HeaderTileBrush" Color="#94241E" />
+
+    <!-- Fluent icon font glyphs used across the app. -->
+    <x:String x:Key="GlyphAdd">&#xE710;</x:String>
+    <x:String x:Key="GlyphDelete">&#xE74D;</x:String>
+    <x:String x:Key="GlyphDocument">&#xE8A5;</x:String>
+    <x:String x:Key="GlyphReset">&#xE72C;</x:String>
+
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Light">
+            <SolidColorBrush x:Key="NavigationViewContentBackground" Color="#ECECEC" />
+            <SolidColorBrush x:Key="SectionHeaderBrush" Color="#D6D6D6" />
+            <SolidColorBrush x:Key="DropZoneBrush" Color="#EAEAEA" />
+            <SolidColorBrush x:Key="DropZoneHoverBrush" Color="#E0E0E0" />
+            <SolidColorBrush x:Key="DropZoneStrokeBrush" Color="#8A8A8A" />
+            <SolidColorBrush x:Key="FileRowBrush" Color="#F6F6F6" />
+            <SolidColorBrush x:Key="CardBrush" Color="#F6F6F6" />
+            <SolidColorBrush x:Key="SchemaBadgeBrush" Color="#E3C9C7" />
+            <SolidColorBrush x:Key="SchemaBadgeForegroundBrush" Color="#7A1D18" />
+            <SolidColorBrush x:Key="AccentButtonBackground" Color="#A43F39" />
+            <SolidColorBrush x:Key="AccentButtonBackgroundPointerOver" Color="#B24A43" />
+            <SolidColorBrush x:Key="AccentButtonBackgroundPressed" Color="#94241E" />
+            <SolidColorBrush x:Key="AccentButtonForeground" Color="White" />
+            <SolidColorBrush x:Key="AccentButtonForegroundPointerOver" Color="White" />
+            <SolidColorBrush x:Key="AccentButtonForegroundPressed" Color="#EEEEEE" />
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Dark">
+            <SolidColorBrush x:Key="NavigationViewContentBackground" Color="#212121" />
+            <SolidColorBrush x:Key="SectionHeaderBrush" Color="#2A2A2A" />
+            <SolidColorBrush x:Key="DropZoneBrush" Color="#1C1C1C" />
+            <SolidColorBrush x:Key="DropZoneHoverBrush" Color="#262626" />
+            <SolidColorBrush x:Key="DropZoneStrokeBrush" Color="#7A7A7A" />
+            <SolidColorBrush x:Key="FileRowBrush" Color="#2A2A2A" />
+            <SolidColorBrush x:Key="CardBrush" Color="#2A2A2A" />
+            <SolidColorBrush x:Key="SchemaBadgeBrush" Color="#4A2220" />
+            <SolidColorBrush x:Key="SchemaBadgeForegroundBrush" Color="#F0C4C0" />
+            <SolidColorBrush x:Key="AccentButtonBackground" Color="#94241E" />
+            <SolidColorBrush x:Key="AccentButtonBackgroundPointerOver" Color="#A43F39" />
+            <SolidColorBrush x:Key="AccentButtonBackgroundPressed" Color="#7A1D18" />
+            <SolidColorBrush x:Key="AccentButtonForeground" Color="White" />
+            <SolidColorBrush x:Key="AccentButtonForegroundPointerOver" Color="White" />
+            <SolidColorBrush x:Key="AccentButtonForegroundPressed" Color="#EEEEEE" />
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="HighContrast">
+            <SolidColorBrush x:Key="SectionHeaderBrush" Color="{ThemeResource SystemColorButtonFaceColor}" />
+            <SolidColorBrush x:Key="DropZoneBrush" Color="{ThemeResource SystemColorWindowColor}" />
+            <SolidColorBrush x:Key="DropZoneHoverBrush" Color="{ThemeResource SystemColorWindowColor}" />
+            <SolidColorBrush x:Key="DropZoneStrokeBrush" Color="{ThemeResource SystemColorWindowTextColor}" />
+            <SolidColorBrush x:Key="FileRowBrush" Color="{ThemeResource SystemColorWindowColor}" />
+            <SolidColorBrush x:Key="CardBrush" Color="{ThemeResource SystemColorWindowColor}" />
+            <SolidColorBrush x:Key="SchemaBadgeBrush" Color="{ThemeResource SystemColorWindowColor}" />
+            <SolidColorBrush x:Key="SchemaBadgeForegroundBrush" Color="{ThemeResource SystemColorWindowTextColor}" />
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+
+</ResourceDictionary>

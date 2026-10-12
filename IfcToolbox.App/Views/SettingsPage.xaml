@@ -1,0 +1,43 @@
+<Page
+    x:Class="IfcToolbox.App.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:IfcToolbox.App.Controls">
+
+    <ScrollViewer>
+        <StackPanel Padding="36,28" Spacing="12">
+            <controls:PageHeader Title="Settings" Glyph="&#xE713;" TileBrush="{StaticResource HeaderTileBrush}" Margin="0,0,0,12" />
+
+            <controls:Section Header="Themes">
+                <RadioButtons x:Name="ThemeChoice" SelectionChanged="OnThemeChanged">
+                    <x:String>Light</x:String>
+                    <x:String>Dark</x:String>
+                    <x:String>System default</x:String>
+                </RadioButtons>
+            </controls:Section>
+
+            <controls:Section Header="Languages">
+                <StackPanel Spacing="8">
+                    <ToggleSwitch x:Name="CustomLanguageSwitch" Header="Use Custom Language" Toggled="OnCustomLanguageToggled" />
+                    <ComboBox x:Name="LanguageChoice" MinWidth="240" SelectionChanged="OnLanguageChanged" />
+                    <TextBlock x:Name="LanguageNote" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               Text="Restart is required. The interface is in English only for now; translations follow in a later stage." TextWrapping="Wrap" />
+                </StackPanel>
+            </controls:Section>
+
+            <controls:Section Header="Storage">
+                <StackPanel Orientation="Horizontal" Spacing="16">
+                    <Button x:Name="ClearCacheButton" Content="Clear cache files" Click="OnClearCache" />
+                    <TextBlock x:Name="CacheText" VerticalAlignment="Center" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                </StackPanel>
+            </controls:Section>
+
+            <controls:Section Header="Help">
+                <StackPanel HorizontalAlignment="Left">
+                    <HyperlinkButton Content="Help documents" NavigateUri="https://youshengcode.github.io/IfcToolbox.Doc/#/" />
+                    <HyperlinkButton x:Name="SettingsFolderLink" Content="Open the settings folder" Click="OnOpenSettingsFolder" />
+                </StackPanel>
+            </controls:Section>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

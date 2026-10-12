@@ -1,0 +1,37 @@
+<Page
+    x:Class="IfcToolbox.App.Views.ToolPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:IfcToolbox.App.Controls">
+
+    <!-- Shared shell of a tool page: header, input files, options, and the run button bottom right. -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ScrollViewer>
+            <StackPanel Padding="36,28,36,12" Spacing="12">
+                <controls:PageHeader x:Name="Header" Margin="0,0,0,4" />
+                <TextBlock x:Name="SummaryText" TextWrapping="Wrap" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,8" />
+
+                <controls:Section x:Name="InputSection" Header="File to process">
+                    <controls:FileDropZone x:Name="DropZone" />
+                </controls:Section>
+
+                <controls:Section Header="Options">
+                    <InfoBar x:Name="PendingInfo" IsOpen="True" IsClosable="False" Severity="Informational" />
+                </controls:Section>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Button x:Name="RunButton"
+                Grid.Row="1"
+                Margin="36,0,36,24"
+                Padding="28,8"
+                HorizontalAlignment="Right"
+                Style="{StaticResource AccentButtonStyle}"
+                IsEnabled="False" />
+    </Grid>
+</Page>
