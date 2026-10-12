@@ -24,6 +24,10 @@ namespace IfcToolbox.Cli.Commands
             {
                 Description = "Copy elements whose GlobalId came in from an earlier file again, with a new GlobalId, instead of once.",
             };
+            var noUnits = new Option<bool>("--no-unit-conversion")
+            {
+                Description = "Refuse files in another length unit instead of converting them to the first file's.",
+            };
             var json = CommandHelpers.JsonOption();
 
             var command = new Command("combine",
@@ -32,6 +36,7 @@ namespace IfcToolbox.Cli.Commands
             command.Options.Add(output);
             command.Options.Add(noNames);
             command.Options.Add(keepDuplicates);
+            command.Options.Add(noUnits);
             command.Options.Add(json);
 
             command.SetAction(result =>
@@ -49,6 +54,7 @@ namespace IfcToolbox.Cli.Commands
                     {
                         MergeSpatialByName = !result.GetValue(noNames),
                         SkipDuplicateElements = !result.GetValue(keepDuplicates),
+                        ConvertUnits = !result.GetValue(noUnits),
                     });
                 }
                 catch (CombineException e)
@@ -68,6 +74,7 @@ namespace IfcToolbox.Cli.Commands
                         spatialMerged = combined.SpatialMerged,
                         spatialKeptApart = combined.SpatialKeptApart,
                         typesMerged = combined.TypesMerged,
+                        unitsConverted = combined.UnitsConverted,
                         renewedByClass = combined.RenewedByClass,
                         globalIdsRenewed = combined.GlobalIdsRenewed,
                         warnings = combined.Warnings,
@@ -78,6 +85,8 @@ namespace IfcToolbox.Cli.Commands
                 writer.WriteLine(combined.OutputPath);
                 writer.WriteLine($"{combined.ElementsCopied} elements from {files.Length} files" +
                                  (combined.ElementsSkipped > 0 ? $"; {combined.ElementsSkipped} already in an earlier file were copied once ({string.Join(", ", combined.SkippedByClass.Select(c => $"{c.Key} {c.Value}"))})" : "") + ".");
+                foreach (var converted in combined.UnitsConverted)
+                    writer.WriteLine("lengths converted: " + converted);
                 if (combined.SpatialMerged.Count > 0)
                     writer.WriteLine("merged: " + string.Join(", ", combined.SpatialMerged));
                 if (combined.SpatialKeptApart.Count > 0)

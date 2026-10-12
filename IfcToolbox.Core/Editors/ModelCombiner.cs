@@ -26,6 +26,12 @@ namespace IfcToolbox.Core.Editors
         /// copied once. Off: it is copied again and given a new GlobalId.
         /// </summary>
         public bool SkipDuplicateElements { get; set; } = true;
+
+        /// <summary>
+        /// Convert the lengths of a file in another unit to the first file's (millimetres, centimetres
+        /// or metres) before copying it. Off: such files are refused.
+        /// </summary>
+        public bool ConvertUnits { get; set; } = true;
     }
 
     /// <summary>What happened while combining, for a report.</summary>
@@ -42,6 +48,8 @@ namespace IfcToolbox.Core.Editors
         public IList<string> SpatialKeptApart { get; } = new List<string>();
         /// <summary>Type objects found in several files, now one: "IfcWallType 'Basic Wall:Generic'".</summary>
         public IList<string> TypesMerged { get; } = new List<string>();
+        /// <summary>"mep.ifc: metres to millimetres", per file whose lengths were converted.</summary>
+        public IList<string> UnitsConverted { get; } = new List<string>();
         public int GlobalIdsRenewed { get; set; }
         /// <summary>The renewed GlobalIds by class, e.g. IfcPropertySet: 4.</summary>
         public IDictionary<string, int> RenewedByClass { get; } = new SortedDictionary<string, int>(StringComparer.Ordinal);
@@ -65,8 +73,8 @@ namespace IfcToolbox.Core.Editors
     /// geometry moves. Anything still sharing a GlobalId at the end gets a new one.
     /// </para>
     /// <para>
-    /// The files must share the schema and the length unit: mixing them would need a schema
-    /// conversion or rescaling every coordinate, which this does not attempt.
+    /// The files must share the schema. A file in another length unit is converted to the first
+    /// file's unit in memory, with <see cref="LengthUnitConverter"/>, unless that is switched off.
     /// </para>
     /// </summary>
     public static class ModelCombiner
@@ -108,8 +116,21 @@ namespace IfcToolbox.Core.Editors
                     }
                     else if (Math.Abs(sourceUnit - unit) > unit * 1e-9)
                     {
-                        throw new CombineException($"{Path.GetFileName(path)} measures lengths in {UnitName(sourceUnit)}, {Path.GetFileName(sourcePaths[0])} in {UnitName(unit)}. " +
-                                                   "Only files with the same length unit can be combined.");
+                        var baseUnit = LengthUnitConverter.Units.FirstOrDefault(u => Math.Abs(u.Value.Metres - unit) < unit * 1e-9).Key;
+                        if (!options.ConvertUnits || baseUnit == null)
+                        {
+                            throw new CombineException($"{Path.GetFileName(path)} measures lengths in {UnitName(sourceUnit)}, {Path.GetFileName(sourcePaths[0])} in {UnitName(unit)}. " +
+                                                       (baseUnit == null
+                                                           ? "Lengths can only be converted to millimetres, centimetres or metres; put a file in one of those first."
+                                                           : "Only files with the same length unit can be combined, unless their lengths are converted."));
+                        }
+                        // In memory only: the source file itself is not touched.
+                        using (var txn = source.BeginTransaction("Convert length unit"))
+                        {
+                            LengthUnitConverter.Convert(source, baseUnit);
+                            txn.Commit();
+                        }
+                        result.UnitsConverted.Add($"{Path.GetFileName(path)}: {UnitName(sourceUnit)} to {UnitName(unit)}");
                     }
 
                     var products = source.Instances.OfType<IIfcProduct>().ToList();
@@ -452,13 +473,22 @@ namespace IfcToolbox.Core.Editors
             return GeoFactory.CreateGeoPlacement(a).Equals(GeoFactory.CreateGeoPlacement(b));
         }
 
+        /// <summary>
+        /// Same horizontal direction, length and z aside. A missing true north is the default, +y,
+        /// so a file that omits it agrees with one that writes (0, 1).
+        /// </summary>
         private static bool SameDirection(IIfcDirection a, IIfcDirection b)
         {
-            if (a == null || b == null)
-                return a == null && b == null;
-            var x = a.DirectionRatios.ToList();
-            var y = b.DirectionRatios.ToList();
-            return x.Count == y.Count && x.Zip(y, (p, q) => Math.Abs((double)p - (double)q) < 1e-9).All(same => same);
+            static (double X, double Y) Horizontal(IIfcDirection d)
+            {
+                var ratios = d?.DirectionRatios.Select(r => (double)r).ToList();
+                double x = ratios?.Count > 0 ? ratios[0] : 0, y = ratios?.Count > 1 ? ratios[1] : 1;
+                double length = Math.Sqrt(x * x + y * y);
+                return length == 0 ? (0, 1) : (x / length, y / length);
+            }
+            var (ax, ay) = Horizontal(a);
+            var (bx, by) = Horizontal(b);
+            return Math.Abs(ax - bx) < 1e-9 && Math.Abs(ay - by) < 1e-9;
         }
 
         #endregion

@@ -43,6 +43,7 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <RadioButton x:Name="AlignMode" GroupName="Target" Style="{StaticResource ModeTileStyle}" IsChecked="True" Checked="OnModeChanged" AutomationProperties.Name="Align to another model">
                                 <Grid ColumnSpacing="12"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
@@ -62,7 +63,28 @@
                                     <StackPanel Grid.Column="1"><TextBlock Text="Georeference" Style="{StaticResource BodyStrongTextBlockStyle}" /><TextBlock x:Name="GeorefHint" Text="Projected CRS and map conversion" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
                                 </Grid>
                             </RadioButton>
+                            <RadioButton x:Name="UnitMode" Grid.Column="3" GroupName="Target" Style="{StaticResource ModeTileStyle}" Checked="OnModeChanged" AutomationProperties.Name="Change length unit">
+                                <Grid ColumnSpacing="12"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
+                                    <FontIcon Glyph="&#xE8EF;" FontSize="18" VerticalAlignment="Center" />
+                                    <StackPanel Grid.Column="1"><TextBlock Text="Change length unit" Style="{StaticResource BodyStrongTextBlockStyle}" /><TextBlock Text="Millimetres, centimetres or metres" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
+                                </Grid>
+                            </RadioButton>
                         </Grid>
+
+                        <!-- Change length unit -->
+                        <Border x:Name="UnitPanel" Style="{StaticResource CardStyle}" Visibility="Collapsed">
+                            <StackPanel Spacing="8">
+                                <Border Style="{StaticResource CardTitleStyle}"><TextBlock Text="Length unit" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
+                                <TextBlock x:Name="UnitHint" Style="{StaticResource SecondaryTextStyle}" />
+                                <RadioButtons x:Name="UnitChoice" Header="Convert every length to" SelectedIndex="2" SelectionChanged="OnUnitChanged">
+                                    <x:String>Millimetres (mm)</x:String>
+                                    <x:String>Centimetres (cm)</x:String>
+                                    <x:String>Metres (m)</x:String>
+                                </RadioButtons>
+                                <TextBlock Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap"
+                                           Text="Coordinates, thicknesses, elevations, length properties and quantities are rescaled, so the model keeps its size and place; areas, volumes and angles have units of their own and stay. Values that state a unit of their own are left as they are, and a map conversion keeps the model where it was on the map." />
+                            </StackPanel>
+                        </Border>
 
                         <!-- Align to another model -->
                         <StackPanel x:Name="AlignPanel" Spacing="8">

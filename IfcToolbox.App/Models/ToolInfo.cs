@@ -44,7 +44,7 @@ namespace IfcToolbox.App.Models
                 "Split IFC"),
             // Not in the original app: the counterpart of the Splitter.
             new ToolInfo("combiner", "IFC Combiner", "", Color.FromArgb(255, 0x00, 0x79, 0x6B),
-                "Combine models of the same schema and unit into one file with one project, merging the storeys they share.",
+                "Combine models into one file with one project, merging the storeys they share and converting length units.",
                 "Combine IFC"),
             new ToolInfo("converter", "IFC Converter", "", Color.FromArgb(255, 0x6A, 0x1B, 0x9A),
                 "Convert to glTF, OBJ, Collada, STEP, IGES, XML, SVG and more with IfcOpenShell.",

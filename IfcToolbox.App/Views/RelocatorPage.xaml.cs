@@ -268,6 +268,7 @@ namespace IfcToolbox.App.Views
             MapRotationBox.Value = map == null ? 0 : Math.Round(MapConversionService.RotationDegrees(map.Parameters), 9);
             ScaleBox.Value = map?.Parameters.Scale ?? a.UnitInMetres;
             FactorBox.Value = map?.Parameters.FactorX ?? double.NaN;
+            UnitHint.Text = $"The model measures lengths in {a.UnitName}.";
             ScaleHint.Text = $"The model is in {a.UnitName}, so a CRS in metres needs a scale of {a.UnitInMetres.ToString("G6", CultureInfo.InvariantCulture)}. " +
                              "Eastings, northings and height are in the CRS unit.";
         }
@@ -279,7 +280,8 @@ namespace IfcToolbox.App.Views
             AlignPanel.Visibility = AlignMode.IsChecked == true ? Visibility.Visible : Visibility.Collapsed;
             ManualPanel.Visibility = ManualMode.IsChecked == true ? Visibility.Visible : Visibility.Collapsed;
             GeorefPanel.Visibility = GeorefMode.IsChecked == true ? Visibility.Visible : Visibility.Collapsed;
-            RunBar.ActionText = GeorefMode.IsChecked == true ? "Georeference IFC" : "Relocate IFC";
+            UnitPanel.Visibility = UnitMode.IsChecked == true ? Visibility.Visible : Visibility.Collapsed;
+            RunBar.ActionText = GeorefMode.IsChecked == true ? "Georeference IFC" : UnitMode.IsChecked == true ? "Change unit" : "Relocate IFC";
             UpdateState();
         }
 
@@ -295,6 +297,60 @@ namespace IfcToolbox.App.Views
 
         private void OnCrsChanged(object sender, TextChangedEventArgs e) => UpdateState();
 
+        private void OnUnitChanged(object sender, SelectionChangedEventArgs e) => UpdateState();
+
+        /// <summary>The unit picked under "Change length unit": its name for the converter, and its size in metres.</summary>
+        private (string Name, double Metres) ChosenUnit
+        {
+            get
+            {
+                var name = UnitChoice.SelectedIndex switch { 0 => "mm", 1 => "cm", _ => "m" };
+                return (name, Core.Editors.LengthUnitConverter.Units[name].Metres);
+            }
+        }
+
+        /// <summary>Writes a copy of the model with every length in the chosen unit, and shows where it sits.</summary>
+        private async Task ChangeUnitAsync(string path)
+        {
+            var (unit, _) = ChosenUnit;
+            var output = Path.Combine(Path.GetDirectoryName(path) ?? ".", Path.GetFileNameWithoutExtension(path) + "_" + unit + ".ifc");
+
+            RunBar.Begin($"Writing {Path.GetFileName(output)}…", cancellable: false);
+            var started = DateTime.Now;
+            string outcome = string.Empty;
+            try
+            {
+                var conversion = await Task.Run(() =>
+                {
+                    using var model = Xbim.Ifc.IfcStore.Open(path);
+                    Core.Editors.LengthUnitConversion result;
+                    using (var txn = model.BeginTransaction("Convert length unit"))
+                    {
+                        result = Core.Editors.LengthUnitConverter.Convert(model, unit);
+                        txn.Commit();
+                    }
+                    model.SaveAs(output);
+                    return result;
+                });
+                OutputView.Show("Done", new[] { output },
+                    $"{conversion.ValuesScaled:N0} lengths rescaled" + (conversion.ValuesWithOwnUnit > 0 ? $"; {conversion.ValuesWithOwnUnit} with a unit of their own left as they are." : "."));
+                OutputSection.Visibility = Visibility.Visible;
+                OutputSection.IsExpanded = true;
+                var after = await Task.Run(() => RelocateAnalysis.Read(output));
+                ShowPlacements(ResultPanel, after, "Result");
+                Ui.ScrollIntoView(OutputSection);
+                outcome = $"Done in {(DateTime.Now - started).TotalSeconds:0.0} s.";
+            }
+            catch (Exception ex)
+            {
+                RunBar.ShowError("The unit could not be changed", ex.Message);
+            }
+            finally
+            {
+                RunBar.End(outcome);
+            }
+        }
+
         private void OnGeorefValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args) => UpdateState();
 
         /// <summary>What is missing for the chosen mode, or null when it can run.</summary>
@@ -304,6 +360,11 @@ namespace IfcToolbox.App.Views
                 return "Add the IFC model to relocate.";
             if (_model == null)
                 return string.Empty;
+            if (UnitMode.IsChecked == true)
+            {
+                var (_, metres) = ChosenUnit;
+                return Math.Abs(metres - _model.UnitInMetres) < metres * 1e-9 ? $"The model is already in {_model.UnitName}." : null;
+            }
             if (AlignMode.IsChecked == true)
             {
                 if (ReferenceZone.Files.Count == 0)
@@ -340,7 +401,9 @@ namespace IfcToolbox.App.Views
             RunBar.CanRun = missing == null;
             RunBar.Status = missing ?? (GeorefMode.IsChecked == true
                 ? "Writes a new, georeferenced file; the geometry is not moved."
-                : "Writes a new file with the moved coordinate systems; the original is kept.");
+                : UnitMode.IsChecked == true
+                    ? "Writes a new file with every length in the chosen unit; the original is kept."
+                    : "Writes a new file with the moved coordinate systems; the original is kept.");
         }
 
         private static IGeoPlacement Placement(IGeoPlacement from, int siteLabel) =>
@@ -406,6 +469,11 @@ namespace IfcToolbox.App.Views
             var path = ModelZone.Files.FirstOrDefault()?.Path;
             if (path == null || _model == null)
                 return;
+            if (UnitMode.IsChecked == true)
+            {
+                await ChangeUnitAsync(path);
+                return;
+            }
             var config = BuildConfig();
 
             RunBar.Begin($"Writing {Path.GetFileNameWithoutExtension(path)}_{config.Suffix}.ifc…", cancellable: false);

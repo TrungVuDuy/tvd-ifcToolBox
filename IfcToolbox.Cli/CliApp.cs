@@ -34,6 +34,7 @@ namespace IfcToolbox.Cli
             root.Subcommands.Add(OptimizeCommand.Create());
             root.Subcommands.Add(AnonymizeCommand.Create());
             root.Subcommands.Add(GeorefCommand.Create());
+            root.Subcommands.Add(UnitsCommand.Create());
             return root;
         }
 

@@ -25,11 +25,15 @@
                 </controls:Section>
 
                 <controls:Section Header="Configuration">
-                    <Grid ColumnSpacing="12">
+                    <Grid ColumnSpacing="12" RowSpacing="12">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
                         <Border Style="{StaticResource CardStyle}">
                             <StackPanel Spacing="6">
                                 <Border Style="{StaticResource CardTitleStyle}"><TextBlock Text="Spatial structure" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
@@ -37,6 +41,15 @@
                                               AutomationProperties.Name="Merge by name" />
                                 <TextBlock Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap"
                                            Text="Elements with the same GlobalId are always merged. Discipline models exported separately share storey names but not GlobalIds; this merges those too. Either way, only elements placed exactly alike are merged, so nothing moves." />
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource CardStyle}">
+                            <StackPanel Spacing="6">
+                                <Border Style="{StaticResource CardTitleStyle}"><TextBlock Text="Length units" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
+                                <ToggleSwitch x:Name="UnitsSwitch" Header="Convert files in another unit to the base file's" IsOn="True"
+                                              AutomationProperties.Name="Convert length units" />
+                                <TextBlock Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap"
+                                           Text="A file in metres combined with a base file in millimetres has every length multiplied by 1000 first, so it lands in the right place at the right size. The file itself is not changed. Off: such files are refused." />
                             </StackPanel>
                         </Border>
                         <Border Grid.Column="1" Style="{StaticResource CardStyle}">

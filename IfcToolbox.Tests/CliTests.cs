@@ -228,6 +228,33 @@ namespace IfcToolbox.Tests
 
         #endregion
 
+        #region units
+
+        [Fact]
+        public void UnitsShowsAndConvertsTheLengthUnit()
+        {
+            var (exit, output, _) = Run("units", LocalFiles.Ifc4_SampleHouse);
+            Assert.Equal(ExitCodes.Success, exit);
+            Assert.StartsWith("millimetres", output);
+
+            var target = Path.Combine(LocalFiles.TestOutputFolder, "cli_units_m.ifc");
+            (exit, output, _) = Run("units", LocalFiles.Ifc4_SampleHouse, "--to", "m", "-o", target, "--json");
+            Assert.Equal(ExitCodes.Success, exit);
+            using var json = JsonDocument.Parse(output);
+            Assert.Equal("metres", json.RootElement.GetProperty("to").GetString());
+            Assert.True(json.RootElement.GetProperty("valuesScaled").GetInt32() > 1000);
+
+            Assert.StartsWith("metres", Run("units", target).Out);
+        }
+
+        [Fact]
+        public void UnitsRejectsAnUnknownUnit()
+        {
+            Assert.Equal(ExitCodes.UsageError, Run("units", LocalFiles.Ifc4_SampleHouse, "--to", "ft").Exit);
+        }
+
+        #endregion
+
         #region combine
 
         [Fact]
@@ -249,9 +276,9 @@ namespace IfcToolbox.Tests
         [Fact]
         public void CombiningModelsThatDoNotFitIsAUsageError()
         {
-            // Millimetres and metres.
+            // Millimetres and metres, with conversion switched off.
             var (exit, _, err) = Run("combine", LocalFiles.Ifc4_SampleHouse, LocalFiles.Ifc4_CubeAdvancedBrep,
-                "-o", Path.Combine(LocalFiles.TestOutputFolder, "cli_units.ifc"));
+                "-o", Path.Combine(LocalFiles.TestOutputFolder, "cli_units.ifc"), "--no-unit-conversion");
             Assert.Equal(ExitCodes.UsageError, exit);
             Assert.Contains("length unit", err);
 

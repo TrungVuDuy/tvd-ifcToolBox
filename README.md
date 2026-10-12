@@ -37,8 +37,8 @@ IfcToolbox is one of the proposals in [openBIM Marketplace - buildingSMART Techn
 - IFC Optimizer – Reduce the size of large IFC files by optimizing the IFC resource layer instance, and eliminate floating-point offsets through FPR geometric optimization.
 - IFC Converter – Easily convert IFC to glTF(.glb), OBJ(.obj), Collada(.dae), STEP(.stp), IGES(.igs), XML(.xml), SVG(.svg) and IFC-SPF(.ifc). Point `IFCTOOLBOX_IFCCONVERT` at an IfcConvert 0.8 build to also get xeokit JSON(.json), RDF Turtle(.ttl) and HDF(.h5).
 - IFC Splitter – Split IFC files by type/container (site, building, level) or simply split selected objects in the hierarchy. For IFC 4.3 infrastructure models, also by facility (road, railway, bridge, marine facility) and facility part (carriageway, track, ...).
-- IFC Combiner – Combine models of the same schema and length unit into one file with a single project. Sites, buildings and storeys that are the same (same GlobalId, or same name) and placed alike are merged; an element found in several files is copied once; duplicate GlobalIds are renewed. Not in the original app.
-- IFC Relocator – Relocate the IFC world coordinate system and the project coordinate system. Align the origin of the two models. Georeference IFC4 and IFC 4.3 models with a projected CRS and map conversion (IfcMapConversion, and IfcMapConversionScaled on IFC 4.3).
+- IFC Combiner – Combine models of the same schema into one file with a single project; a model in another length unit is converted to the first one's. Sites, buildings and storeys that are the same (same GlobalId, or same name) and placed alike are merged; an element found in several files is copied once; duplicate GlobalIds are renewed. Not in the original app.
+- IFC Relocator – Relocate the IFC world coordinate system and the project coordinate system. Align the origin of the two models. Change a model's length unit (millimetres, centimetres, metres), rescaling every length. Georeference IFC4 and IFC 4.3 models with a projected CRS and map conversion (IfcMapConversion, and IfcMapConversionScaled on IFC 4.3).
 - IFC Anonymizer – Anonymous user-related information and specific product-related information. Simplify model submission in bidding activities or design competitions.
 - IFC Validator – Validate the existence of the properties of classes in the IFC file. Requirements can be pulled directly from the buildingSMART Data Dictionary (bSDD) instead of being written out by hand; they are turned into IDS, checked by the IDS engine and can be saved as an `.ids` file to share.
 - IDS Validator – Check a model against an [Information Delivery Specification](https://www.buildingsmart.org/standards/bsi-standards/information-delivery-specification-ids/) (IDS 1.0, the official buildingSMART standard since June 2024). Reads and writes `.ids` files and checks entity, attribute, property, classification, material and partOf facets, with restrictions, cardinality and unit conversion. Verified against all 307 runnable cases of the official buildingSMART test suite.
@@ -54,6 +54,7 @@ ifctoolbox convert model.ifc --format glb
 ifctoolbox split road.ifc --by facility --list
 ifctoolbox split road.ifc --by part --item "#146"
 ifctoolbox combine architecture.ifc structure.ifc mep.ifc -o building.ifc
+ifctoolbox units model.ifc --to m
 ifctoolbox optimize model.ifc --precision 4 --output small.ifc
 ifctoolbox anonymize model.ifc
 ifctoolbox georef model.ifc --crs EPSG:25832 --eastings 333000 --northings 5800000

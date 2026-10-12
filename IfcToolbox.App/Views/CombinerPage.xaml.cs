@@ -77,7 +77,7 @@ namespace IfcToolbox.App.Views
             if (paths.Count < 2)
                 return;
             var output = Path.Combine(Path.GetDirectoryName(paths[0]) ?? ".", Path.GetFileNameWithoutExtension(paths[0]) + "_Combined.ifc");
-            var options = new CombineOptions { MergeSpatialByName = ByNameSwitch.IsOn, SkipDuplicateElements = SkipSwitch.IsOn };
+            var options = new CombineOptions { MergeSpatialByName = ByNameSwitch.IsOn, SkipDuplicateElements = SkipSwitch.IsOn, ConvertUnits = UnitsSwitch.IsOn };
 
             var token = RunBar.Begin($"Combining {paths.Count} models…");
             var started = DateTime.Now;
@@ -121,6 +121,8 @@ namespace IfcToolbox.App.Views
                 Child = new TextBlock { Text = "What happened", Style = StyleOf("SubtitleTextBlockStyle"), FontSize = 18 },
             });
 
+            foreach (var converted in result.UnitsConverted)
+                AddLine("Lengths converted", converted);
             AddLine("Merged", result.SpatialMerged.Count == 0 ? "nothing: every site, building and storey was different" : Join(result.SpatialMerged));
             if (result.SpatialKeptApart.Count > 0)
                 AddLine("Kept apart, placed differently", Join(result.SpatialKeptApart));

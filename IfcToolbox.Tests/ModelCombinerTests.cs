@@ -1,4 +1,5 @@
 using IfcToolbox.Core.Editors;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -167,12 +168,32 @@ namespace IfcToolbox.Tests
         }
 
         [Fact]
-        public void RefusesDifferentLengthUnits()
+        public void RefusesDifferentLengthUnitsWhenNotConverting()
         {
             var e = Assert.Throws<CombineException>(() =>
-                ModelCombiner.Combine(new[] { LocalFiles.Ifc4_SampleHouse, LocalFiles.Ifc4_CubeAdvancedBrep }, Output("Units")));
+                ModelCombiner.Combine(new[] { LocalFiles.Ifc4_SampleHouse, LocalFiles.Ifc4_CubeAdvancedBrep }, Output("Units"),
+                    new CombineOptions { ConvertUnits = false }));
             Assert.Contains("millimetres", e.Message);
             Assert.Contains("metres", e.Message);
+        }
+
+        [Fact]
+        public void ConvertsAFileInAnotherUnitToTheFirstFiles()
+        {
+            // The house is in millimetres, the cube in metres.
+            double cubeX;
+            using (var cube = IfcStore.Open(LocalFiles.Ifc4_CubeAdvancedBrep))
+                cubeX = cube.Instances.OfType<IIfcCartesianPoint>().Select(p => p.X).Where(x => Math.Abs(x) > 0.01).Max();
+
+            var output = Output("MixedUnits");
+            var result = ModelCombiner.Combine(new[] { LocalFiles.Ifc4_SampleHouse, LocalFiles.Ifc4_CubeAdvancedBrep }, output);
+
+            Assert.Contains(result.UnitsConverted, u => u.StartsWith("Ifc4_CubeAdvancedBrep.ifc: metres to millimetres"));
+            using var combined = IfcStore.Open(output);
+            AssertSound(combined);
+            Assert.Equal(0.001, IfcToolbox.Core.Geo.MapConversionService.LengthUnitInMetres(combined), 12);
+            // The cube's points came in a thousand times larger: millimetres now.
+            Assert.Contains(combined.Instances.OfType<IIfcCartesianPoint>(), p => Math.Abs(p.X - cubeX * 1000) < 1e-6);
         }
     }
 }
