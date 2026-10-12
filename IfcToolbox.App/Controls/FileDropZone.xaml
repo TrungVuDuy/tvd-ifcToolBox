@@ -72,6 +72,7 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="72" />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <FontIcon Glyph="{StaticResource GlyphDocument}" FontSize="22" />
                         <StackPanel Grid.Column="1" VerticalAlignment="Center">
@@ -84,7 +85,12 @@
                         </Border>
                         <TextBlock Grid.Column="3" VerticalAlignment="Center" Text="{x:Bind Modified}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                         <TextBlock Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Right" Text="{x:Bind Size}" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                        <Button Grid.Column="5" Click="OnRemoveFile" Tag="{x:Bind}" Background="Transparent" BorderThickness="0"
+                        <Button Grid.Column="5" Click="OnMoveUp" Tag="{x:Bind}" Background="Transparent" BorderThickness="0"
+                                Visibility="{x:Bind local:FileDropZone.ShowIfTrue(CanMoveUp), Mode=OneWay}"
+                                ToolTipService.ToolTip="Move up" AutomationProperties.Name="{x:Bind models:ImportedFile.Label('Move up', Name)}">
+                            <FontIcon Glyph="&#xE70E;" FontSize="14" />
+                        </Button>
+                        <Button Grid.Column="6" Click="OnRemoveFile" Tag="{x:Bind}" Background="Transparent" BorderThickness="0"
                                 ToolTipService.ToolTip="Remove" AutomationProperties.Name="{x:Bind models:ImportedFile.Label('Remove', Name)}">
                             <FontIcon Glyph="{StaticResource GlyphDelete}" FontSize="14" />
                         </Button>

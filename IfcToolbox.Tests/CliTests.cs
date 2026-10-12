@@ -228,6 +228,38 @@ namespace IfcToolbox.Tests
 
         #endregion
 
+        #region combine
+
+        [Fact]
+        public void CombineWritesOneModelAndReportsWhatWasMerged()
+        {
+            var target = Path.Combine(LocalFiles.TestOutputFolder, "cli_combined.ifc");
+            var (exit, output, err) = Run("combine", LocalFiles.Ifc4_SampleHouse_0_GroundFloor, LocalFiles.Ifc4_SampleHouse_1_Roof, "-o", target, "--json");
+
+            Assert.True(exit == ExitCodes.Success, err);
+            using var json = JsonDocument.Parse(output);
+            Assert.Equal(target, json.RootElement.GetProperty("output").GetString());
+            Assert.Contains(json.RootElement.GetProperty("spatialMerged").EnumerateArray(), m => m.GetString() == "IfcSite 'Default'");
+
+            using var model = IfcStore.Open(target);
+            Assert.Single(model.Instances.OfType<IIfcProject>());
+            Assert.Equal(2, model.Instances.OfType<IIfcBuildingStorey>().Count());
+        }
+
+        [Fact]
+        public void CombiningModelsThatDoNotFitIsAUsageError()
+        {
+            // Millimetres and metres.
+            var (exit, _, err) = Run("combine", LocalFiles.Ifc4_SampleHouse, LocalFiles.Ifc4_CubeAdvancedBrep,
+                "-o", Path.Combine(LocalFiles.TestOutputFolder, "cli_units.ifc"));
+            Assert.Equal(ExitCodes.UsageError, exit);
+            Assert.Contains("length unit", err);
+
+            Assert.Equal(ExitCodes.UsageError, Run("combine", LocalFiles.Ifc4_SampleHouse).Exit);
+        }
+
+        #endregion
+
         #region optimize / anonymize
 
         [Fact]

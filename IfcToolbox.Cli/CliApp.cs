@@ -22,7 +22,7 @@ namespace IfcToolbox.Cli
         public static RootCommand BuildRootCommand()
         {
             var root = new RootCommand(
-                "IFC toolbox: validate against IDS, convert, split, optimise, anonymise and georeference IFC models " +
+                "IFC toolbox: validate against IDS, convert, split, combine, optimise, anonymise and georeference IFC models " +
                 "(IFC2X3, IFC4, IFC 4.3).");
             root.Options.Add(VerboseOption);
 
@@ -30,6 +30,7 @@ namespace IfcToolbox.Cli
             root.Subcommands.Add(ValidateCommand.Create());
             root.Subcommands.Add(ConvertCommand.Create());
             root.Subcommands.Add(SplitCommand.Create());
+            root.Subcommands.Add(CombineCommand.Create());
             root.Subcommands.Add(OptimizeCommand.Create());
             root.Subcommands.Add(AnonymizeCommand.Create());
             root.Subcommands.Add(GeorefCommand.Create());

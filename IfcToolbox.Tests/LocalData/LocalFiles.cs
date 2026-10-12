@@ -31,7 +31,7 @@ namespace IfcToolbox.Tests
         public const string Ifc4_Revit_MEP = "TestFiles\\Ifc4_Revit_MEP.ifc";
         public const string Ifc4_Revit_STR = "TestFiles\\Ifc4_Revit_STR.ifc";
         public const string Ifc4_SampleHouse = "TestFiles\\Ifc4_SampleHouse.ifc";
-        public const string Ifc4_SampleHouse_0_GroundFloor = "TestFiles\\Ifc4_SampleHouse_0_Ground Floor.ifc";
+        public const string Ifc4_SampleHouse_0_GroundFloor = "TestFiles\\Ifc4_SampleHouse_0_GroundFloor.ifc";
         public const string Ifc4_SampleHouse_1_Roof = "TestFiles\\Ifc4_SampleHouse_1_Roof.ifc";
         public const string Ifc4_SampleHouse_IfcWallStandardCase = "TestFiles\\Ifc4_SampleHouse_IfcWallStandardCase.ifc";
         public const string Ifc4_SampleHouse_IfcWindow = "TestFiles\\Ifc4_SampleHouse_IfcWindow.ifc";

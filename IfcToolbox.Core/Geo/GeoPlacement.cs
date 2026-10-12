@@ -121,16 +121,30 @@ namespace IfcToolbox.Core.Geo
                 }
             }
         }
+        /// <summary>
+        /// Same location and axes, to a tolerance of 1e-9 relative (and 1e-9 absolute, for
+        /// values near zero). This compared the lists by reference before, so two placements
+        /// were never equal.
+        /// </summary>
         public bool Equals(IGeoPlacement other)
         {
             if (other == null)
                 return false;
-            if (LocationXYZ == other.LocationXYZ &&
-                RotationX == other.RotationX &&
-                RotationZ == other.RotationZ)
-                return true;
-            else
+            return SameValues(LocationXYZ, other.LocationXYZ)
+                   && SameValues(RotationX, other.RotationX)
+                   && SameValues(RotationZ, other.RotationZ);
+        }
+
+        private static bool SameValues(IList<double> a, IList<double> b)
+        {
+            if (a == null || b == null)
+                return a == b;
+            if (a.Count != b.Count)
                 return false;
+            for (int i = 0; i < a.Count; i++)
+                if (Math.Abs(a[i] - b[i]) > 1e-9 * Math.Max(1, Math.Max(Math.Abs(a[i]), Math.Abs(b[i]))))
+                    return false;
+            return true;
         }
     }
 }

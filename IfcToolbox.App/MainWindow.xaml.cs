@@ -76,6 +76,7 @@ namespace IfcToolbox.App
                 "about" => (typeof(AboutPage), null),
                 "validator" => (typeof(ValidatorPage), null),
                 "splitter" => (typeof(SplitterPage), null),
+                "combiner" => (typeof(CombinerPage), null),
                 "converter" => (typeof(ConverterPage), null),
                 "optimizer" => (typeof(OptimizerPage), null),
                 "relocator" => (typeof(RelocatorPage), null),

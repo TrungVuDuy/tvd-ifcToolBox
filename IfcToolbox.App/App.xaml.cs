@@ -35,6 +35,9 @@ namespace IfcToolbox.App
         /// <summary>A file to import into the first tool page shown, from --import or a file opened with the app.</summary>
         public static string StartupImport { get; set; }
 
+        /// <summary>Further --import files, for pages that take several (the Combiner).</summary>
+        public static List<string> StartupMoreImports { get; } = new();
+
         /// <summary>IDS files to load into the validator, from --ids or .ids files opened with the app.</summary>
         public static List<string> StartupIds { get; } = new();
 
@@ -67,7 +70,10 @@ namespace IfcToolbox.App
                         i++;
                         break;
                     case "--import" when next != null:
-                        StartupImport = next;
+                        if (StartupImport == null)
+                            StartupImport = next;
+                        else
+                            StartupMoreImports.Add(next);
                         i++;
                         break;
                     case "--reference" when next != null:

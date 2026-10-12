@@ -37,6 +37,7 @@ IfcToolbox is one of the proposals in [openBIM Marketplace - buildingSMART Techn
 - IFC Optimizer – Reduce the size of large IFC files by optimizing the IFC resource layer instance, and eliminate floating-point offsets through FPR geometric optimization.
 - IFC Converter – Easily convert IFC to glTF(.glb), OBJ(.obj), Collada(.dae), STEP(.stp), IGES(.igs), XML(.xml), SVG(.svg) and IFC-SPF(.ifc). Point `IFCTOOLBOX_IFCCONVERT` at an IfcConvert 0.8 build to also get xeokit JSON(.json), RDF Turtle(.ttl) and HDF(.h5).
 - IFC Splitter – Split IFC files by type/container (site, building, level) or simply split selected objects in the hierarchy. For IFC 4.3 infrastructure models, also by facility (road, railway, bridge, marine facility) and facility part (carriageway, track, ...).
+- IFC Combiner – Combine models of the same schema and length unit into one file with a single project. Sites, buildings and storeys that are the same (same GlobalId, or same name) and placed alike are merged; an element found in several files is copied once; duplicate GlobalIds are renewed. Not in the original app.
 - IFC Relocator – Relocate the IFC world coordinate system and the project coordinate system. Align the origin of the two models. Georeference IFC4 and IFC 4.3 models with a projected CRS and map conversion (IfcMapConversion, and IfcMapConversionScaled on IFC 4.3).
 - IFC Anonymizer – Anonymous user-related information and specific product-related information. Simplify model submission in bidding activities or design competitions.
 - IFC Validator – Validate the existence of the properties of classes in the IFC file. Requirements can be pulled directly from the buildingSMART Data Dictionary (bSDD) instead of being written out by hand; they are turned into IDS, checked by the IDS engine and can be saved as an `.ids` file to share.
@@ -52,6 +53,7 @@ ifctoolbox validate model.ifc --ids requirements.ids --report findings.csv
 ifctoolbox convert model.ifc --format glb
 ifctoolbox split road.ifc --by facility --list
 ifctoolbox split road.ifc --by part --item "#146"
+ifctoolbox combine architecture.ifc structure.ifc mep.ifc -o building.ifc
 ifctoolbox optimize model.ifc --precision 4 --output small.ifc
 ifctoolbox anonymize model.ifc
 ifctoolbox georef model.ifc --crs EPSG:25832 --eastings 333000 --northings 5800000
@@ -71,7 +73,7 @@ IFC2X3, IFC4 and IFC 4.3 (IFC4X3_ADD2, ISO 16739-1:2024) for every tool. Convert
 
 ## Desktop app
 
-A new desktop app with every tool, rebuilt in WinUI 3 because the original app's source was never published. It follows the original's layout and adds IDS validation, requirements from bSDD that can be saved as IDS, IFC 4.3 splitting by facility and facility part, glTF output and georeferencing.
+A new desktop app with every tool, rebuilt in WinUI 3 because the original app's source was never published. It follows the original's layout and adds the IFC Combiner, IDS validation, requirements from bSDD that can be saved as IDS, IFC 4.3 splitting by facility and facility part, glTF output and georeferencing.
 
 It needs no installation: unzip it and run `IfcToolbox.exe` (Windows 10 1809 or later, x64). Every CI run uploads it as the `IfcToolbox-app-win-x64` artifact, and tagged releases attach it as a zip. To build it yourself, see [Source code projects](#source-code-projects).
 
@@ -143,7 +145,7 @@ IFC Toolbox GUI App is a free software, if you like it, please consider:
 - IfcToolbox.Core - Lower extension for IFC processing.
 - IfcToolbox.Tools - Higher implementation for each tool in IfcToolbox. 
 - IfcToolbox.Cli - The `ifctoolbox` command line tool.
-- IfcToolbox.App - The WinUI 3 desktop app with all six tools, rebuilt because the original app's source was never published.
+- IfcToolbox.App - The WinUI 3 desktop app with all seven tools, rebuilt because the original app's source was never published.
 - IfcToolbox.IfcConvert - Packaging only: carries the IfcConvert executable for the NuGet packages.
 - IfcToolbox.Tests - Unit tests with xUnit for Core, Tools and the CLI.
 - IfcToolbox.Examples - .Net core console app for tools example.

@@ -33,9 +33,14 @@ namespace IfcToolbox.App.Controls
             Files.CollectionChanged += (_, _) =>
             {
                 ResetButton.Visibility = Files.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+                for (int i = 0; i < Files.Count; i++)
+                    Files[i].CanMoveUp = AllowReorder && i > 0;
                 FilesChanged?.Invoke(this, EventArgs.Empty);
             };
         }
+
+        /// <summary>Whether the order matters, so rows offer to move up. Set before files are added.</summary>
+        public bool AllowReorder { get; set; }
 
         /// <summary>Whether more than one file can be imported; otherwise a new file replaces the old one.</summary>
         public bool AllowMultiple
@@ -137,6 +142,16 @@ namespace IfcToolbox.App.Controls
             }
         }
 
+        private void OnMoveUp(object sender, RoutedEventArgs e)
+        {
+            if ((sender as FrameworkElement)?.Tag is ImportedFile file)
+            {
+                int index = Files.IndexOf(file);
+                if (index > 0)
+                    Files.Move(index, index - 1);
+            }
+        }
+
         private void OnRemoveFile(object sender, RoutedEventArgs e)
         {
             if ((sender as FrameworkElement)?.Tag is ImportedFile file)
@@ -146,5 +161,7 @@ namespace IfcToolbox.App.Controls
         private void OnReset(object sender, RoutedEventArgs e) => Files.Clear();
 
         public static Visibility ShowIf(string text) => string.IsNullOrEmpty(text) ? Visibility.Collapsed : Visibility.Visible;
+
+        public static Visibility ShowIfTrue(bool value) => value ? Visibility.Visible : Visibility.Collapsed;
     }
 }

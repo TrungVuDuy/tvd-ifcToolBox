@@ -30,6 +30,10 @@ namespace IfcToolbox.App.Models
         [ObservableProperty]
         private string _badge;
 
+        /// <summary>Whether the row offers to move it up; only in lists where the order matters.</summary>
+        [ObservableProperty]
+        private bool _canMoveUp;
+
         /// <summary>Set when the file cannot be used, e.g. an IDS file that does not parse.</summary>
         [ObservableProperty]
         private string _problem;

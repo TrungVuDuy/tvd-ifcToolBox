@@ -1,0 +1,67 @@
+<Page
+    x:Class="IfcToolbox.App.Views.CombinerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:IfcToolbox.App.Controls">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ScrollViewer>
+            <StackPanel Padding="36,28,36,12" Spacing="12">
+                <controls:PageHeader x:Name="Header" Margin="0,0,0,4" />
+                <TextBlock x:Name="SummaryText" Style="{StaticResource SecondaryTextStyle}" Margin="0,0,0,8" />
+
+                <controls:Section Header="Files to combine">
+                    <StackPanel Spacing="8">
+                        <controls:FileDropZone x:Name="ModelZone" AllowMultiple="True" FilesChanged="OnFilesChanged" />
+                        <TextBlock Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap"
+                                   Text="The first file is the base: its project, units, coordinate system and true north are kept. Move a file up to make it the base." />
+                        <InfoBar x:Name="SchemaWarning" Severity="Error" IsOpen="False" IsClosable="False" Title="These files cannot be combined" />
+                    </StackPanel>
+                </controls:Section>
+
+                <controls:Section Header="Configuration">
+                    <Grid ColumnSpacing="12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Border Style="{StaticResource CardStyle}">
+                            <StackPanel Spacing="6">
+                                <Border Style="{StaticResource CardTitleStyle}"><TextBlock Text="Spatial structure" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
+                                <ToggleSwitch x:Name="ByNameSwitch" Header="Merge sites, buildings and storeys with the same name" IsOn="True"
+                                              AutomationProperties.Name="Merge by name" />
+                                <TextBlock Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap"
+                                           Text="Elements with the same GlobalId are always merged. Discipline models exported separately share storey names but not GlobalIds; this merges those too. Either way, only elements placed exactly alike are merged, so nothing moves." />
+                            </StackPanel>
+                        </Border>
+                        <Border Grid.Column="1" Style="{StaticResource CardStyle}">
+                            <StackPanel Spacing="6">
+                                <Border Style="{StaticResource CardTitleStyle}"><TextBlock Text="Elements in several files" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
+                                <ToggleSwitch x:Name="SkipSwitch" Header="Copy an element found in several files once" IsOn="True"
+                                              AutomationProperties.Name="Copy shared elements once" />
+                                <TextBlock Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap"
+                                           Text="An element with the same GlobalId in two files is the same object, for example a slab the structural model copied from the architectural one. Off: it is copied from each file and given a new GlobalId." />
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+                </controls:Section>
+
+                <controls:Section x:Name="OutputSection" Header="Combined file" Visibility="Collapsed">
+                    <StackPanel Spacing="12">
+                        <controls:OutputFilesView x:Name="OutputView" />
+                        <Border Style="{StaticResource CardStyle}">
+                            <StackPanel x:Name="ReportPanel" Spacing="6" />
+                        </Border>
+                    </StackPanel>
+                </controls:Section>
+            </StackPanel>
+        </ScrollViewer>
+
+        <controls:RunBar x:Name="RunBar" Grid.Row="1" ActionText="Combine IFC" Run="OnCombine" />
+    </Grid>
+</Page>
