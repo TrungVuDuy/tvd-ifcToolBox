@@ -224,6 +224,20 @@ namespace IfcToolbox.Tests
             Assert.All(rows, r => Assert.Equal("IFCWALL", r.EntityType));
         }
 
+        [Fact]
+        public void SeveralResultsShareOneCsvHeader()
+        {
+            var document = BuildFireRatingIds();
+            document.Specifications[0].Requirements.Properties[0].Value = new IdsValue("NOT-A-REAL-RATING");
+            var result = (IdsValidationResult)IdsProcessor.Process(LocalFiles.Ifc4_Revit_ARC_FireRatingAdded, document).Value;
+
+            var single = IdsReport.ToCsv(result).Split('\n', StringSplitOptions.RemoveEmptyEntries);
+            var combined = IdsReport.ToCsv(new[] { result, result }).Split('\n', StringSplitOptions.RemoveEmptyEntries);
+
+            Assert.Single(combined, line => line.StartsWith("Specification,"));
+            Assert.Equal(1 + 2 * (single.Length - 1), combined.Length);
+        }
+
         private static IdsDocument BuildFireRatingIds()
         {
             return new IdsDocument

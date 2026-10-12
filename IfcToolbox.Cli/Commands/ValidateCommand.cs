@@ -79,14 +79,7 @@ namespace IfcToolbox.Cli.Commands
         private static void WriteCsv(FileInfo reportFile, IList<IdsValidationResult> results)
         {
             reportFile.Directory?.Create();
-            var sb = new StringBuilder();
-            for (int i = 0; i < results.Count; i++)
-            {
-                var csv = IdsReport.ToCsv(results[i]);
-                // One header for the whole file.
-                sb.Append(i == 0 ? csv : csv.Substring(csv.IndexOf('\n') + 1));
-            }
-            File.WriteAllText(reportFile.FullName, sb.ToString(), Encoding.UTF8);
+            File.WriteAllText(reportFile.FullName, IdsReport.ToCsv(results), Encoding.UTF8);
         }
 
         private static object ToJson(FileInfo model, FileInfo[] idsFiles, IList<IdsValidationResult> results) => new

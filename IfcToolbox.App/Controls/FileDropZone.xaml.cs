@@ -21,6 +21,11 @@ namespace IfcToolbox.App.Controls
         public static readonly DependencyProperty AllowMultipleProperty = DependencyProperty.Register(
             nameof(AllowMultiple), typeof(bool), typeof(FileDropZone), new PropertyMetadata(false));
 
+        public static readonly DependencyProperty PromptProperty = DependencyProperty.Register(
+            nameof(Prompt), typeof(string), typeof(FileDropZone), new PropertyMetadata(DefaultPrompt));
+
+        private const string DefaultPrompt = "Choose files or Drop files here";
+
         public FileDropZone()
         {
             InitializeComponent();
@@ -39,8 +44,21 @@ namespace IfcToolbox.App.Controls
             set => SetValue(AllowMultipleProperty, value);
         }
 
+        /// <summary>Text in the dashed area.</summary>
+        public string Prompt
+        {
+            get => (string)GetValue(PromptProperty);
+            set => SetValue(PromptProperty, value);
+        }
+
         /// <summary>Extensions accepted, with the dot.</summary>
         public IReadOnlyList<string> FileTypes { get; set; } = new[] { ".ifc" };
+
+        /// <summary>
+        /// Badge text for a file, run off the UI thread; throw to flag the file as unusable.
+        /// Defaults to the IFC schema.
+        /// </summary>
+        public Func<string, string> Describe { get; set; }
 
         public ObservableCollection<ImportedFile> Files { get; } = new();
 
@@ -66,7 +84,7 @@ namespace IfcToolbox.App.Controls
                     continue;
                 var file = new ImportedFile(path);
                 Files.Add(file);
-                _ = file.ReadSchemaAsync();
+                _ = file.DescribeAsync(Describe);
             }
         }
 
@@ -100,11 +118,11 @@ namespace IfcToolbox.App.Controls
             PromptText.Text = "Drop to import";
         }
 
-        private void OnDragLeave(object sender, DragEventArgs e) => PromptText.Text = "Choose files or Drop files here";
+        private void OnDragLeave(object sender, DragEventArgs e) => PromptText.Text = Prompt;
 
         private async void OnDrop(object sender, DragEventArgs e)
         {
-            PromptText.Text = "Choose files or Drop files here";
+            PromptText.Text = Prompt;
             if (!e.DataView.Contains(StandardDataFormats.StorageItems))
                 return;
             var deferral = e.GetDeferral();
@@ -126,5 +144,7 @@ namespace IfcToolbox.App.Controls
         }
 
         private void OnReset(object sender, RoutedEventArgs e) => Files.Clear();
+
+        public static Visibility ShowIf(string text) => string.IsNullOrEmpty(text) ? Visibility.Collapsed : Visibility.Visible;
     }
 }

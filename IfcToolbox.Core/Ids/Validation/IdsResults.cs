@@ -43,12 +43,26 @@ namespace IfcToolbox.Core.Ids.Validation
         /// <summary>Why the specification as a whole failed or was skipped, when that is not obvious from the entities.</summary>
         public string Message { get; set; }
 
-        /// <summary>Entities the applicability selected.</summary>
+        /// <summary>
+        /// Entities the applicability selected: every failing one, and the passing ones only when
+        /// <see cref="IdsValidator.ReportPassingEntities"/> is on.
+        /// </summary>
         public IList<IdsEntityResult> Entities { get; set; } = new List<IdsEntityResult>();
 
-        public int ApplicableCount => Entities.Count;
-        public int PassedCount => Entities.Count(e => e.Passed);
+        /// <summary>
+        /// How many entities the applicability selected, including passing ones left out of
+        /// <see cref="Entities"/>. Falls back to the list when it was never set.
+        /// </summary>
+        public int ApplicableCount
+        {
+            get => _applicableCount ?? Entities.Count;
+            set => _applicableCount = value;
+        }
+
+        private int? _applicableCount;
+
         public int FailedCount => Entities.Count(e => !e.Passed);
+        public int PassedCount => ApplicableCount - FailedCount;
 
         public IEnumerable<IdsEntityResult> Failures => Entities.Where(e => !e.Passed);
 

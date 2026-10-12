@@ -69,6 +69,8 @@ namespace IfcToolbox.Core.Ids.Validation
                 return result;
             }
 
+            // Kept separately because passing entities are normally not listed.
+            result.ApplicableCount = applicable.Count;
             foreach (var entity in applicable)
             {
                 cancellationToken.ThrowIfCancellationRequested();

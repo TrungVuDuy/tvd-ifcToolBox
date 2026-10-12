@@ -105,6 +105,20 @@ namespace IfcToolbox.Core.Ids.Validation
             return sb.ToString();
         }
 
+        /// <summary>Several results (one per IDS document) in one table with a single header line.</summary>
+        public static string ToCsv(IEnumerable<IdsValidationResult> results, bool includePassing = false, string delimiter = ",")
+        {
+            var sb = new StringBuilder();
+            bool first = true;
+            foreach (var result in results)
+            {
+                var csv = ToCsv(result, includePassing, delimiter);
+                sb.Append(first ? csv : csv.Substring(csv.IndexOf('\n') + 1));
+                first = false;
+            }
+            return sb.ToString();
+        }
+
         private static string Escape(string value, string delimiter)
         {
             if (string.IsNullOrEmpty(value))

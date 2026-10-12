@@ -1,6 +1,8 @@
 using IfcToolbox.App.Services;
 using Microsoft.UI.Xaml;
 using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace IfcToolbox.App
 {
@@ -16,9 +18,12 @@ namespace IfcToolbox.App
         /// <summary>A file to import into the first tool page shown, from --import or a file opened with the app.</summary>
         public static string StartupImport { get; set; }
 
+        /// <summary>IDS files to load into the validator, from --ids or .ids files opened with the app.</summary>
+        public static List<string> StartupIds { get; } = new();
+
         /// <summary>
         /// Command line:
-        ///   IfcToolbox.exe [model.ifc] [--page tools|settings|about|validator|...] [--theme light|dark|system]
+        ///   IfcToolbox.exe [model.ifc] [requirements.ids] [--ids file.ids] [--page tools|settings|about|validator|...] [--theme light|dark|system]
         /// --theme applies to this run only; the saved setting is left alone.
         /// </summary>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
@@ -43,8 +48,16 @@ namespace IfcToolbox.App
                         StartupImport = next;
                         i++;
                         break;
+                    case "--ids" when next != null:
+                        StartupIds.Add(next);
+                        i++;
+                        break;
                     default:
-                        if (!arguments[i].StartsWith("--", StringComparison.Ordinal))
+                        if (arguments[i].StartsWith("--", StringComparison.Ordinal))
+                            break;
+                        if (string.Equals(Path.GetExtension(arguments[i]), ".ids", StringComparison.OrdinalIgnoreCase))
+                            StartupIds.Add(arguments[i]);
+                        else
                             StartupImport = arguments[i];
                         break;
                 }
@@ -53,7 +66,7 @@ namespace IfcToolbox.App
             MainWindow = new MainWindow();
             MainWindow.ApplyTheme(theme);
             // A file given without a page opens in the validator, the tool most people start with.
-            MainWindow.NavigateTo(page ?? (StartupImport != null ? "validator" : "tools"));
+            MainWindow.NavigateTo(page ?? (StartupImport != null || StartupIds.Count > 0 ? "validator" : "tools"));
             MainWindow.Activate();
         }
     }

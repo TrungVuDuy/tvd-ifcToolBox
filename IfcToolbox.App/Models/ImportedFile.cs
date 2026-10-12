@@ -26,14 +26,36 @@ namespace IfcToolbox.App.Models
         public string Modified { get; }
         public string Size { get; }
 
-        /// <summary>FILE_SCHEMA of the header, e.g. "IFC4X3_ADD2"; filled in after the row appears.</summary>
+        /// <summary>Short label next to the name, e.g. the IFC schema; filled in after the row appears.</summary>
         [ObservableProperty]
-        private string _schema;
+        private string _badge;
 
-        public async Task ReadSchemaAsync()
+        /// <summary>Set when the file cannot be used, e.g. an IDS file that does not parse.</summary>
+        [ObservableProperty]
+        private string _problem;
+
+        /// <summary>
+        /// Works out the badge off the UI thread. The describer returns the badge text, and throws
+        /// to report a file it cannot read.
+        /// </summary>
+        public async Task DescribeAsync(Func<string, string> describe)
         {
-            var schema = await Task.Run(() => IfcConvert.ReadFileSchema(Path));
-            Schema = schema switch
+            try
+            {
+                Badge = await Task.Run(() => (describe ?? DescribeIfc)(Path));
+            }
+            catch (Exception e)
+            {
+                Badge = "unreadable";
+                Problem = e.Message;
+            }
+        }
+
+        /// <summary>The IFC schema named in the file header, e.g. "IFC4" or "IFC 4.3".</summary>
+        public static string DescribeIfc(string path)
+        {
+            var schema = IfcConvert.ReadFileSchema(path);
+            return schema switch
             {
                 null => "?",
                 _ when schema.StartsWith("IFC4X3", StringComparison.OrdinalIgnoreCase) => "IFC 4.3",

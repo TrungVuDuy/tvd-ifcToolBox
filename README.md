@@ -39,7 +39,7 @@ IfcToolbox is one of the proposals in [openBIM Marketplace - buildingSMART Techn
 - IFC Splitter – Split IFC files by type/container (site, building, level) or simply split selected objects in the hierarchy. For IFC 4.3 infrastructure models, also by facility (road, railway, bridge, marine facility) and facility part (carriageway, track, ...).
 - IFC Relocator – Relocate the IFC world coordinate system and the project coordinate system. Align the origin of the two models. Georeference IFC4 and IFC 4.3 models with a projected CRS and map conversion (IfcMapConversion, and IfcMapConversionScaled on IFC 4.3).
 - IFC Anonymizer – Anonymous user-related information and specific product-related information. Simplify model submission in bidding activities or design competitions.
-- IFC Validator – Validate the existence of the properties of classes in the IFC file. Requirements can be pulled directly from the buildingSMART Data Dictionary (bSDD) instead of being written out by hand.
+- IFC Validator – Validate the existence of the properties of classes in the IFC file. Requirements can be pulled directly from the buildingSMART Data Dictionary (bSDD) instead of being written out by hand; they are turned into IDS, checked by the IDS engine and can be saved as an `.ids` file to share.
 - IDS Validator – Check a model against an [Information Delivery Specification](https://www.buildingsmart.org/standards/bsi-standards/information-delivery-specification-ids/) (IDS 1.0, the official buildingSMART standard since June 2024). Reads and writes `.ids` files and checks entity, attribute, property, classification, material and partOf facets, with restrictions, cardinality and unit conversion. Verified against all 307 runnable cases of the official buildingSMART test suite.
 
 ## Command line
@@ -135,7 +135,7 @@ IFC Toolbox GUI App is a free software, if you like it, please consider:
 - IfcToolbox.Core - Lower extension for IFC processing.
 - IfcToolbox.Tools - Higher implementation for each tool in IfcToolbox. 
 - IfcToolbox.Cli - The `ifctoolbox` command line tool.
-- IfcToolbox.App - A new WinUI 3 desktop app, rebuilt because the original app's source was never published. Work in progress: the shell, settings and file import are done; the tool pages are wired up stage by stage.
+- IfcToolbox.App - A new WinUI 3 desktop app, rebuilt because the original app's source was never published. Work in progress: the shell, settings, file import and the IFC Validator (IDS files or bSDD, with CSV and text reports) are done; the other tool pages are wired up stage by stage.
 - IfcToolbox.IfcConvert - Packaging only: carries the IfcConvert executable for the NuGet packages.
 - IfcToolbox.Tests - Unit tests with xUnit for Core, Tools and the CLI.
 - IfcToolbox.Examples - .Net core console app for tools example.

@@ -1,0 +1,11 @@
+<UserControl
+    x:Class="IfcToolbox.App.Controls.IdsResultsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Outcome of an IDS check: a verdict, then one expandable row per specification. -->
+    <StackPanel Spacing="8">
+        <InfoBar x:Name="Verdict" IsOpen="True" IsClosable="False" />
+        <StackPanel x:Name="Specifications" Spacing="4" />
+    </StackPanel>
+</UserControl>
