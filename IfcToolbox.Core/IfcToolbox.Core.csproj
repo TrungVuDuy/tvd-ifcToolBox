@@ -6,12 +6,13 @@
     <Description>IFC building blocks for IfcToolbox: IDS 1.0 validation, bSDD client, IFC 4.3 facilities and georeferencing, point optimisation, sub-model extraction, anonymisation and IfcConvert integration. IFC2X3, IFC4 and IFC 4.3, on xbim 6.</Description>
 
     <!--
-      Whether IfcConvert is embedded in this assembly (the original design, which the
-      desktop app relies on) or shipped beside it through the IfcToolbox.IfcConvert package.
-      Local builds keep embedding; packing turns it off:
-        dotnet pack -p:IfcToolboxEmbedIfcConvert=false
+      Whether IfcConvert is embedded in this assembly (the original design) or shipped beside
+      the application through IfcToolbox.IfcConvert. Beside is the default: embedding both the
+      x64 and x86 builds made this assembly 72 MB, and the executable was then written out next
+      to the application on first use anyway. To embed, as the original UWP app did:
+        dotnet build -p:IfcToolboxEmbedIfcConvert=true
     -->
-    <IfcToolboxEmbedIfcConvert Condition="'$(IfcToolboxEmbedIfcConvert)' == ''">true</IfcToolboxEmbedIfcConvert>
+    <IfcToolboxEmbedIfcConvert Condition="'$(IfcToolboxEmbedIfcConvert)' == ''">false</IfcToolboxEmbedIfcConvert>
   </PropertyGroup>
 
   <ItemGroup>

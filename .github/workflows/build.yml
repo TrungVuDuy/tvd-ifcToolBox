@@ -38,9 +38,9 @@ jobs:
           name: test-results
           path: '**/TestResults/*.trx'
 
-      # Packages ship IfcConvert in its own package instead of embedded in IfcToolbox.Core.
+      # IfcConvert goes in its own package, IfcToolbox.IfcConvert, not inside IfcToolbox.Core.
       - name: Pack
-        run: dotnet pack IfcToolbox.sln --configuration Release -p:IfcToolboxEmbedIfcConvert=false --output artifacts
+        run: dotnet pack IfcToolbox.sln --configuration Release --output artifacts
 
       # Install the tool from the packages just built and run it, so a broken package
       # layout (e.g. IfcConvert not reaching the tool) fails the build.
@@ -65,7 +65,7 @@ jobs:
       # A standalone ifctoolbox.exe (no .NET needed on the target machine) with IfcConvert
       # beside it, downloadable from the run's artifacts for manual testing.
       - name: Publish standalone executable
-        run: dotnet publish IfcToolbox.Cli/IfcToolbox.Cli.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:IfcToolboxEmbedIfcConvert=false -p:DebugType=none -o publish/ifctoolbox-win-x64
+        run: dotnet publish IfcToolbox.Cli/IfcToolbox.Cli.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:DebugType=none -o publish/ifctoolbox-win-x64
 
       - name: Smoke test the standalone executable
         shell: pwsh
@@ -81,3 +81,23 @@ jobs:
         with:
           name: ifctoolbox-win-x64
           path: publish/ifctoolbox-win-x64/*
+
+      # The desktop app, self-contained: a folder with IfcToolbox.exe that runs without
+      # installing .NET or the Windows App SDK.
+      - name: Publish the desktop app
+        run: dotnet publish IfcToolbox.App/IfcToolbox.App.csproj -c Release -p:DebugType=none -o publish/IfcToolbox-app-win-x64
+
+      # A WinUI app cannot be shown on the build agent, so check that what it needs to start
+      # and to convert made it into the folder; a missing .pri crashes it before any window.
+      - name: Check the desktop app folder
+        shell: pwsh
+        run: |
+          foreach ($file in 'IfcToolbox.exe', 'IfcToolbox.pri', 'IfcConvert_x64.exe', 'Assets/AppLogo.png', 'Microsoft.ui.xaml.dll') {
+            if (-not (Test-Path "publish/IfcToolbox-app-win-x64/$file")) { throw "$file is missing from the published app" }
+          }
+
+      - name: Upload the desktop app
+        uses: actions/upload-artifact@v4
+        with:
+          name: IfcToolbox-app-win-x64
+          path: publish/IfcToolbox-app-win-x64/*

@@ -1,6 +1,7 @@
 name: release
 
-# Publishes the NuGet packages when a version tag is pushed, e.g. v2.0.0-preview.1.
+# When a version tag is pushed, e.g. v2.0.0-preview.1: creates a GitHub release with the desktop
+# app and the command line tool, then publishes the NuGet packages.
 # Needs a NUGET_API_KEY repository secret; without it the push step fails and nothing is published.
 #
 # BEFORE THE FIRST RELEASE: the IDs IfcToolbox.Core and IfcToolbox.Tools are already owned
@@ -10,6 +11,10 @@ name: release
 on:
   push:
     tags: ['v*']
+
+permissions:
+  # To create the GitHub release with the desktop app and the command line tool.
+  contents: write
 
 jobs:
   publish:
@@ -32,8 +37,23 @@ jobs:
         env:
           IFCTOOLBOX_SKIP_NETWORK_TESTS: '1'
 
+      # Attached to a GitHub release for the tag, before the NuGet push so that a refused
+      # push (see above) does not hold the downloads back.
+      - name: Publish the desktop app and the command line tool
+        shell: pwsh
+        run: |
+          dotnet publish IfcToolbox.App/IfcToolbox.App.csproj -c Release -p:DebugType=none -o publish/IfcToolbox-app-win-x64
+          dotnet publish IfcToolbox.Cli/IfcToolbox.Cli.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:DebugType=none -o publish/ifctoolbox-win-x64
+          Compress-Archive -Path publish/IfcToolbox-app-win-x64/* -DestinationPath IfcToolbox-app-win-x64.zip
+          Compress-Archive -Path publish/ifctoolbox-win-x64/* -DestinationPath ifctoolbox-cli-win-x64.zip
+
+      - name: Create the GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create ${{ github.ref_name }} IfcToolbox-app-win-x64.zip ifctoolbox-cli-win-x64.zip --title ${{ github.ref_name }} --generate-notes --prerelease
+
       - name: Pack
-        run: dotnet pack IfcToolbox.sln --configuration Release -p:IfcToolboxEmbedIfcConvert=false --output artifacts
+        run: dotnet pack IfcToolbox.sln --configuration Release --output artifacts
 
       - name: Push
         run: dotnet nuget push "artifacts/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate

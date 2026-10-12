@@ -19,7 +19,7 @@
   </a>
 </p>
 
-> **About this repository.** This is a modified continuation of [IfcToolbox](https://github.com/youshengCode/IfcToolbox) by Yousheng Wang, which is no longer maintained upstream. It was imported from upstream version 1.2.1 and modified from September 2026 onwards: moved to .NET 8 and xbim 6, added IDS 1.0 validation, IFC 4.3 support, glTF output, a rewritten bSDD client and the `ifctoolbox` command line tool. The git history records every change. The Microsoft Store app, its releases and the badges above belong to the original project. This repository rebuilds the desktop app from scratch in WinUI 3 (`IfcToolbox.App`, work in progress) and does not publish to the Store.
+> **About this repository.** This is a modified continuation of [IfcToolbox](https://github.com/youshengCode/IfcToolbox) by Yousheng Wang, which is no longer maintained upstream. It was imported from upstream version 1.2.1 and modified from September 2026 onwards: moved to .NET 8 and xbim 6, added IDS 1.0 validation, IFC 4.3 support, glTF output, a rewritten bSDD client and the `ifctoolbox` command line tool. The git history records every change. The Microsoft Store app, its releases and the badges above belong to the original project. This repository rebuilds the desktop app from scratch in WinUI 3 (`IfcToolbox.App`, see [Desktop app](#desktop-app)) and does not publish to the Store.
 
 
 
@@ -60,7 +60,7 @@ ifctoolbox georef model.ifc --crs EPSG:25832 --eastings 333000 --northings 58000
 Or build a standalone `ifctoolbox.exe` that needs no .NET installation, with IfcConvert beside it (every CI run also uploads one as the `ifctoolbox-win-x64` artifact):
 
 ```
-dotnet publish IfcToolbox.Cli -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:IfcToolboxEmbedIfcConvert=false -p:DebugType=none -o publish/ifctoolbox-win-x64
+dotnet publish IfcToolbox.Cli -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:DebugType=none -o publish/ifctoolbox-win-x64
 ```
 
 Exit codes: `0` success, `1` the model failed validation, `2` usage error, `3` error. `validate` exiting with `1` lets it gate a CI pipeline; add `--json` to `info`, `validate` or `georef` for machine readable output.
@@ -69,9 +69,17 @@ Exit codes: `0` success, `1` the model failed validation, `2` usage error, `3` e
 
 IFC2X3, IFC4 and IFC 4.3 (IFC4X3_ADD2, ISO 16739-1:2024) for every tool. Converting IFC 4.3 models needs IfcConvert 0.8 or newer: the bundled IfcConvert 0.6 predates IFC 4.3, so point the `IFCTOOLBOX_IFCCONVERT` environment variable at a newer build.
 
-## GUI App in Microsoft Store 
+## Desktop app
 
-There is also a GUI version desktop app, which contains all the implementations of these tools. The IfcToolbox App is **designed for No-Code users and to provide a better user experience.**
+A new desktop app with every tool, rebuilt in WinUI 3 because the original app's source was never published. It follows the original's layout and adds IDS validation, requirements from bSDD that can be saved as IDS, IFC 4.3 splitting by facility and facility part, glTF output and georeferencing.
+
+It needs no installation: unzip it and run `IfcToolbox.exe` (Windows 10 1809 or later, x64). Every CI run uploads it as the `IfcToolbox-app-win-x64` artifact, and tagged releases attach it as a zip. To build it yourself, see [Source code projects](#source-code-projects).
+
+Settings are kept in `%LOCALAPPDATA%\IfcToolbox\settings.json`; if the app crashes it describes why in `crash.log` beside them. Converting IFC 4.3 models needs a newer IfcConvert, which can be chosen under Settings.
+
+## The original app in the Microsoft Store
+
+The original IFC Toolbox app by Yousheng Wang, version 1.2.1, which this repository does not maintain. It was **designed for No-Code users and to provide a better user experience.**
 
 **[Download IFC Toolbox from Microsoft Store](https://www.microsoft.com/en-us/p/ifc-toolbox/9n77phd2h471#activetab=pivot:overviewtab)**
 
@@ -135,15 +143,15 @@ IFC Toolbox GUI App is a free software, if you like it, please consider:
 - IfcToolbox.Core - Lower extension for IFC processing.
 - IfcToolbox.Tools - Higher implementation for each tool in IfcToolbox. 
 - IfcToolbox.Cli - The `ifctoolbox` command line tool.
-- IfcToolbox.App - A new WinUI 3 desktop app, rebuilt because the original app's source was never published. Work in progress: the shell, settings and file import are done, as are the IFC Validator (IDS files or bSDD, with CSV and text reports), the IFC Splitter (including IFC 4.3 facilities and facility parts) and the IFC Converter (with a setting to use a newer IfcConvert for IFC 4.3); the Optimizer, Relocator and Anonymizer pages come next.
+- IfcToolbox.App - The WinUI 3 desktop app with all six tools, rebuilt because the original app's source was never published.
 - IfcToolbox.IfcConvert - Packaging only: carries the IfcConvert executable for the NuGet packages.
 - IfcToolbox.Tests - Unit tests with xUnit for Core, Tools and the CLI.
 - IfcToolbox.Examples - .Net core console app for tools example.
 
-Local builds embed IfcConvert in IfcToolbox.Core, as the desktop app expects. The NuGet packages ship it separately instead, which keeps IfcToolbox.Core at about 0.1 MB:
+IfcConvert ships beside the application (the IfcToolbox.IfcConvert package) rather than embedded in IfcToolbox.Core, which keeps IfcToolbox.Core at about 0.1 MB. Add `-p:IfcToolboxEmbedIfcConvert=true` to embed it instead, as the original app did. Packages:
 
 ```
-dotnet pack IfcToolbox.sln -c Release -p:IfcToolboxEmbedIfcConvert=false -o artifacts
+dotnet pack IfcToolbox.sln -c Release -o artifacts
 ```
 
 The desktop app publishes self-contained to a folder with `IfcToolbox.exe`, which runs without installing anything:
