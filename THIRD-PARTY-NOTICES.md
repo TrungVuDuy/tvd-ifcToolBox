@@ -5,9 +5,9 @@
 Copyright (c) 2021 Yousheng Wang. Modifications from 2026 by their respective contributors.
 
 IFC Toolbox is free software under the GNU General Public License version 3 (`LICENSE.txt`).
-It comes with ABSOLUTELY NO WARRANTY. Its source code is published with every release: each
-release page on GitHub links a source code archive of exactly that version. The original
-project is at https://github.com/youshengCode/IfcToolbox.
+It comes with ABSOLUTELY NO WARRANTY. Its source code is at https://github.com/TrungVuDuy/tvd-ifcToolBox, and every
+release page there links a source code archive of exactly that version. The original project
+is at https://github.com/youshengCode/IfcToolbox.
 
 ## Components included
 

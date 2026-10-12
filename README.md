@@ -76,7 +76,7 @@ IFC2X3, IFC4 and IFC 4.3 (IFC4X3_ADD2, ISO 16739-1:2024) for every tool. Convert
 
 A new desktop app with every tool, rebuilt in WinUI 3 because the original app's source was never published. It follows the original's layout and adds the IFC Combiner, IDS validation, requirements from bSDD that can be saved as IDS, IFC 4.3 splitting by facility and facility part, glTF output and georeferencing.
 
-It needs no installation: unzip it and run `IfcToolbox.exe` (Windows 10 1809 or later, x64). Every CI run uploads it as the `IfcToolbox-app-win-x64` artifact, and tagged releases attach it as a zip. To build it yourself, see [Source code projects](#source-code-projects).
+It needs no installation: download `IfcToolbox-app-win-x64.zip` from [Releases](https://github.com/TrungVuDuy/tvd-ifcToolBox/releases), unzip it and run `IfcToolbox.exe` (Windows 10 1809 or later, x64). Windows may warn that the app is from an unknown publisher, as it is not code signed yet; choose More info, then Run anyway. Every CI run also uploads it as the `IfcToolbox-app-win-x64` artifact. To build it yourself, see [Source code projects](#source-code-projects).
 
 Settings are kept in `%LOCALAPPDATA%\IfcToolbox\settings.json`; if the app crashes it describes why in `crash.log` beside them. Converting IFC 4.3 models needs a newer IfcConvert, which can be chosen under Settings.
 

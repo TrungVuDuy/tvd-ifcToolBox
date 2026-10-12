@@ -39,6 +39,7 @@
                         Credit for the original app, its design and its tools goes to its author and everyone who helped with it.
                         The Microsoft Store app and its releases belong to the original project.
                     </TextBlock>
+                    <HyperlinkButton Content="This version on GitHub: source code, releases, issues" NavigateUri="https://github.com/TrungVuDuy/tvd-ifcToolBox" Padding="0" />
                     <HyperlinkButton Content="Original IFC Toolbox on GitHub" NavigateUri="https://github.com/youshengCode/IfcToolbox" Padding="0" />
                 </StackPanel>
             </controls:Section>

@@ -27,7 +27,9 @@
     <Copyright>Copyright (c) 2021 Yousheng Wang and contributors</Copyright>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>PACKAGE.md</PackageReadmeFile>
-    <PackageProjectUrl>https://github.com/youshengCode/IfcToolbox</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/TrungVuDuy/tvd-ifcToolBox</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/TrungVuDuy/tvd-ifcToolBox.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
     <PackageTags>IFC;BIM;openBIM;IDS;buildingSMART;IFC4x3;xbim</PackageTags>
     <IsPackable>false</IsPackable>
     <IncludeSymbols>true</IncludeSymbols>
