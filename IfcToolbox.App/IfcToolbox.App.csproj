@@ -25,10 +25,18 @@
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <!-- LICENSE, THIRD-PARTY-NOTICES.md and licenses beside the exe (Directory.Build.targets). -->
     <IfcToolboxShipsNotices>true</IfcToolboxShipsNotices>
+    <!--
+      MVVMTK0045: [ObservableProperty] on fields is not AOT compatible for WinRT; the fix is
+      partial properties, which need C# 13 and so the .NET 9 SDK. The app is published without
+      AOT or trimming, so the fields are fine; revisit when moving to a newer SDK.
+    -->
+    <NoWarn>$(NoWarn);MVVMTK0045</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" Version="2.3.9" />
+    <!-- WinUI 2.3.9 asks for 2.1.8, which nuget.org does not have; 2.1.9 is what resolves anyway (NU1603). -->
+    <PackageReference Include="Microsoft.WindowsAppSDK.InteractiveExperiences" Version="2.1.9" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.2705" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
   </ItemGroup>

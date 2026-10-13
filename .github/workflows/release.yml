@@ -2,7 +2,8 @@ name: release
 
 # When a version tag is pushed, e.g. v2.0.0-preview.1: creates a GitHub release with the desktop
 # app and the command line tool, then publishes the NuGet packages.
-# Needs a NUGET_API_KEY repository secret; without it the push step fails and nothing is published.
+# Publishing to NuGet needs a NUGET_API_KEY repository secret; without it those steps are
+# skipped and only the GitHub release is made.
 #
 # BEFORE THE FIRST RELEASE: the IDs IfcToolbox.Core and IfcToolbox.Tools are already owned
 # on nuget.org by an unrelated account, so pushing them is refused. Rename the PackageId in
@@ -19,10 +20,14 @@ permissions:
 jobs:
   publish:
     runs-on: windows-latest
+    env:
+      # Empty when the secret is not set. Secrets cannot be tested in a step's if, the
+      # environment can, so the NuGet steps below are skipped instead of failing the release.
+      NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: '8.0.x'
 
@@ -47,13 +52,30 @@ jobs:
           Compress-Archive -Path publish/IfcToolbox-app-win-x64/* -DestinationPath IfcToolbox-app-win-x64.zip
           Compress-Archive -Path publish/ifctoolbox-win-x64/* -DestinationPath ifctoolbox-cli-win-x64.zip
 
+      # Re-running the workflow for the same tag replaces the files instead of failing.
       - name: Create the GitHub release
+        shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create ${{ github.ref_name }} IfcToolbox-app-win-x64.zip ifctoolbox-cli-win-x64.zip --title ${{ github.ref_name }} --generate-notes --prerelease
+          TAG: ${{ github.ref_name }}
+        run: |
+          gh release view $env:TAG 2>$null | Out-Null
+          if ($LASTEXITCODE -eq 0) {
+            gh release upload $env:TAG IfcToolbox-app-win-x64.zip ifctoolbox-cli-win-x64.zip --clobber
+          } else {
+            gh release create $env:TAG IfcToolbox-app-win-x64.zip ifctoolbox-cli-win-x64.zip --title $env:TAG --generate-notes --prerelease
+          }
+          if ($LASTEXITCODE -ne 0) { throw "The GitHub release could not be created or updated." }
 
       - name: Pack
+        if: env.NUGET_API_KEY != ''
         run: dotnet pack IfcToolbox.sln --configuration Release --output artifacts
 
       - name: Push
-        run: dotnet nuget push "artifacts/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+        if: env.NUGET_API_KEY != ''
+        run: dotnet nuget push "artifacts/*.nupkg" --api-key $env:NUGET_API_KEY --source https://api.nuget.org/v3/index.json --skip-duplicate
+
+      - name: NuGet skipped
+        if: env.NUGET_API_KEY == ''
+        shell: pwsh
+        run: echo "::notice title=NuGet not published::No NUGET_API_KEY secret, so the packages were not pushed. The GitHub release has the app and the command line tool."
