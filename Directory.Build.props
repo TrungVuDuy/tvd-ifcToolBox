@@ -22,7 +22,7 @@
     are attached in Directory.Build.targets, which runs after each project has decided.
   -->
   <PropertyGroup>
-    <Version>2.0.0-preview.1</Version>
+    <Version>2.0.0-preview.2</Version>
     <Authors>Yousheng Wang and contributors</Authors>
     <Copyright>Copyright (c) 2021 Yousheng Wang and contributors</Copyright>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
