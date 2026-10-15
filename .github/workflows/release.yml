@@ -5,6 +5,9 @@ name: release
 # Publishing to NuGet needs a NUGET_API_KEY repository secret; without it those steps are
 # skipped and only the GitHub release is made.
 #
+# Code signing goes through SignPath (CODE_SIGNING.md) and needs a SIGNPATH_API_TOKEN secret
+# and a SIGNPATH_ORGANIZATION_ID variable; without them the release is made unsigned.
+#
 # BEFORE THE FIRST RELEASE: the IDs IfcToolbox.Core and IfcToolbox.Tools are already owned
 # on nuget.org by an unrelated account, so pushing them is refused. Rename the PackageId in
 # IfcToolbox.Core.csproj, IfcToolbox.Tools.csproj (and, for consistency, IfcToolbox.Cli.csproj
@@ -16,6 +19,8 @@ on:
 permissions:
   # To create the GitHub release with the desktop app and the command line tool.
   contents: write
+  # For SignPath to fetch the unsigned files from this run.
+  actions: read
 
 jobs:
   publish:
@@ -24,6 +29,7 @@ jobs:
       # Empty when the secret is not set. Secrets cannot be tested in a step's if, the
       # environment can, so the NuGet steps below are skipped instead of failing the release.
       NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+      SIGNPATH_API_TOKEN: ${{ secrets.SIGNPATH_API_TOKEN }}
     steps:
       - uses: actions/checkout@v7
 
@@ -49,6 +55,52 @@ jobs:
         run: |
           dotnet publish IfcToolbox.App/IfcToolbox.App.csproj -c Release -p:DebugType=none -o publish/IfcToolbox-app-win-x64
           dotnet publish IfcToolbox.Cli/IfcToolbox.Cli.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:DebugType=none -o publish/ifctoolbox-win-x64
+
+      # SignPath signs what .signpath/artifact-configuration.xml lists and hands the folder back.
+      - name: Upload for signing
+        id: unsigned
+        if: env.SIGNPATH_API_TOKEN != ''
+        uses: actions/upload-artifact@v7
+        with:
+          name: unsigned
+          path: publish/
+          # A re-run of the workflow uploads it again.
+          overwrite: true
+
+      - name: Sign with SignPath
+        if: env.SIGNPATH_API_TOKEN != ''
+        uses: signpath/github-action-submit-signing-request@v3
+        with:
+          api-token: ${{ secrets.SIGNPATH_API_TOKEN }}
+          organization-id: ${{ vars.SIGNPATH_ORGANIZATION_ID }}
+          project-slug: ${{ vars.SIGNPATH_PROJECT_SLUG || 'tvd-ifcToolBox' }}
+          signing-policy-slug: ${{ vars.SIGNPATH_SIGNING_POLICY_SLUG || 'release-signing' }}
+          github-artifact-id: ${{ steps.unsigned.outputs.artifact-id }}
+          wait-for-completion: true
+          # A release signing request waits for a person to approve it in SignPath.
+          wait-for-completion-timeout-in-seconds: 3600
+          output-artifact-directory: signed
+
+      - name: Use the signed files
+        if: env.SIGNPATH_API_TOKEN != ''
+        shell: pwsh
+        run: |
+          Remove-Item publish -Recurse -Force
+          Move-Item signed publish
+          foreach ($file in 'publish/IfcToolbox-app-win-x64/IfcToolbox.exe', 'publish/ifctoolbox-win-x64/ifctoolbox.exe') {
+            $signature = Get-AuthenticodeSignature $file
+            if ($signature.Status -ne 'Valid') { throw "$file is not signed: $($signature.StatusMessage)" }
+            Write-Host "$file signed by $($signature.SignerCertificate.Subject)"
+          }
+
+      - name: Signing skipped
+        if: env.SIGNPATH_API_TOKEN == ''
+        shell: pwsh
+        run: echo "::notice title=Not code signed::No SIGNPATH_API_TOKEN secret, so the executables are released unsigned."
+
+      - name: Zip
+        shell: pwsh
+        run: |
           Compress-Archive -Path publish/IfcToolbox-app-win-x64/* -DestinationPath IfcToolbox-app-win-x64.zip
           Compress-Archive -Path publish/ifctoolbox-win-x64/* -DestinationPath ifctoolbox-cli-win-x64.zip
 
