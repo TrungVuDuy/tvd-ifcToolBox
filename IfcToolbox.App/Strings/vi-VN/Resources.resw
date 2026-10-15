@@ -1,0 +1,1579 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About_BsddTerms" xml:space="preserve">
+    <value>Điều khoản sử dụng bSDD</value>
+  </data>
+  <data name="About_Continuation.Text" xml:space="preserve">
+    <value>Đây là bản tiếp nối có chỉnh sửa của IFC Toolbox do Yousheng Wang phát triển, dự án gốc không còn được duy trì. Bản này chuyển ứng dụng từ UWP sang WinUI 3, chuyển các công cụ sang .NET 8 và xbim 6, đồng thời bổ sung kiểm tra IDS 1.0, hỗ trợ IFC 4.3, xuất glTF và một trình kết nối bSDD mới.</value>
+  </data>
+  <data name="About_Copyright.Text" xml:space="preserve">
+    <value>Bản quyền (c) 2021 Yousheng Wang. Các chỉnh sửa từ năm 2026 thuộc về những người đóng góp tương ứng.</value>
+  </data>
+  <data name="About_Credit.Text" xml:space="preserve">
+    <value>Công lao của ứng dụng gốc, thiết kế và các công cụ thuộc về tác giả và tất cả những người đã góp sức. Ứng dụng trên Microsoft Store và các bản phát hành của nó thuộc về dự án gốc.</value>
+  </data>
+  <data name="About_Dependencies.Header" xml:space="preserve">
+    <value>Thành phần sử dụng và tham khảo</value>
+  </data>
+  <data name="About_Disclaimer.Header" xml:space="preserve">
+    <value>Miễn trừ trách nhiệm</value>
+  </data>
+  <data name="About_DisclaimerText.Text" xml:space="preserve">
+    <value>Chương trình này được phân phối với mong muốn hữu ích nhưng KHÔNG KÈM BẤT KỲ BẢO ĐẢM NÀO, kể cả bảo đảm ngụ ý về KHẢ NĂNG THƯƠNG MẠI hay SỰ PHÙ HỢP CHO MỘT MỤC ĐÍCH CỤ THỂ. Hãy kiểm tra các tệp do chương trình tạo ra trước khi sử dụng. Xem Giấy phép Công cộng GNU (GNU General Public License) để biết thêm chi tiết.</value>
+  </data>
+  <data name="About_Header.Title" xml:space="preserve">
+    <value>Giới thiệu</value>
+  </data>
+  <data name="About_License.Header" xml:space="preserve">
+    <value>Giấy phép</value>
+  </data>
+  <data name="About_Notices.Content" xml:space="preserve">
+    <value>Thông báo và giấy phép của bên thứ ba (tiếng Anh)</value>
+  </data>
+  <data name="About_OriginalRepo.Content" xml:space="preserve">
+    <value>IFC Toolbox gốc trên GitHub</value>
+  </data>
+  <data name="About_Privacy.Header" xml:space="preserve">
+    <value>Quyền riêng tư</value>
+  </data>
+  <data name="About_PrivacyText.Text" xml:space="preserve">
+    <value>IFC Toolbox xử lý tệp của bạn ngay trên máy tính này và không thu thập dữ liệu sử dụng. Chỉ các tính năng bSDD mới kết nối mạng: chúng gửi nội dung bạn tìm kiếm tới dịch vụ buildingSMART Data Dictionary.</value>
+  </data>
+  <data name="About_ReadLicense.Content" xml:space="preserve">
+    <value>Đọc giấy phép (tiếng Anh)</value>
+  </data>
+  <data name="About_Tagline.Text" xml:space="preserve">
+    <value>Bộ công cụ đơn giản để xử lý tệp IFC.</value>
+  </data>
+  <data name="About_ThisRepo.Content" xml:space="preserve">
+    <value>Phiên bản này trên GitHub: mã nguồn, bản phát hành, báo lỗi</value>
+  </data>
+  <data name="About_ThisVersion.Header" xml:space="preserve">
+    <value>Phiên bản này</value>
+  </data>
+  <data name="About_UseBsdd" xml:space="preserve">
+    <value>Phân loại và thuộc tính</value>
+  </data>
+  <data name="About_UseCsv" xml:space="preserve">
+    <value>Báo cáo CSV</value>
+  </data>
+  <data name="About_UseGeometry" xml:space="preserve">
+    <value>Chuyển đổi hình học</value>
+  </data>
+  <data name="About_UseIds" xml:space="preserve">
+    <value>Yêu cầu IDS 1.0</value>
+  </data>
+  <data name="About_UseIfcModels" xml:space="preserve">
+    <value>Đọc và ghi mô hình IFC</value>
+  </data>
+  <data name="About_UseLogging" xml:space="preserve">
+    <value>Ghi nhật ký</value>
+  </data>
+  <data name="About_UseUi" xml:space="preserve">
+    <value>Giao diện người dùng</value>
+  </data>
+  <data name="About_Version" xml:space="preserve">
+    <value>Phiên bản {0}</value>
+  </data>
+  <data name="Anonymizer_ActorRoleCheck.Content" xml:space="preserve">
+    <value>Vai trò (IfcActorRole)</value>
+  </data>
+  <data name="Anonymizer_AddRules.Text" xml:space="preserve">
+    <value>Thêm quy tắc cho các loại đối tượng được đánh dấu</value>
+  </data>
+  <data name="Anonymizer_AddRulesButton.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Thêm quy tắc cho các loại đối tượng được đánh dấu</value>
+  </data>
+  <data name="Anonymizer_ApplicationCheck.Content" xml:space="preserve">
+    <value>Ứng dụng tạo mô hình</value>
+  </data>
+  <data name="Anonymizer_ClearRules.Content" xml:space="preserve">
+    <value>Xóa hết</value>
+  </data>
+  <data name="Anonymizer_ColumnClass.Text" xml:space="preserve">
+    <value>Lớp</value>
+  </data>
+  <data name="Anonymizer_ColumnFind.Text" xml:space="preserve">
+    <value>Văn bản cần tìm</value>
+  </data>
+  <data name="Anonymizer_ColumnReplace.Text" xml:space="preserve">
+    <value>Thay bằng</value>
+  </data>
+  <data name="Anonymizer_Failed" xml:space="preserve">
+    <value>Không ẩn danh được mô hình</value>
+  </data>
+  <data name="Anonymizer_File.Header" xml:space="preserve">
+    <value>Tệp cần ẩn danh</value>
+  </data>
+  <data name="Anonymizer_FileNameCheck.Content" xml:space="preserve">
+    <value>Đầu tệp: tên, tác giả, tổ chức, phần mềm, ngày</value>
+  </data>
+  <data name="Anonymizer_FindBox.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Văn bản cần tìm</value>
+  </data>
+  <data name="Anonymizer_Finished" xml:space="preserve">
+    <value>Đã ẩn danh xong</value>
+  </data>
+  <data name="Anonymizer_FinishedNote" xml:space="preserve">
+    <value>Mô hình mới, kèm nhật ký mọi giá trị đã được thay đổi hoặc xóa.</value>
+  </data>
+  <data name="Anonymizer_InNameCheck.Content" xml:space="preserve">
+    <value>Tên</value>
+  </data>
+  <data name="Anonymizer_InObjectTypeCheck.Content" xml:space="preserve">
+    <value>Loại đối tượng</value>
+  </data>
+  <data name="Anonymizer_InProductPropsCheck.Content" xml:space="preserve">
+    <value>Thuộc tính của sản phẩm</value>
+  </data>
+  <data name="Anonymizer_InTypePropsCheck.Content" xml:space="preserve">
+    <value>Thuộc tính của kiểu</value>
+  </data>
+  <data name="Anonymizer_NeedModel" xml:space="preserve">
+    <value>Hãy thêm mô hình IFC cần ẩn danh.</value>
+  </data>
+  <data name="Anonymizer_NeedModelForTypes" xml:space="preserve">
+    <value>Hãy thêm mô hình để liệt kê các loại đối tượng.</value>
+  </data>
+  <data name="Anonymizer_NeedOption" xml:space="preserve">
+    <value>Hãy bật ít nhất một kiểu ẩn danh.</value>
+  </data>
+  <data name="Anonymizer_NeedRules" xml:space="preserve">
+    <value>Hãy đánh dấu các loại đối tượng và thêm thành quy tắc, hoặc tắt chức năng thay thế sản phẩm.</value>
+  </data>
+  <data name="Anonymizer_NoTypes" xml:space="preserve">
+    <value>Không có sản phẩm nào trong mô hình có loại đối tượng để thay thế.</value>
+  </data>
+  <data name="Anonymizer_OrganizationCheck.Content" xml:space="preserve">
+    <value>Tổ chức (IfcOrganization)</value>
+  </data>
+  <data name="Anonymizer_Output.Header" xml:space="preserve">
+    <value>Tệp đã ẩn danh</value>
+  </data>
+  <data name="Anonymizer_PersonAndOrganizationCheck.Content" xml:space="preserve">
+    <value>Cá nhân thuộc tổ chức</value>
+  </data>
+  <data name="Anonymizer_PersonCheck.Content" xml:space="preserve">
+    <value>Cá nhân (IfcPerson)</value>
+  </data>
+  <data name="Anonymizer_PostalCheck.Content" xml:space="preserve">
+    <value>Địa chỉ bưu chính</value>
+  </data>
+  <data name="Anonymizer_ProductNote.Text" xml:space="preserve">
+    <value>Thay thế đoạn văn bản như nhãn hiệu hay tên sản phẩm ở mọi chỗ nó xuất hiện trong các sản phẩm thuộc một lớp: tên, loại đối tượng, và giá trị thuộc tính của sản phẩm cũng như kiểu (type) của nó.</value>
+  </data>
+  <data name="Anonymizer_Products.Header" xml:space="preserve">
+    <value>Ẩn danh IfcProduct nâng cao</value>
+  </data>
+  <data name="Anonymizer_ProductSwitch.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Thay thế tên sản phẩm và nhãn hiệu</value>
+  </data>
+  <data name="Anonymizer_ProductSwitch.Header" xml:space="preserve">
+    <value>Thay thế tên sản phẩm và nhãn hiệu</value>
+  </data>
+  <data name="Anonymizer_Ready" xml:space="preserve">
+    <value>Sẽ ghi một tệp mới kèm nhật ký mọi thay đổi; tệp gốc được giữ nguyên.</value>
+  </data>
+  <data name="Anonymizer_RemoveRule.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Bỏ quy tắc</value>
+  </data>
+  <data name="Anonymizer_RemoveRuleName" xml:space="preserve">
+    <value>Bỏ quy tắc {0}</value>
+  </data>
+  <data name="Anonymizer_ReplaceBox.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Thay bằng</value>
+  </data>
+  <data name="Anonymizer_RulesHint.Text" xml:space="preserve">
+    <value>Mỗi quy tắc thay thế đoạn văn bản của nó trong các sản phẩm thuộc lớp tương ứng. Có thể sửa đoạn cần tìm hoặc nội dung thay thế khi cần.</value>
+  </data>
+  <data name="Anonymizer_RulesTitle.Text" xml:space="preserve">
+    <value>Quy tắc thay thế</value>
+  </data>
+  <data name="Anonymizer_Running" xml:space="preserve">
+    <value>Đang ẩn danh {0}…</value>
+  </data>
+  <data name="Anonymizer_TelecomCheck.Content" xml:space="preserve">
+    <value>Số điện thoại và địa chỉ e-mail</value>
+  </data>
+  <data name="Anonymizer_TickTypes" xml:space="preserve">
+    <value>Đánh dấu các loại đối tượng cần ẩn, cả một lớp hoặc từng loại, rồi thêm chúng thành quy tắc.</value>
+  </data>
+  <data name="Anonymizer_TypesTitle.Text" xml:space="preserve">
+    <value>Các loại đối tượng trong mô hình</value>
+  </data>
+  <data name="Anonymizer_TypeTree.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Các loại đối tượng</value>
+  </data>
+  <data name="Anonymizer_User.Header" xml:space="preserve">
+    <value>Thông tin người dùng và tổ chức</value>
+  </data>
+  <data name="Anonymizer_UserNote.Text" xml:space="preserve">
+    <value>Xóa lịch sử sở hữu (ai đã tạo hoặc sửa từng đối tượng, bằng ứng dụng nào và khi nào) cùng các loại thông tin được đánh dấu.</value>
+  </data>
+  <data name="Anonymizer_UserSwitch.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Xóa thông tin người tạo mô hình</value>
+  </data>
+  <data name="Anonymizer_UserSwitch.Header" xml:space="preserve">
+    <value>Xóa thông tin người tạo mô hình</value>
+  </data>
+  <data name="Combiner_BaseNote.Text" xml:space="preserve">
+    <value>Tệp đầu tiên là tệp gốc: dự án, đơn vị, hệ tọa độ và hướng Bắc thực của nó được giữ nguyên. Đưa một tệp lên đầu để chọn nó làm tệp gốc.</value>
+  </data>
+  <data name="Combiner_ByName.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Hợp nhất theo tên</value>
+  </data>
+  <data name="Combiner_ByName.Header" xml:space="preserve">
+    <value>Hợp nhất khu đất, tòa nhà và tầng trùng tên</value>
+  </data>
+  <data name="Combiner_ByNameNote.Text" xml:space="preserve">
+    <value>Các phần tử cùng GlobalId luôn được hợp nhất. Mô hình của từng bộ môn xuất riêng thường trùng tên tầng nhưng khác GlobalId; tùy chọn này hợp nhất cả những phần tử đó. Dù thế nào, chỉ những phần tử có vị trí đặt giống hệt nhau mới được hợp nhất, nên không có gì bị dịch chuyển.</value>
+  </data>
+  <data name="Combiner_CannotCombine" xml:space="preserve">
+    <value>Không thể gộp các tệp này</value>
+  </data>
+  <data name="Combiner_Configuration.Header" xml:space="preserve">
+    <value>Cấu hình</value>
+  </data>
+  <data name="Combiner_Failed" xml:space="preserve">
+    <value>Không gộp được các mô hình</value>
+  </data>
+  <data name="Combiner_Files.Header" xml:space="preserve">
+    <value>Các tệp cần gộp</value>
+  </data>
+  <data name="Combiner_FileSchema" xml:space="preserve">
+    <value>{0} là {1}</value>
+  </data>
+  <data name="Combiner_Finished" xml:space="preserve">
+    <value>Đã gộp xong</value>
+  </data>
+  <data name="Combiner_NeedModels" xml:space="preserve">
+    <value>Hãy thêm các mô hình IFC cần gộp.</value>
+  </data>
+  <data name="Combiner_NeedOneMore" xml:space="preserve">
+    <value>Hãy thêm ít nhất một mô hình nữa.</value>
+  </data>
+  <data name="Combiner_Output.Header" xml:space="preserve">
+    <value>Tệp đã gộp</value>
+  </data>
+  <data name="Combiner_Ready" xml:space="preserve">
+    <value>Sẵn sàng gộp {0} mô hình thành {1}.</value>
+  </data>
+  <data name="Combiner_Report" xml:space="preserve">
+    <value>Chi tiết quá trình gộp</value>
+  </data>
+  <data name="Combiner_ReportKeptApart" xml:space="preserve">
+    <value>Giữ riêng vì vị trí đặt khác nhau</value>
+  </data>
+  <data name="Combiner_ReportMerged" xml:space="preserve">
+    <value>Đã hợp nhất</value>
+  </data>
+  <data name="Combiner_ReportMergedNothing" xml:space="preserve">
+    <value>không có: mọi khu đất, tòa nhà và tầng đều khác nhau</value>
+  </data>
+  <data name="Combiner_ReportRenewed" xml:space="preserve">
+    <value>GlobalId được tạo mới để không bị trùng</value>
+  </data>
+  <data name="Combiner_ReportSkipped" xml:space="preserve">
+    <value>Chỉ sao chép một lần vì đã có trong tệp trước</value>
+  </data>
+  <data name="Combiner_ReportTypes" xml:space="preserve">
+    <value>Kiểu (type) có trong nhiều tệp, nay gộp thành một</value>
+  </data>
+  <data name="Combiner_ReportUnits" xml:space="preserve">
+    <value>Đã chuyển đổi chiều dài</value>
+  </data>
+  <data name="Combiner_Running" xml:space="preserve">
+    <value>Đang gộp {0} mô hình…</value>
+  </data>
+  <data name="Combiner_SchemasDiffer" xml:space="preserve">
+    <value>Chỉ gộp được các tệp cùng phiên bản IFC: {0}.</value>
+  </data>
+  <data name="Combiner_SchemaWarning.Title" xml:space="preserve">
+    <value>Không thể gộp các tệp này</value>
+  </data>
+  <data name="Combiner_SharedTitle.Text" xml:space="preserve">
+    <value>Phần tử có trong nhiều tệp</value>
+  </data>
+  <data name="Combiner_Skip.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Sao chép phần tử dùng chung một lần</value>
+  </data>
+  <data name="Combiner_Skip.Header" xml:space="preserve">
+    <value>Chỉ sao chép một lần phần tử có trong nhiều tệp</value>
+  </data>
+  <data name="Combiner_SkipNote.Text" xml:space="preserve">
+    <value>Phần tử có cùng GlobalId trong hai tệp là cùng một đối tượng, ví dụ tấm sàn mà mô hình kết cấu sao chép từ mô hình kiến trúc. Khi tắt: phần tử được sao chép từ từng tệp và gán GlobalId mới.</value>
+  </data>
+  <data name="Combiner_SpatialTitle.Text" xml:space="preserve">
+    <value>Cấu trúc không gian</value>
+  </data>
+  <data name="Combiner_Summary" xml:space="preserve">
+    <value>{0} phần tử từ {1} tệp trong một mô hình.</value>
+  </data>
+  <data name="Combiner_Units.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Chuyển đổi đơn vị chiều dài</value>
+  </data>
+  <data name="Combiner_Units.Header" xml:space="preserve">
+    <value>Chuyển các tệp dùng đơn vị khác sang đơn vị của tệp gốc</value>
+  </data>
+  <data name="Combiner_UnitsNote.Text" xml:space="preserve">
+    <value>Khi gộp một tệp tính bằng mét vào tệp gốc tính bằng milimét, mọi kích thước của nó được nhân 1000 trước, để nằm đúng vị trí và đúng kích cỡ. Bản thân tệp đó không bị thay đổi. Khi tắt: các tệp như vậy sẽ bị từ chối.</value>
+  </data>
+  <data name="Combiner_UnitsTitle.Text" xml:space="preserve">
+    <value>Đơn vị chiều dài</value>
+  </data>
+  <data name="Combiner_UnknownSchema" xml:space="preserve">
+    <value>không rõ</value>
+  </data>
+  <data name="Common_CancelledNothingWritten" xml:space="preserve">
+    <value>Đã hủy; không có tệp nào được ghi.</value>
+  </data>
+  <data name="Common_Done" xml:space="preserve">
+    <value>Hoàn tất trong {0:0.0} giây.</value>
+  </data>
+  <data name="Common_ModelUnreadable" xml:space="preserve">
+    <value>Không đọc được mô hình</value>
+  </data>
+  <data name="Common_NothingWritten" xml:space="preserve">
+    <value>Không có tệp nào được ghi</value>
+  </data>
+  <data name="Common_Off" xml:space="preserve">
+    <value>Tắt</value>
+  </data>
+  <data name="Common_On" xml:space="preserve">
+    <value>Bật</value>
+  </data>
+  <data name="Common_Reading" xml:space="preserve">
+    <value>Đang đọc {0}…</value>
+  </data>
+  <data name="Common_Warning" xml:space="preserve">
+    <value>Cảnh báo</value>
+  </data>
+  <data name="Converter_BundledVersion" xml:space="preserve">
+    <value>Đang dùng IfcConvert {0} đi kèm. Các định dạng mà nó không xuất được sẽ bị làm mờ; có thể chọn IfcConvert mới hơn trong Cài đặt.</value>
+  </data>
+  <data name="Converter_CannotRead43" xml:space="preserve">
+    <value>IfcConvert {0} không đọc được IFC 4.3 ({1}). Hãy chọn IfcConvert 0.8 trở lên trong Cài đặt, hoặc bỏ các tệp này.</value>
+  </data>
+  <data name="Converter_Center.Content" xml:space="preserve">
+    <value>Dời mô hình về gốc tọa độ</value>
+  </data>
+  <data name="Converter_CheckingIfcConvert" xml:space="preserve">
+    <value>Đang kiểm tra IfcConvert…</value>
+  </data>
+  <data name="Converter_CustomVersion" xml:space="preserve">
+    <value>Đang dùng IfcConvert {0} đã chọn trong Cài đặt.</value>
+  </data>
+  <data name="Converter_Files.Header" xml:space="preserve">
+    <value>Các tệp cần chuyển đổi</value>
+  </data>
+  <data name="Converter_Filter.Header" xml:space="preserve">
+    <value>Lọc theo lớp IFC</value>
+  </data>
+  <data name="Converter_FilterSwitch.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Chỉ chuyển đổi các lớp IFC được đánh dấu</value>
+  </data>
+  <data name="Converter_FilterSwitch.OffContent" xml:space="preserve">
+    <value>Tắt: mọi thứ trừ lỗ mở (và không gian với định dạng 3D)</value>
+  </data>
+  <data name="Converter_FilterSwitch.OnContent" xml:space="preserve">
+    <value>Bật: chỉ các lớp được đánh dấu</value>
+  </data>
+  <data name="Converter_Finished" xml:space="preserve">
+    <value>Đã chuyển đổi xong</value>
+  </data>
+  <data name="Converter_Format_DAE" xml:space="preserve">
+    <value>Digital Asset Exchange</value>
+  </data>
+  <data name="Converter_Format_GLB" xml:space="preserve">
+    <value>glTF 2.0 nhị phân, cho trình xem web và game engine</value>
+  </data>
+  <data name="Converter_Format_H5" xml:space="preserve">
+    <value>Hierarchical Data Format</value>
+  </data>
+  <data name="Converter_Format_IFC" xml:space="preserve">
+    <value>IFC-SPF do IfcConvert ghi lại</value>
+  </data>
+  <data name="Converter_Format_IGS" xml:space="preserve">
+    <value>Initial Graphics Exchange Specification</value>
+  </data>
+  <data name="Converter_Format_JSON" xml:space="preserve">
+    <value>xeokit JSON cho trình xem xeokit</value>
+  </data>
+  <data name="Converter_Format_OBJ" xml:space="preserve">
+    <value>Wavefront OBJ</value>
+  </data>
+  <data name="Converter_Format_STP" xml:space="preserve">
+    <value>Tiêu chuẩn trao đổi dữ liệu sản phẩm (STEP)</value>
+  </data>
+  <data name="Converter_Format_SVG" xml:space="preserve">
+    <value>Đồ họa vector SVG, mặt bằng 2D</value>
+  </data>
+  <data name="Converter_Format_TTL" xml:space="preserve">
+    <value>RDF Turtle kèm hình học WKT</value>
+  </data>
+  <data name="Converter_Format_XML" xml:space="preserve">
+    <value>Định nghĩa thuộc tính và cây phân rã</value>
+  </data>
+  <data name="Converter_Format.Header" xml:space="preserve">
+    <value>Chọn định dạng đích</value>
+  </data>
+  <data name="Converter_Geometry.Text" xml:space="preserve">
+    <value>Hình học</value>
+  </data>
+  <data name="Converter_Naming.Header" xml:space="preserve">
+    <value>Quy ước đặt tên</value>
+  </data>
+  <data name="Converter_NamingGuids.Content" xml:space="preserve">
+    <value>GUID của phần tử (IfcRoot.GlobalId)</value>
+  </data>
+  <data name="Converter_NamingIds.Content" xml:space="preserve">
+    <value>Mã riêng của IfcConvert</value>
+  </data>
+  <data name="Converter_NamingNames.Content" xml:space="preserve">
+    <value>Tên phần tử (IfcRoot.Name)</value>
+  </data>
+  <data name="Converter_NeedClass" xml:space="preserve">
+    <value>Hãy đánh dấu ít nhất một lớp IFC, hoặc tắt bộ lọc.</value>
+  </data>
+  <data name="Converter_NeedModels" xml:space="preserve">
+    <value>Hãy thêm các mô hình IFC cần chuyển đổi.</value>
+  </data>
+  <data name="Converter_NeedsVersion" xml:space="preserve">
+    <value>Cần IfcConvert {0} trở lên</value>
+  </data>
+  <data name="Converter_NothingConverted" xml:space="preserve">
+    <value>Không chuyển đổi được tệp nào</value>
+  </data>
+  <data name="Converter_OpenSettings" xml:space="preserve">
+    <value>Mở Cài đặt</value>
+  </data>
+  <data name="Converter_Options.Header" xml:space="preserve">
+    <value>Tùy chọn</value>
+  </data>
+  <data name="Converter_OptionsNote.Text" xml:space="preserve">
+    <value>Tùy chọn nào định dạng không hỗ trợ sẽ được bỏ qua với định dạng đó. Tệp được ghi cạnh mô hình, với phần mở rộng của định dạng.</value>
+  </data>
+  <data name="Converter_Output.Header" xml:space="preserve">
+    <value>Các tệp đã chuyển đổi</value>
+  </data>
+  <data name="Converter_Placement.Header" xml:space="preserve">
+    <value>Hệ tọa độ</value>
+  </data>
+  <data name="Converter_PlacementBuilding.Content" xml:space="preserve">
+    <value>Vị trí cục bộ của tòa nhà (IfcBuilding)</value>
+  </data>
+  <data name="Converter_PlacementGlobal.Content" xml:space="preserve">
+    <value>Tọa độ toàn cục của mô hình</value>
+  </data>
+  <data name="Converter_PlacementSite.Content" xml:space="preserve">
+    <value>Vị trí cục bộ của khu đất (IfcSite)</value>
+  </data>
+  <data name="Converter_ReadyMany" xml:space="preserve">
+    <value>Sẵn sàng ghi tệp {0} cạnh từng mô hình trong {1} mô hình.</value>
+  </data>
+  <data name="Converter_ReadyOne" xml:space="preserve">
+    <value>Sẵn sàng ghi tệp {0} cạnh mô hình.</value>
+  </data>
+  <data name="Converter_Running" xml:space="preserve">
+    <value>Đang chuyển {0} sang {1}…</value>
+  </data>
+  <data name="Converter_RunningMany" xml:space="preserve">
+    <value>Đang chuyển {0}/{1}: {2}…</value>
+  </data>
+  <data name="Converter_SchemaWarning.Title" xml:space="preserve">
+    <value>IFC 4.3 cần IfcConvert mới hơn</value>
+  </data>
+  <data name="Converter_SomeFailed" xml:space="preserve">
+    <value>{0}/{1} tệp không chuyển đổi được</value>
+  </data>
+  <data name="Converter_Stopped" xml:space="preserve">
+    <value>Đã dừng; danh sách dưới đây là các tệp đã chuyển xong.</value>
+  </data>
+  <data name="Converter_Warnings" xml:space="preserve">
+    <value>IfcConvert có báo cảnh báo; chi tiết nằm trong tệp .log.txt.</value>
+  </data>
+  <data name="Converter_WorldCoords.Content" xml:space="preserve">
+    <value>Áp vị trí đặt vào hình học (tọa độ thế giới)</value>
+  </data>
+  <data name="Drop_Caption" xml:space="preserve">
+    <value>Nhập</value>
+  </data>
+  <data name="Drop_Prompt" xml:space="preserve">
+    <value>Chọn tệp hoặc kéo thả tệp vào đây</value>
+  </data>
+  <data name="Drop_Release" xml:space="preserve">
+    <value>Thả để nhập</value>
+  </data>
+  <data name="Drop_Reset.Text" xml:space="preserve">
+    <value>Bỏ các tệp đã nhập</value>
+  </data>
+  <data name="Drop_Zone.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Chọn tệp hoặc kéo thả tệp vào đây</value>
+  </data>
+  <data name="File_Unreadable" xml:space="preserve">
+    <value>không đọc được</value>
+  </data>
+  <data name="Ids_AllMeet" xml:space="preserve">
+    <value>Cả {0} đối tượng khớp đều đáp ứng yêu cầu.</value>
+  </data>
+  <data name="Ids_AppliesTo" xml:space="preserve">
+    <value>Áp dụng cho {0}</value>
+  </data>
+  <data name="Ids_Failed" xml:space="preserve">
+    <value>Không đạt</value>
+  </data>
+  <data name="Ids_More" xml:space="preserve">
+    <value>…và {0} đối tượng khác. Hãy xuất báo cáo để xem đầy đủ.</value>
+  </data>
+  <data name="Ids_NoEntityFailed" xml:space="preserve">
+    <value>Không có đối tượng riêng lẻ nào không đạt; xem ghi chú phía trên.</value>
+  </data>
+  <data name="Ids_NotApplicable" xml:space="preserve">
+    <value>Không áp dụng</value>
+  </data>
+  <data name="Ids_NothingMatches" xml:space="preserve">
+    <value>Không có đối tượng nào trong mô hình khớp với đặc tả này.</value>
+  </data>
+  <data name="Ids_NothingMatchesAllowed" xml:space="preserve">
+    <value>Không có đối tượng nào trong mô hình khớp với đặc tả này, và điều đó được phép.</value>
+  </data>
+  <data name="Ids_PassCount" xml:space="preserve">
+    <value>{0}/{1} đạt</value>
+  </data>
+  <data name="Ids_Passed" xml:space="preserve">
+    <value>Đạt</value>
+  </data>
+  <data name="Ids_Skipped" xml:space="preserve">
+    <value>Bỏ qua</value>
+  </data>
+  <data name="Ids_Summary" xml:space="preserve">
+    <value>{0}/{1} đặc tả đạt, {2} không đạt.</value>
+  </data>
+  <data name="Ids_SummaryWithNotApplicable" xml:space="preserve">
+    <value>{0}/{1} đặc tả đạt, {2} không đạt, {3} không áp dụng cho đối tượng nào trong mô hình.</value>
+  </data>
+  <data name="Ids_Unnamed" xml:space="preserve">
+    <value>(đặc tả không tên)</value>
+  </data>
+  <data name="Ids_VerdictFail" xml:space="preserve">
+    <value>Mô hình chưa đáp ứng các yêu cầu</value>
+  </data>
+  <data name="Ids_VerdictPass" xml:space="preserve">
+    <value>Mô hình đáp ứng các yêu cầu</value>
+  </data>
+  <data name="LanguageTag" xml:space="preserve">
+    <value>vi-VN</value>
+  </data>
+  <data name="Nav_About.Content" xml:space="preserve">
+    <value>Giới thiệu</value>
+  </data>
+  <data name="Nav_Settings.Content" xml:space="preserve">
+    <value>Cài đặt</value>
+  </data>
+  <data name="Nav_Tools.Content" xml:space="preserve">
+    <value>Công cụ</value>
+  </data>
+  <data name="Optimizer_Configuration.Header" xml:space="preserve">
+    <value>Cấu hình</value>
+  </data>
+  <data name="Optimizer_Files.Header" xml:space="preserve">
+    <value>Các tệp cần tối ưu</value>
+  </data>
+  <data name="Optimizer_Finished" xml:space="preserve">
+    <value>Đã tối ưu xong</value>
+  </data>
+  <data name="Optimizer_FprTitle.Text" xml:space="preserve">
+    <value>Tối ưu FPR</value>
+  </data>
+  <data name="Optimizer_General.Text" xml:space="preserve">
+    <value>Chung</value>
+  </data>
+  <data name="Optimizer_KeepLabel.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Giữ số hiệu thực thể cũ</value>
+  </data>
+  <data name="Optimizer_KeepLabel.Header" xml:space="preserve">
+    <value>Giữ số hiệu thực thể cũ</value>
+  </data>
+  <data name="Optimizer_KeepLabelNote.Text" xml:space="preserve">
+    <value>Bật: #123 vẫn là #123, tiện khi so sánh với tệp gốc. Tắt: các thực thể được đánh số lại, giúp tệp nhỏ hơn.</value>
+  </data>
+  <data name="Optimizer_Merge.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Gộp các thực thể trùng lặp</value>
+  </data>
+  <data name="Optimizer_Merge.Header" xml:space="preserve">
+    <value>Gộp các thực thể trùng lặp (không mất dữ liệu)</value>
+  </data>
+  <data name="Optimizer_MergeAll.Content" xml:space="preserve">
+    <value>Mọi thực thể liên quan</value>
+  </data>
+  <data name="Optimizer_MergeNote.Text" xml:space="preserve">
+    <value>Thực thể lớp tài nguyên (điểm, hướng, màu…) không tham chiếu tới thực thể khác nên luôn gộp an toàn. &apos;Mọi thực thể liên quan&apos; gộp cả những thực thể tham chiếu tới chúng, tiết kiệm được nhiều nhất.</value>
+  </data>
+  <data name="Optimizer_MergeResources.Content" xml:space="preserve">
+    <value>Chỉ thực thể lớp tài nguyên</value>
+  </data>
+  <data name="Optimizer_MergeTitle.Text" xml:space="preserve">
+    <value>Gộp dữ liệu trùng lặp</value>
+  </data>
+  <data name="Optimizer_NeedModels" xml:space="preserve">
+    <value>Hãy thêm các mô hình IFC cần tối ưu.</value>
+  </data>
+  <data name="Optimizer_NeedOption" xml:space="preserve">
+    <value>Hãy bật ít nhất một tùy chọn tối ưu.</value>
+  </data>
+  <data name="Optimizer_Output.Header" xml:space="preserve">
+    <value>Các tệp đã tối ưu</value>
+  </data>
+  <data name="Optimizer_PointLists.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tối ưu danh sách điểm</value>
+  </data>
+  <data name="Optimizer_PointLists.Header" xml:space="preserve">
+    <value>Tối ưu danh sách điểm (IFC4 trở lên)</value>
+  </data>
+  <data name="Optimizer_PointListsNote.Text" xml:space="preserve">
+    <value>IfcCartesianPointList của IfcIndexedPolyCurve và IfcTessellatedFaceSet. Cần bật làm tròn tọa độ.</value>
+  </data>
+  <data name="Optimizer_Points.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tối ưu điểm</value>
+  </data>
+  <data name="Optimizer_Points.Header" xml:space="preserve">
+    <value>Tối ưu điểm</value>
+  </data>
+  <data name="Optimizer_PointsNote.Text" xml:space="preserve">
+    <value>Gộp các IfcCartesianPoint trùng nhau được dùng bởi IfcAxis2Placement2D/3D, IfcPolyline, IfcPolyLoop, IfcVertexPoint, IfcBoundingBox, IfcBSplineCurve và IfcBSplineSurface.</value>
+  </data>
+  <data name="Optimizer_Precision.Header" xml:space="preserve">
+    <value>Số chữ số thập phân giữ lại</value>
+  </data>
+  <data name="Optimizer_PrecisionText" xml:space="preserve">
+    <value>Tọa độ được làm tròn đến {0} chữ số thập phân theo đơn vị chiều dài của mô hình ({1:0.############}). Càng ít chữ số càng tiết kiệm nhưng hình học càng bị xê dịch; mô hình tính bằng milimét nên giữ từ 3 chữ số, tính bằng mét nên giữ từ 6 chữ số.</value>
+  </data>
+  <data name="Optimizer_ReadyLossless" xml:space="preserve">
+    <value>Không mất dữ liệu: chỉ gộp những gì trùng khớp hoàn toàn. Các tệp gốc vẫn được giữ nguyên.</value>
+  </data>
+  <data name="Optimizer_ReadyRounding" xml:space="preserve">
+    <value>Làm tròn sẽ thay đổi tọa độ; các tệp gốc vẫn được giữ nguyên.</value>
+  </data>
+  <data name="Optimizer_Round.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Làm tròn tọa độ</value>
+  </data>
+  <data name="Optimizer_Round.Header" xml:space="preserve">
+    <value>Làm tròn tọa độ (làm tròn số dấu phẩy động)</value>
+  </data>
+  <data name="Optimizer_Running" xml:space="preserve">
+    <value>Đang tối ưu {0}…</value>
+  </data>
+  <data name="Optimizer_RunningMany" xml:space="preserve">
+    <value>Đang tối ưu {0}/{1}: {2}…</value>
+  </data>
+  <data name="Optimizer_Saved" xml:space="preserve">
+    <value>{0} → {1}, nhỏ hơn {2:0.#}%.</value>
+  </data>
+  <data name="Optimizer_Schemas.Text" xml:space="preserve">
+    <value>IFC2X3, IFC4 và IFC 4.3</value>
+  </data>
+  <data name="Optimizer_SchemaSupport.Text" xml:space="preserve">
+    <value>Phiên bản IFC hỗ trợ</value>
+  </data>
+  <data name="Optimizer_SomeFailed" xml:space="preserve">
+    <value>{0}/{1} tệp không tối ưu được</value>
+  </data>
+  <data name="Optimizer_Stopped" xml:space="preserve">
+    <value>Đã dừng; danh sách dưới đây là các tệp đã tối ưu xong.</value>
+  </data>
+  <data name="Output_FilesWritten_Many" xml:space="preserve">
+    <value>Đã ghi {0} tệp.</value>
+  </data>
+  <data name="Output_FilesWritten_One" xml:space="preserve">
+    <value>Đã ghi 1 tệp.</value>
+  </data>
+  <data name="Relocator_ActionGeoref" xml:space="preserve">
+    <value>Tham chiếu địa lý</value>
+  </data>
+  <data name="Relocator_ActionUnit" xml:space="preserve">
+    <value>Đổi đơn vị</value>
+  </data>
+  <data name="Relocator_AlignMode.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Căn theo mô hình khác</value>
+  </data>
+  <data name="Relocator_AlignModeHint.Text" xml:space="preserve">
+    <value>Lấy vị trí đặt từ một tệp khác</value>
+  </data>
+  <data name="Relocator_AlignModeTitle.Text" xml:space="preserve">
+    <value>Căn theo mô hình khác</value>
+  </data>
+  <data name="Relocator_AlignProject.Content" xml:space="preserve">
+    <value>Lấy hệ tọa độ dự án của nó (vị trí đặt IfcSite)</value>
+  </data>
+  <data name="Relocator_AlignWorld.Content" xml:space="preserve">
+    <value>Lấy hệ tọa độ thế giới của nó (IfcProject)</value>
+  </data>
+  <data name="Relocator_AlreadyInUnit" xml:space="preserve">
+    <value>Mô hình đã dùng đơn vị {0}.</value>
+  </data>
+  <data name="Relocator_Crs.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Hệ tọa độ phẳng (CRS)</value>
+  </data>
+  <data name="Relocator_Crs.Header" xml:space="preserve">
+    <value>Hệ tọa độ phẳng (CRS), ví dụ EPSG:25832</value>
+  </data>
+  <data name="Relocator_Eastings.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tọa độ Đông</value>
+  </data>
+  <data name="Relocator_Eastings.Header" xml:space="preserve">
+    <value>Tọa độ Đông (Easting) của gốc</value>
+  </data>
+  <data name="Relocator_Enh" xml:space="preserve">
+    <value>Tọa độ Đông, Bắc, Cao độ</value>
+  </data>
+  <data name="Relocator_Factor.Header" xml:space="preserve">
+    <value>Hệ số tỉ lệ, chỉ IFC 4.3</value>
+  </data>
+  <data name="Relocator_Factor.PlaceholderText" xml:space="preserve">
+    <value>không có</value>
+  </data>
+  <data name="Relocator_Factors" xml:space="preserve">
+    <value>hệ số {0}</value>
+  </data>
+  <data name="Relocator_Failed" xml:space="preserve">
+    <value>Không định vị được mô hình</value>
+  </data>
+  <data name="Relocator_File.Header" xml:space="preserve">
+    <value>Tệp cần định vị</value>
+  </data>
+  <data name="Relocator_Finished" xml:space="preserve">
+    <value>Hoàn tất</value>
+  </data>
+  <data name="Relocator_FromEast" xml:space="preserve">
+    <value>của trục x so với hướng Đông</value>
+  </data>
+  <data name="Relocator_GeorefCard" xml:space="preserve">
+    <value>Tham chiếu địa lý</value>
+  </data>
+  <data name="Relocator_GeorefHint" xml:space="preserve">
+    <value>Hệ tọa độ phẳng (CRS) và chuyển đổi bản đồ</value>
+  </data>
+  <data name="Relocator_GeorefIfc4Only" xml:space="preserve">
+    <value>Chỉ dành cho mô hình IFC4 và IFC 4.3</value>
+  </data>
+  <data name="Relocator_GeorefMode.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tham chiếu địa lý</value>
+  </data>
+  <data name="Relocator_GeorefModeHint.Text" xml:space="preserve">
+    <value>Hệ tọa độ phẳng (CRS) và chuyển đổi bản đồ</value>
+  </data>
+  <data name="Relocator_GeorefModeTitle.Text" xml:space="preserve">
+    <value>Tham chiếu địa lý</value>
+  </data>
+  <data name="Relocator_Height.Header" xml:space="preserve">
+    <value>Cao độ trực giao</value>
+  </data>
+  <data name="Relocator_Ifc2x3NoMap" xml:space="preserve">
+    <value>IFC2X3 không có IfcMapConversion</value>
+  </data>
+  <data name="Relocator_InUnit" xml:space="preserve">
+    <value>theo {0}</value>
+  </data>
+  <data name="Relocator_ManualMode.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Nhập vị trí đặt</value>
+  </data>
+  <data name="Relocator_ManualModeHint.Text" xml:space="preserve">
+    <value>Nhập gốc tọa độ và góc xoay mới</value>
+  </data>
+  <data name="Relocator_ManualModeTitle.Text" xml:space="preserve">
+    <value>Nhập vị trí đặt</value>
+  </data>
+  <data name="Relocator_MapNote.Text" xml:space="preserve">
+    <value>Vị trí gốc tọa độ cục bộ của mô hình trên bản đồ phẳng (IfcProjectedCRS và IfcMapConversion). Hình học của mô hình không bị dịch chuyển.</value>
+  </data>
+  <data name="Relocator_MapRotation.Header" xml:space="preserve">
+    <value>Góc xoay của trục x so với hướng Đông, độ</value>
+  </data>
+  <data name="Relocator_MapTitle.Text" xml:space="preserve">
+    <value>Chuyển đổi bản đồ</value>
+  </data>
+  <data name="Relocator_NeedCrs" xml:space="preserve">
+    <value>Hãy ghi tên hệ tọa độ phẳng (CRS), thường là mã EPSG.</value>
+  </data>
+  <data name="Relocator_NeedEastingsNorthings" xml:space="preserve">
+    <value>Hãy điền tọa độ Đông và Bắc của gốc.</value>
+  </data>
+  <data name="Relocator_NeedModel" xml:space="preserve">
+    <value>Hãy thêm mô hình IFC cần định vị.</value>
+  </data>
+  <data name="Relocator_NeedReference" xml:space="preserve">
+    <value>Hãy thêm mô hình dùng để căn theo.</value>
+  </data>
+  <data name="Relocator_NeedScale" xml:space="preserve">
+    <value>Tỉ lệ phải lớn hơn 0.</value>
+  </data>
+  <data name="Relocator_NeedSystem" xml:space="preserve">
+    <value>Hãy đánh dấu hệ tọa độ cần thay đổi.</value>
+  </data>
+  <data name="Relocator_NeedValues" xml:space="preserve">
+    <value>Hãy điền đủ mọi tọa độ và góc xoay.</value>
+  </data>
+  <data name="Relocator_NoContext" xml:space="preserve">
+    <value>Không có ngữ cảnh mô hình 3D</value>
+  </data>
+  <data name="Relocator_NoMapConversion" xml:space="preserve">
+    <value>không có IfcMapConversion</value>
+  </data>
+  <data name="Relocator_Northings.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tọa độ Bắc</value>
+  </data>
+  <data name="Relocator_Northings.Header" xml:space="preserve">
+    <value>Tọa độ Bắc (Northing) của gốc</value>
+  </data>
+  <data name="Relocator_NoSite" xml:space="preserve">
+    <value>Không có khu đất nào nằm trực tiếp dưới dự án</value>
+  </data>
+  <data name="Relocator_NoSiteTag" xml:space="preserve">
+    <value>không có IfcSite</value>
+  </data>
+  <data name="Relocator_NotGeoreferenced" xml:space="preserve">
+    <value>Chưa tham chiếu địa lý</value>
+  </data>
+  <data name="Relocator_NotGiven" xml:space="preserve">
+    <value>không khai báo</value>
+  </data>
+  <data name="Relocator_NothingToTake" xml:space="preserve">
+    <value>Không có gì để lấy: hãy đánh dấu hệ tọa độ mà cả hai mô hình đều có.</value>
+  </data>
+  <data name="Relocator_Output.Header" xml:space="preserve">
+    <value>Tệp đã định vị</value>
+  </data>
+  <data name="Relocator_PlacementXyz" xml:space="preserve">
+    <value>Vị trí đặt X, Y, Z</value>
+  </data>
+  <data name="Relocator_ProjectCard" xml:space="preserve">
+    <value>Vị trí hệ tọa độ dự án</value>
+  </data>
+  <data name="Relocator_ProjectCheck.Content" xml:space="preserve">
+    <value>Thay đổi vị trí đặt của khu đất</value>
+  </data>
+  <data name="Relocator_ProjectedCrs" xml:space="preserve">
+    <value>Hệ tọa độ phẳng (CRS)</value>
+  </data>
+  <data name="Relocator_ProjectRotation.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Góc xoay hệ dự án</value>
+  </data>
+  <data name="Relocator_ProjectRotation.Header" xml:space="preserve">
+    <value>Góc xoay quanh trục Z, độ, ngược chiều kim đồng hồ</value>
+  </data>
+  <data name="Relocator_ProjectTitle.Text" xml:space="preserve">
+    <value>Vị trí hệ tọa độ dự án</value>
+  </data>
+  <data name="Relocator_ProjectX.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>X dự án</value>
+  </data>
+  <data name="Relocator_ProjectX.Header" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="Relocator_ProjectY.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Y dự án</value>
+  </data>
+  <data name="Relocator_ProjectY.Header" xml:space="preserve">
+    <value>Y</value>
+  </data>
+  <data name="Relocator_ProjectZ.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Z dự án</value>
+  </data>
+  <data name="Relocator_ProjectZ.Header" xml:space="preserve">
+    <value>Z</value>
+  </data>
+  <data name="Relocator_ReadyGeoref" xml:space="preserve">
+    <value>Sẽ ghi một tệp mới đã tham chiếu địa lý; hình học không bị dịch chuyển.</value>
+  </data>
+  <data name="Relocator_ReadyMove" xml:space="preserve">
+    <value>Sẽ ghi một tệp mới với các hệ tọa độ đã dời; tệp gốc được giữ nguyên.</value>
+  </data>
+  <data name="Relocator_ReadyUnit" xml:space="preserve">
+    <value>Sẽ ghi một tệp mới với mọi chiều dài theo đơn vị đã chọn; tệp gốc được giữ nguyên.</value>
+  </data>
+  <data name="Relocator_ReferenceModel" xml:space="preserve">
+    <value>Mô hình dùng để căn theo</value>
+  </data>
+  <data name="Relocator_ReferenceUnreadable" xml:space="preserve">
+    <value>Không đọc được mô hình dùng để căn theo</value>
+  </data>
+  <data name="Relocator_ReferenceZone.Prompt" xml:space="preserve">
+    <value>Chọn mô hình cần căn theo, hoặc kéo thả vào đây</value>
+  </data>
+  <data name="Relocator_Rescaled" xml:space="preserve">
+    <value>Đã quy đổi {0:N0} giá trị chiều dài.</value>
+  </data>
+  <data name="Relocator_RescaledOwnUnit" xml:space="preserve">
+    <value>Đã quy đổi {0:N0} giá trị chiều dài; {1} giá trị có đơn vị riêng được giữ nguyên.</value>
+  </data>
+  <data name="Relocator_ResultModel" xml:space="preserve">
+    <value>Kết quả</value>
+  </data>
+  <data name="Relocator_ResultTitle.Text" xml:space="preserve">
+    <value>Vị trí đặt của tệp mới</value>
+  </data>
+  <data name="Relocator_RotationLabel" xml:space="preserve">
+    <value>Góc xoay</value>
+  </data>
+  <data name="Relocator_RotationX" xml:space="preserve">
+    <value>hướng của trục X</value>
+  </data>
+  <data name="Relocator_RotationZ" xml:space="preserve">
+    <value>hướng của trục Z</value>
+  </data>
+  <data name="Relocator_Scale.Header" xml:space="preserve">
+    <value>Tỉ lệ (đơn vị mô hình sang đơn vị bản đồ)</value>
+  </data>
+  <data name="Relocator_ScaleHint" xml:space="preserve">
+    <value>Mô hình tính bằng {0}, nên với CRS tính bằng mét cần tỉ lệ {1}. Tọa độ Đông, Bắc và cao độ tính theo đơn vị của CRS.</value>
+  </data>
+  <data name="Relocator_ScaleLabel" xml:space="preserve">
+    <value>Tỉ lệ</value>
+  </data>
+  <data name="Relocator_SiteCount" xml:space="preserve">
+    <value>{0} khu đất</value>
+  </data>
+  <data name="Relocator_SitesMovedAlike" xml:space="preserve">
+    <value>tất cả được dời như nhau</value>
+  </data>
+  <data name="Relocator_Target.Header" xml:space="preserve">
+    <value>Chọn vị trí đích</value>
+  </data>
+  <data name="Relocator_ThisModel" xml:space="preserve">
+    <value>Mô hình này</value>
+  </data>
+  <data name="Relocator_TrueNorth" xml:space="preserve">
+    <value>Hướng Bắc thực</value>
+  </data>
+  <data name="Relocator_UnitChoice.Header" xml:space="preserve">
+    <value>Chuyển mọi chiều dài sang</value>
+  </data>
+  <data name="Relocator_UnitCm.Content" xml:space="preserve">
+    <value>Centimét (cm)</value>
+  </data>
+  <data name="Relocator_UnitFailed" xml:space="preserve">
+    <value>Không đổi được đơn vị</value>
+  </data>
+  <data name="Relocator_UnitHint" xml:space="preserve">
+    <value>Mô hình đang đo chiều dài bằng {0}.</value>
+  </data>
+  <data name="Relocator_UnitM.Content" xml:space="preserve">
+    <value>Mét (m)</value>
+  </data>
+  <data name="Relocator_UnitMm.Content" xml:space="preserve">
+    <value>Milimét (mm)</value>
+  </data>
+  <data name="Relocator_UnitMode.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Đổi đơn vị chiều dài</value>
+  </data>
+  <data name="Relocator_UnitModeHint.Text" xml:space="preserve">
+    <value>Milimét, centimét hoặc mét</value>
+  </data>
+  <data name="Relocator_UnitModeTitle.Text" xml:space="preserve">
+    <value>Đổi đơn vị chiều dài</value>
+  </data>
+  <data name="Relocator_UnitNoteText.Text" xml:space="preserve">
+    <value>Tọa độ, chiều dày, cao độ, các thuộc tính và khối lượng có đơn vị chiều dài đều được quy đổi, nên mô hình giữ nguyên kích thước và vị trí; diện tích, thể tích và góc có đơn vị riêng nên giữ nguyên. Các giá trị tự ghi kèm đơn vị riêng được để nguyên, và chuyển đổi bản đồ (map conversion) giữ mô hình ở đúng chỗ cũ trên bản đồ.</value>
+  </data>
+  <data name="Relocator_UnitTitle.Text" xml:space="preserve">
+    <value>Đơn vị chiều dài</value>
+  </data>
+  <data name="Relocator_Unnamed" xml:space="preserve">
+    <value>không tên</value>
+  </data>
+  <data name="Relocator_WorldCard" xml:space="preserve">
+    <value>Vị trí hệ tọa độ thế giới</value>
+  </data>
+  <data name="Relocator_WorldCheck.Content" xml:space="preserve">
+    <value>Thay đổi hệ tọa độ thế giới</value>
+  </data>
+  <data name="Relocator_WorldRotation.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Góc xoay hệ thế giới</value>
+  </data>
+  <data name="Relocator_WorldRotation.Header" xml:space="preserve">
+    <value>Góc xoay quanh trục Z, độ, ngược chiều kim đồng hồ</value>
+  </data>
+  <data name="Relocator_WorldTitle.Text" xml:space="preserve">
+    <value>Vị trí hệ tọa độ thế giới</value>
+  </data>
+  <data name="Relocator_WorldX.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>X thế giới</value>
+  </data>
+  <data name="Relocator_WorldX.Header" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="Relocator_WorldY.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Y thế giới</value>
+  </data>
+  <data name="Relocator_WorldY.Header" xml:space="preserve">
+    <value>Y</value>
+  </data>
+  <data name="Relocator_WorldZ.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Z thế giới</value>
+  </data>
+  <data name="Relocator_WorldZ.Header" xml:space="preserve">
+    <value>Z</value>
+  </data>
+  <data name="Relocator_Writing" xml:space="preserve">
+    <value>Đang ghi {0}…</value>
+  </data>
+  <data name="Row_MoveUp.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Lên trên</value>
+  </data>
+  <data name="Row_MoveUpName" xml:space="preserve">
+    <value>Đưa {0} lên trên</value>
+  </data>
+  <data name="Row_Open.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Mở</value>
+  </data>
+  <data name="Row_OpenName" xml:space="preserve">
+    <value>Mở {0}</value>
+  </data>
+  <data name="Row_Remove.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Bỏ</value>
+  </data>
+  <data name="Row_RemoveName" xml:space="preserve">
+    <value>Bỏ {0}</value>
+  </data>
+  <data name="Row_ShowInFolder.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Mở thư mục chứa</value>
+  </data>
+  <data name="Row_ShowInFolderName" xml:space="preserve">
+    <value>Mở thư mục chứa {0}</value>
+  </data>
+  <data name="Run_Cancel.Content" xml:space="preserve">
+    <value>Hủy</value>
+  </data>
+  <data name="Run_Cancelling" xml:space="preserve">
+    <value>Đang hủy…</value>
+  </data>
+  <data name="Settings_BundledIfcConvert.Content" xml:space="preserve">
+    <value>Dùng bản đi kèm</value>
+  </data>
+  <data name="Settings_CacheEmpty" xml:space="preserve">
+    <value>Bộ nhớ đệm đang trống.</value>
+  </data>
+  <data name="Settings_CacheFreed" xml:space="preserve">
+    <value>Đã giải phóng {0}.</value>
+  </data>
+  <data name="Settings_CacheSize" xml:space="preserve">
+    <value>Bộ nhớ đệm đang chiếm {0}.</value>
+  </data>
+  <data name="Settings_CheckingIfcConvert" xml:space="preserve">
+    <value>Đang kiểm tra phiên bản IfcConvert…</value>
+  </data>
+  <data name="Settings_ClearCache.Content" xml:space="preserve">
+    <value>Xóa tệp bộ nhớ đệm</value>
+  </data>
+  <data name="Settings_Header.Title" xml:space="preserve">
+    <value>Cài đặt</value>
+  </data>
+  <data name="Settings_Help.Header" xml:space="preserve">
+    <value>Trợ giúp</value>
+  </data>
+  <data name="Settings_HelpDocs.Content" xml:space="preserve">
+    <value>Tài liệu hướng dẫn (tiếng Anh)</value>
+  </data>
+  <data name="Settings_IfcConvert.Header" xml:space="preserve">
+    <value>IfcConvert</value>
+  </data>
+  <data name="Settings_IfcConvertBundled" xml:space="preserve">
+    <value>Đang dùng: IfcConvert {0} đi kèm</value>
+  </data>
+  <data name="Settings_IfcConvertCustom" xml:space="preserve">
+    <value>Đang dùng: IfcConvert {0} tại {1}</value>
+  </data>
+  <data name="Settings_IfcConvertError.Title" xml:space="preserve">
+    <value>Tệp này không phải IfcConvert dùng được</value>
+  </data>
+  <data name="Settings_IfcConvertIntro.Text" xml:space="preserve">
+    <value>Công cụ Chuyển đổi IFC chạy IfcConvert của IfcOpenShell. Phiên bản 0.6 đi kèm không đọc được mô hình IFC 4.3 và không xuất được xeokit JSON, Turtle hay HDF5; hãy chọn IfcConvert mới hơn (0.8 trở lên) để dùng các tính năng này.</value>
+  </data>
+  <data name="Settings_IfcConvertNoVersion" xml:space="preserve">
+    <value>{0} không trả về phiên bản IfcConvert.</value>
+  </data>
+  <data name="Settings_Language.Header" xml:space="preserve">
+    <value>Ngôn ngữ giao diện</value>
+  </data>
+  <data name="Settings_Languages.Header" xml:space="preserve">
+    <value>Ngôn ngữ</value>
+  </data>
+  <data name="Settings_LanguageWindows" xml:space="preserve">
+    <value>Theo ngôn ngữ hiển thị của Windows</value>
+  </data>
+  <data name="Settings_OpenFolder.Content" xml:space="preserve">
+    <value>Mở thư mục cài đặt</value>
+  </data>
+  <data name="Settings_PickIfcConvert.Content" xml:space="preserve">
+    <value>Dùng IfcConvert khác…</value>
+  </data>
+  <data name="Settings_RestartNote.Text" xml:space="preserve">
+    <value>Ngôn ngữ mới sẽ được áp dụng sau khi khởi động lại ứng dụng.</value>
+  </data>
+  <data name="Settings_RestartNow.Content" xml:space="preserve">
+    <value>Khởi động lại ngay</value>
+  </data>
+  <data name="Settings_Storage.Header" xml:space="preserve">
+    <value>Lưu trữ</value>
+  </data>
+  <data name="Settings_ThemeDark.Content" xml:space="preserve">
+    <value>Tối</value>
+  </data>
+  <data name="Settings_ThemeLight.Content" xml:space="preserve">
+    <value>Sáng</value>
+  </data>
+  <data name="Settings_Themes.Header" xml:space="preserve">
+    <value>Giao diện</value>
+  </data>
+  <data name="Settings_ThemeSystem.Content" xml:space="preserve">
+    <value>Theo hệ thống</value>
+  </data>
+  <data name="Splitter_Buildings_Many" xml:space="preserve">
+    <value>Mô hình có {0} tòa nhà</value>
+  </data>
+  <data name="Splitter_Buildings_One" xml:space="preserve">
+    <value>Mô hình có 1 tòa nhà</value>
+  </data>
+  <data name="Splitter_ByBuilding.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tách theo tòa nhà</value>
+  </data>
+  <data name="Splitter_ByBuildingHint" xml:space="preserve">
+    <value>Phần tử không gian: IfcBuilding</value>
+  </data>
+  <data name="Splitter_ByBuildingStorey.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tách theo tầng</value>
+  </data>
+  <data name="Splitter_ByBuildingStoreyHint" xml:space="preserve">
+    <value>Phần tử không gian: IfcBuildingStorey</value>
+  </data>
+  <data name="Splitter_ByBuildingStoreyTitle.Text" xml:space="preserve">
+    <value>Tách theo tầng</value>
+  </data>
+  <data name="Splitter_ByBuildingTitle.Text" xml:space="preserve">
+    <value>Tách theo tòa nhà</value>
+  </data>
+  <data name="Splitter_ByFacility.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tách theo công trình</value>
+  </data>
+  <data name="Splitter_ByFacilityHint" xml:space="preserve">
+    <value>IFC 4.3: đường bộ, đường sắt, cầu, công trình thủy</value>
+  </data>
+  <data name="Splitter_ByFacilityPart.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tách theo bộ phận công trình</value>
+  </data>
+  <data name="Splitter_ByFacilityPartHint" xml:space="preserve">
+    <value>IFC 4.3: phần xe chạy, đường ray, mặt cầu…</value>
+  </data>
+  <data name="Splitter_ByFacilityPartTitle.Text" xml:space="preserve">
+    <value>Tách theo bộ phận công trình</value>
+  </data>
+  <data name="Splitter_ByFacilityTitle.Text" xml:space="preserve">
+    <value>Tách theo công trình</value>
+  </data>
+  <data name="Splitter_ByObjectType.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tách theo loại</value>
+  </data>
+  <data name="Splitter_ByObjectTypeHint" xml:space="preserve">
+    <value>Sản phẩm theo loại đối tượng (ObjectType)</value>
+  </data>
+  <data name="Splitter_ByObjectTypeTitle.Text" xml:space="preserve">
+    <value>Tách theo loại</value>
+  </data>
+  <data name="Splitter_ByProduct.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tách theo đối tượng</value>
+  </data>
+  <data name="Splitter_ByProductHint.Text" xml:space="preserve">
+    <value>Các sản phẩm bạn chọn</value>
+  </data>
+  <data name="Splitter_ByProductTitle.Text" xml:space="preserve">
+    <value>Tách theo đối tượng</value>
+  </data>
+  <data name="Splitter_BySite.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tách theo khu đất</value>
+  </data>
+  <data name="Splitter_BySiteHint" xml:space="preserve">
+    <value>Phần tử không gian: IfcSite</value>
+  </data>
+  <data name="Splitter_BySiteTitle.Text" xml:space="preserve">
+    <value>Tách theo khu đất</value>
+  </data>
+  <data name="Splitter_DataOnly.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Chỉ tách dữ liệu</value>
+  </data>
+  <data name="Splitter_DataOnlyHint.Text" xml:space="preserve">
+    <value>Mọi thứ trừ hình học</value>
+  </data>
+  <data name="Splitter_DataOnlyTitle.Text" xml:space="preserve">
+    <value>Chỉ tách dữ liệu</value>
+  </data>
+  <data name="Splitter_EmptyPicks_Many" xml:space="preserve">
+    <value>{0} mục không chứa phần tử nào nên đã bị bỏ qua.</value>
+  </data>
+  <data name="Splitter_EmptyPicks_One" xml:space="preserve">
+    <value>1 mục không chứa phần tử nào nên đã bị bỏ qua.</value>
+  </data>
+  <data name="Splitter_Facilities_Many" xml:space="preserve">
+    <value>Mô hình có {0} công trình</value>
+  </data>
+  <data name="Splitter_Facilities_One" xml:space="preserve">
+    <value>Mô hình có 1 công trình</value>
+  </data>
+  <data name="Splitter_FacilityParts_Many" xml:space="preserve">
+    <value>Mô hình có {0} bộ phận công trình</value>
+  </data>
+  <data name="Splitter_FacilityParts_One" xml:space="preserve">
+    <value>Mô hình có 1 bộ phận công trình</value>
+  </data>
+  <data name="Splitter_Failed" xml:space="preserve">
+    <value>Không tách được mô hình</value>
+  </data>
+  <data name="Splitter_File.Header" xml:space="preserve">
+    <value>Tệp cần tách</value>
+  </data>
+  <data name="Splitter_Finished" xml:space="preserve">
+    <value>Đã tách xong</value>
+  </data>
+  <data name="Splitter_Levels_Many" xml:space="preserve">
+    <value>Mô hình có {0} tầng</value>
+  </data>
+  <data name="Splitter_Levels_One" xml:space="preserve">
+    <value>Mô hình có 1 tầng</value>
+  </data>
+  <data name="Splitter_Mode.Header" xml:space="preserve">
+    <value>Chọn cách tách</value>
+  </data>
+  <data name="Splitter_NeedModel" xml:space="preserve">
+    <value>Hãy thêm mô hình IFC cần tách.</value>
+  </data>
+  <data name="Splitter_NeedModelToPick" xml:space="preserve">
+    <value>Hãy thêm mô hình để xem nội dung bên trong.</value>
+  </data>
+  <data name="Splitter_NeedPick" xml:space="preserve">
+    <value>Hãy đánh dấu ít nhất một mục cần tách.</value>
+  </data>
+  <data name="Splitter_NoBuildings" xml:space="preserve">
+    <value>Mô hình không có IfcBuilding</value>
+  </data>
+  <data name="Splitter_NoFacilities" xml:space="preserve">
+    <value>Dành cho mô hình IFC 4.3 có công trình (facility)</value>
+  </data>
+  <data name="Splitter_NoFacilityParts" xml:space="preserve">
+    <value>Dành cho mô hình IFC 4.3 có bộ phận công trình (facility part)</value>
+  </data>
+  <data name="Splitter_NoLevels" xml:space="preserve">
+    <value>Mô hình không có IfcBuildingStorey</value>
+  </data>
+  <data name="Splitter_NoObjectTypes" xml:space="preserve">
+    <value>Mô hình này không có loại đối tượng nào</value>
+  </data>
+  <data name="Splitter_NoSites" xml:space="preserve">
+    <value>Mô hình không có IfcSite</value>
+  </data>
+  <data name="Splitter_NothingToWrite" xml:space="preserve">
+    <value>Những mục đã chọn không chứa phần tử nào nên không có gì để ghi.</value>
+  </data>
+  <data name="Splitter_Output.Header" xml:space="preserve">
+    <value>Các tệp đã tách</value>
+  </data>
+  <data name="Splitter_Pick.Header" xml:space="preserve">
+    <value>Chọn nội dung cần tách</value>
+  </data>
+  <data name="Splitter_PickBuildings" xml:space="preserve">
+    <value>Đánh dấu các tòa nhà cần tách. Mỗi tòa nhà thành một tệp riêng.</value>
+  </data>
+  <data name="Splitter_PickDataOnly" xml:space="preserve">
+    <value>Ghi toàn bộ mô hình nhưng bỏ phần hình học: chỉ giữ thuộc tính, quan hệ và cấu trúc. Không cần chọn gì.</value>
+  </data>
+  <data name="Splitter_Picked_Many" xml:space="preserve">
+    <value>Đã chọn {0} mục.</value>
+  </data>
+  <data name="Splitter_Picked_One" xml:space="preserve">
+    <value>Đã chọn 1 mục.</value>
+  </data>
+  <data name="Splitter_PickFacilities" xml:space="preserve">
+    <value>Đánh dấu các công trình cần tách: đường bộ, đường sắt, cầu… Mỗi công trình thành một tệp riêng.</value>
+  </data>
+  <data name="Splitter_PickFacilityParts" xml:space="preserve">
+    <value>Đánh dấu các bộ phận công trình cần tách, chẳng hạn phần xe chạy hay đường ray. Mỗi bộ phận thành một tệp riêng.</value>
+  </data>
+  <data name="Splitter_PickLevels" xml:space="preserve">
+    <value>Đánh dấu các tầng cần tách. Mỗi tầng thành một tệp riêng.</value>
+  </data>
+  <data name="Splitter_PickObjectTypes" xml:space="preserve">
+    <value>Đánh dấu các loại đối tượng cần tách; mọi sản phẩm thuộc loại đó sẽ được đưa vào tệp.</value>
+  </data>
+  <data name="Splitter_PickProducts" xml:space="preserve">
+    <value>Đánh dấu các sản phẩm cần tách, hoặc cả một tầng hay một lớp. Cấu trúc không gian chứa chúng sẽ được giữ kèm.</value>
+  </data>
+  <data name="Splitter_PickSites" xml:space="preserve">
+    <value>Đánh dấu các khu đất cần tách. Mỗi khu đất thành một tệp riêng.</value>
+  </data>
+  <data name="Splitter_PickTree.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Nội dung cần tách</value>
+  </data>
+  <data name="Splitter_ReadyDataOnly" xml:space="preserve">
+    <value>Sẵn sàng ghi mô hình không kèm hình học.</value>
+  </data>
+  <data name="Splitter_Running" xml:space="preserve">
+    <value>Đang tách {0}…</value>
+  </data>
+  <data name="Splitter_Sites_Many" xml:space="preserve">
+    <value>Mô hình có {0} khu đất</value>
+  </data>
+  <data name="Splitter_Sites_One" xml:space="preserve">
+    <value>Mô hình có 1 khu đất</value>
+  </data>
+  <data name="Tool_anonymizer_Action" xml:space="preserve">
+    <value>Ẩn danh IFC</value>
+  </data>
+  <data name="Tool_anonymizer_Summary" xml:space="preserve">
+    <value>Xóa thông tin về người, tổ chức và các thông tin sản phẩm được chọn trước khi chia sẻ mô hình.</value>
+  </data>
+  <data name="Tool_anonymizer_Title" xml:space="preserve">
+    <value>Ẩn danh IFC</value>
+  </data>
+  <data name="Tool_combiner_Action" xml:space="preserve">
+    <value>Gộp IFC</value>
+  </data>
+  <data name="Tool_combiner_Summary" xml:space="preserve">
+    <value>Gộp nhiều mô hình thành một tệp với một dự án, hợp nhất các tầng chung và chuyển đổi đơn vị chiều dài.</value>
+  </data>
+  <data name="Tool_combiner_Title" xml:space="preserve">
+    <value>Gộp IFC</value>
+  </data>
+  <data name="Tool_converter_Action" xml:space="preserve">
+    <value>Chuyển đổi IFC</value>
+  </data>
+  <data name="Tool_converter_Summary" xml:space="preserve">
+    <value>Chuyển sang glTF, OBJ, Collada, STEP, IGES, XML, SVG và nhiều định dạng khác bằng IfcOpenShell.</value>
+  </data>
+  <data name="Tool_converter_Title" xml:space="preserve">
+    <value>Chuyển đổi IFC</value>
+  </data>
+  <data name="Tool_optimizer_Action" xml:space="preserve">
+    <value>Tối ưu IFC</value>
+  </data>
+  <data name="Tool_optimizer_Summary" xml:space="preserve">
+    <value>Giảm dung lượng tệp bằng cách gộp các đối tượng trùng lặp và làm tròn sai số dấu phẩy động.</value>
+  </data>
+  <data name="Tool_optimizer_Title" xml:space="preserve">
+    <value>Tối ưu IFC</value>
+  </data>
+  <data name="Tool_relocator_Action" xml:space="preserve">
+    <value>Định vị IFC</value>
+  </data>
+  <data name="Tool_relocator_Summary" xml:space="preserve">
+    <value>Dời hệ tọa độ thế giới và hệ tọa độ dự án, căn hai mô hình với nhau, tham chiếu địa lý theo hệ tọa độ phẳng (CRS).</value>
+  </data>
+  <data name="Tool_relocator_Title" xml:space="preserve">
+    <value>Định vị IFC</value>
+  </data>
+  <data name="Tool_splitter_Action" xml:space="preserve">
+    <value>Tách IFC</value>
+  </data>
+  <data name="Tool_splitter_Summary" xml:space="preserve">
+    <value>Tách mô hình theo loại, khu đất, tòa nhà, tầng, công trình hoặc bộ phận công trình IFC 4.3, hoặc theo đối tượng được chọn.</value>
+  </data>
+  <data name="Tool_splitter_Title" xml:space="preserve">
+    <value>Tách IFC</value>
+  </data>
+  <data name="Tool_validator_Action" xml:space="preserve">
+    <value>Kiểm tra IFC</value>
+  </data>
+  <data name="Tool_validator_Summary" xml:space="preserve">
+    <value>Kiểm tra mô hình theo tệp IDS 1.0 hoặc theo yêu cầu lấy từ buildingSMART Data Dictionary (bSDD).</value>
+  </data>
+  <data name="Tool_validator_Title" xml:space="preserve">
+    <value>Kiểm tra IFC</value>
+  </data>
+  <data name="Tools_Header.Title" xml:space="preserve">
+    <value>Công cụ</value>
+  </data>
+  <data name="Tools_Intro.Text" xml:space="preserve">
+    <value>Bộ công cụ đơn giản để xử lý tệp IFC. Hỗ trợ mô hình IFC2X3, IFC4 và IFC 4.3.</value>
+  </data>
+  <data name="Tree_Entities_Many" xml:space="preserve">
+    <value>{0} đối tượng</value>
+  </data>
+  <data name="Tree_Entities_One" xml:space="preserve">
+    <value>1 đối tượng</value>
+  </data>
+  <data name="Validator_AllowedValues.Content" xml:space="preserve">
+    <value>Kiểm tra cả giá trị theo danh sách giá trị cho phép trong bSDD</value>
+  </data>
+  <data name="Validator_BsddError.Title" xml:space="preserve">
+    <value>Không kết nối được bSDD</value>
+  </data>
+  <data name="Validator_BsddMode.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>bSDD</value>
+  </data>
+  <data name="Validator_BsddModeText.Text" xml:space="preserve">
+    <value>Chọn lớp và thuộc tính của chúng từ bSDD. Cần kết nối internet.</value>
+  </data>
+  <data name="Validator_Cancelled" xml:space="preserve">
+    <value>Đã hủy kiểm tra.</value>
+  </data>
+  <data name="Validator_ChooseDictionary.Text" xml:space="preserve">
+    <value>Chọn từ điển bSDD</value>
+  </data>
+  <data name="Validator_ChooseDictionaryPlaceholder" xml:space="preserve">
+    <value>Chọn từ điển</value>
+  </data>
+  <data name="Validator_ClearClasses.Content" xml:space="preserve">
+    <value>Xóa hết</value>
+  </data>
+  <data name="Validator_CsvType" xml:space="preserve">
+    <value>CSV</value>
+  </data>
+  <data name="Validator_DictionariesFailed" xml:space="preserve">
+    <value>Không tải được danh sách từ điển</value>
+  </data>
+  <data name="Validator_Dictionary.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Từ điển bSDD</value>
+  </data>
+  <data name="Validator_Dictionary.PlaceholderText" xml:space="preserve">
+    <value>Đang tải danh sách từ điển…</value>
+  </data>
+  <data name="Validator_Done" xml:space="preserve">
+    <value>Đã kiểm tra xong trong {0:0.0} giây.</value>
+  </data>
+  <data name="Validator_ExportCsv.Text" xml:space="preserve">
+    <value>Xuất CSV</value>
+  </data>
+  <data name="Validator_ExportText.Text" xml:space="preserve">
+    <value>Xuất báo cáo dạng văn bản</value>
+  </data>
+  <data name="Validator_Failed" xml:space="preserve">
+    <value>Kiểm tra thất bại</value>
+  </data>
+  <data name="Validator_File.Header" xml:space="preserve">
+    <value>Tệp cần kiểm tra</value>
+  </data>
+  <data name="Validator_IdsFileName" xml:space="preserve">
+    <value>Yêu cầu bSDD</value>
+  </data>
+  <data name="Validator_IdsFileType" xml:space="preserve">
+    <value>Information Delivery Specification</value>
+  </data>
+  <data name="Validator_IdsMode.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tệp IDS</value>
+  </data>
+  <data name="Validator_IdsModeText.Text" xml:space="preserve">
+    <value>Yêu cầu dưới dạng Information Delivery Specification (IDS 1.0), soạn bằng bất kỳ công cụ IDS nào.</value>
+  </data>
+  <data name="Validator_IdsModeTitle.Text" xml:space="preserve">
+    <value>Tệp IDS</value>
+  </data>
+  <data name="Validator_IdsSaved" xml:space="preserve">
+    <value>Đã lưu {0}. Có thể mở lại bằng tùy chọn Tệp IDS hoặc chia sẻ cho người khác.</value>
+  </data>
+  <data name="Validator_IdsUnreadable" xml:space="preserve">
+    <value>Không đọc được một tệp IDS</value>
+  </data>
+  <data name="Validator_IdsZone.Prompt" xml:space="preserve">
+    <value>Chọn tệp IDS hoặc kéo thả vào đây</value>
+  </data>
+  <data name="Validator_NeedIds" xml:space="preserve">
+    <value>Hãy thêm tệp IDS chứa các yêu cầu.</value>
+  </data>
+  <data name="Validator_NeedModel" xml:space="preserve">
+    <value>Hãy thêm mô hình IFC cần kiểm tra.</value>
+  </data>
+  <data name="Validator_NeedProperty" xml:space="preserve">
+    <value>Hãy chọn ít nhất một thuộc tính từ bSDD.</value>
+  </data>
+  <data name="Validator_NoClasses.Text" xml:space="preserve">
+    <value>Tìm ở trên và chọn một lớp. Các bộ thuộc tính của lớp sẽ hiện ở đây: hãy đánh dấu những thuộc tính mà mọi đối tượng phù hợp đều phải có.</value>
+  </data>
+  <data name="Validator_NoMatch" xml:space="preserve">
+    <value>Không có lớp nào khớp với “{0}” trong {1}.</value>
+  </data>
+  <data name="Validator_ReportFailed" xml:space="preserve">
+    <value>Không lưu được báo cáo</value>
+  </data>
+  <data name="Validator_ReportSaved" xml:space="preserve">
+    <value>Đã lưu báo cáo vào {0}.</value>
+  </data>
+  <data name="Validator_Requirements.Header" xml:space="preserve">
+    <value>Yêu cầu</value>
+  </data>
+  <data name="Validator_RequirementTree.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Yêu cầu cần kiểm tra</value>
+  </data>
+  <data name="Validator_Results.Header" xml:space="preserve">
+    <value>Kết quả</value>
+  </data>
+  <data name="Validator_Retry" xml:space="preserve">
+    <value>Thử lại</value>
+  </data>
+  <data name="Validator_Running" xml:space="preserve">
+    <value>Đang kiểm tra {0}…</value>
+  </data>
+  <data name="Validator_SaveIds.Content" xml:space="preserve">
+    <value>Lưu thành IDS…</value>
+  </data>
+  <data name="Validator_SearchBox.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tìm lớp</value>
+  </data>
+  <data name="Validator_SearchBox.PlaceholderText" xml:space="preserve">
+    <value>Tìm lớp, ví dụ: wall</value>
+  </data>
+  <data name="Validator_SearchButton.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tìm trên bSDD</value>
+  </data>
+  <data name="Validator_SearchButton.Content" xml:space="preserve">
+    <value>Tìm</value>
+  </data>
+  <data name="Validator_SearchResults.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Kết quả tìm kiếm</value>
+  </data>
+  <data name="Validator_SearchTitle.Text" xml:space="preserve">
+    <value>Tìm lớp phân loại và thuộc tính để kiểm tra</value>
+  </data>
+  <data name="Validator_Specifications_Many" xml:space="preserve">
+    <value>{0} đặc tả</value>
+  </data>
+  <data name="Validator_Specifications_One" xml:space="preserve">
+    <value>1 đặc tả</value>
+  </data>
+  <data name="Validator_TextType" xml:space="preserve">
+    <value>Báo cáo văn bản</value>
+  </data>
+  <data name="Validator_Timeout" xml:space="preserve">
+    <value>Hết thời gian chờ phản hồi. Hãy kiểm tra kết nối internet rồi thử lại.</value>
+  </data>
+  <data name="Validator_ToCheck.Text" xml:space="preserve">
+    <value>Yêu cầu cần kiểm tra</value>
+  </data>
+</root>

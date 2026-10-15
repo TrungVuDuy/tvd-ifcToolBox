@@ -10,6 +10,10 @@ namespace IfcToolbox.App
     {
         public App()
         {
+            // Before any XAML is loaded, or the text would come in the previous language.
+            var arguments = Environment.GetCommandLineArgs();
+            int language = Array.FindIndex(arguments, a => string.Equals(a, "--language", StringComparison.OrdinalIgnoreCase));
+            Loc.Apply(language > 0 && language + 1 < arguments.Length ? arguments[language + 1] : null);
             InitializeComponent();
             UnhandledException += (_, e) => WriteCrashLog(e.Exception);
         }
@@ -32,6 +36,28 @@ namespace IfcToolbox.App
 
         public static MainWindow MainWindow { get; private set; }
 
+        /// <summary>
+        /// WinUI writes "On" and "Off" next to a toggle switch in Windows' display language, not
+        /// the one chosen in Settings; an implicit style gives every switch the app's words.
+        /// Switches that set their own OnContent and OffContent keep them.
+        /// </summary>
+        private void UseLanguageForToggleSwitches()
+        {
+            var style = new Style(typeof(Microsoft.UI.Xaml.Controls.ToggleSwitch));
+            if (Resources.TryGetValue("DefaultToggleSwitchStyle", out var basedOn) && basedOn is Style defaultStyle)
+                style.BasedOn = defaultStyle;
+            style.Setters.Add(new Setter(Microsoft.UI.Xaml.Controls.ToggleSwitch.OnContentProperty, Loc.Get("Common_On")));
+            style.Setters.Add(new Setter(Microsoft.UI.Xaml.Controls.ToggleSwitch.OffContentProperty, Loc.Get("Common_Off")));
+            Resources[typeof(Microsoft.UI.Xaml.Controls.ToggleSwitch)] = style;
+        }
+
+        /// <summary>Starts a new instance on <paramref name="page"/> and closes this one, e.g. to show a new language.</summary>
+        public static void Restart(string page)
+        {
+            System.Diagnostics.Process.Start(Environment.ProcessPath, new[] { "--page", page });
+            Current.Exit();
+        }
+
         /// <summary>A file to import into the first tool page shown, from --import or a file opened with the app.</summary>
         public static string StartupImport { get; set; }
 
@@ -46,8 +72,9 @@ namespace IfcToolbox.App
 
         /// <summary>
         /// Command line:
-        ///   IfcToolbox.exe [model.ifc] [requirements.ids] [--ids file.ids] [--reference other.ifc] [--page tools|settings|about|validator|...] [--theme light|dark|system]
-        /// --theme applies to this run only; the saved setting is left alone.
+        ///   IfcToolbox.exe [model.ifc] [requirements.ids] [--ids file.ids] [--reference other.ifc] [--page tools|settings|about|validator|...] [--theme light|dark|system] [--language en-US|vi-VN]
+        /// --theme and --language apply to this run only; the saved settings are left alone.
+        /// --language is read in the constructor, as it has to be set before any XAML loads.
         /// </summary>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
@@ -63,6 +90,9 @@ namespace IfcToolbox.App
                 {
                     case "--page" when next != null:
                         page = next.ToLowerInvariant();
+                        i++;
+                        break;
+                    case "--language" when next != null:
                         i++;
                         break;
                     case "--theme" when next != null:
@@ -95,6 +125,7 @@ namespace IfcToolbox.App
                 }
             }
 
+            UseLanguageForToggleSwitches();
             MainWindow = new MainWindow();
             MainWindow.ApplyTheme(theme);
             // A file given without a page opens in the validator, the tool most people start with.

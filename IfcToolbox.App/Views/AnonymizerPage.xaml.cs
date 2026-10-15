@@ -1,5 +1,6 @@
 using IfcToolbox.App.Controls;
 using IfcToolbox.App.Models;
+using IfcToolbox.App.Services;
 using IfcToolbox.Core.Editors;
 using IfcToolbox.Core.Hierarchy;
 using IfcToolbox.Tools.Configurations;
@@ -37,6 +38,7 @@ namespace IfcToolbox.App.Views
             RuleList.ItemsSource = _rules;
             _rules.CollectionChanged += (_, _) => UpdateState();
             UpdateOptions();
+            TypesHint.Text = Loc.Get("Anonymizer_NeedModelForTypes");
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -47,6 +49,7 @@ namespace IfcToolbox.App.Views
             Header.Glyph = tool.Glyph;
             Header.TileBrush = new SolidColorBrush(tool.Color);
             SummaryText.Text = tool.Summary;
+            RunBar.ActionText = tool.Action;
 
             if (App.StartupImport != null)
             {
@@ -69,13 +72,13 @@ namespace IfcToolbox.App.Views
             UpdateState();
             if (path == null)
             {
-                TypesHint.Text = "Add a model to list its object types.";
+                TypesHint.Text = Loc.Get("Anonymizer_NeedModelForTypes");
                 return;
             }
 
             int run = ++_analysisRun;
             TypesProgress.IsActive = true;
-            TypesHint.Text = $"Reading {Path.GetFileName(path)}…";
+            TypesHint.Text = Loc.Format("Common_Reading", Path.GetFileName(path));
             try
             {
                 var trees = await Task.Run(() => AnonymizerProcessor.Analyse(path));
@@ -83,16 +86,16 @@ namespace IfcToolbox.App.Views
                     return;
                 _types.Show(trees.TypedNodes,
                     n => n.IsComposition ? null : n.ParentId + Separator + n.Id,
-                    n => string.IsNullOrEmpty(n.Description) ? n.Name : $"{n.Name}  ·  {n.Description}",
+                    Ui.NodeLabel,
                     (_, _) => false);
                 TypesHint.Text = trees.TypedNodes.Count == 0
-                    ? "No product in this model has an object type to replace."
-                    : "Tick the object types to hide, a whole class or single ones, then add them as rules.";
+                    ? Loc.Get("Anonymizer_NoTypes")
+                    : Loc.Get("Anonymizer_TickTypes");
             }
             catch (Exception ex)
             {
                 if (run == _analysisRun)
-                    RunBar.ShowError("The model could not be read", ex.Message);
+                    RunBar.ShowError(Loc.Get("Common_ModelUnreadable"), ex.Message);
             }
             finally
             {
@@ -141,10 +144,10 @@ namespace IfcToolbox.App.Views
             bool hasModel = ModelZone.Files.Count > 0;
             bool products = ProductSwitch.IsOn && _rules.Count > 0;
             RunBar.CanRun = hasModel && (UserSwitch.IsOn || products);
-            RunBar.Status = !hasModel ? "Add the IFC model to anonymize."
-                : !UserSwitch.IsOn && !ProductSwitch.IsOn ? "Switch on at least one kind of anonymization."
-                : ProductSwitch.IsOn && _rules.Count == 0 ? "Tick object types and add them as rules, or switch product replacement off."
-                : "Writes a new file and a log of every change; the original is kept.";
+            RunBar.Status = !hasModel ? Loc.Get("Anonymizer_NeedModel")
+                : !UserSwitch.IsOn && !ProductSwitch.IsOn ? Loc.Get("Anonymizer_NeedOption")
+                : ProductSwitch.IsOn && _rules.Count == 0 ? Loc.Get("Anonymizer_NeedRules")
+                : Loc.Get("Anonymizer_Ready");
         }
 
         private IConfigAnonymize BuildConfig()
@@ -179,7 +182,7 @@ namespace IfcToolbox.App.Views
                 return;
             var config = BuildConfig();
 
-            RunBar.Begin($"Anonymizing {Path.GetFileName(path)}…", cancellable: false);
+            RunBar.Begin(Loc.Format("Anonymizer_Running", Path.GetFileName(path)), cancellable: false);
             var started = DateTime.Now;
             string outcome = string.Empty;
             try
@@ -187,15 +190,15 @@ namespace IfcToolbox.App.Views
                 var result = await Task.Run(() => AnonymizerProcessor.Process(path, config));
                 // The model first, then the log of changes.
                 var files = result.FilePaths.OrderBy(p => p.EndsWith(".ifc", StringComparison.OrdinalIgnoreCase) ? 0 : 1).ToList();
-                OutputView.Show("Anonymization finished", files, "The new model, and a log of every value that was changed or removed.");
+                OutputView.Show(Loc.Get("Anonymizer_Finished"), files, Loc.Get("Anonymizer_FinishedNote"));
                 OutputSection.Visibility = Visibility.Visible;
                 OutputSection.IsExpanded = true;
                 Ui.ScrollIntoView(OutputSection);
-                outcome = $"Done in {(DateTime.Now - started).TotalSeconds:0.0} s.";
+                outcome = Loc.Format("Common_Done", (DateTime.Now - started).TotalSeconds);
             }
             catch (Exception ex)
             {
-                RunBar.ShowError("The model could not be anonymized", ex.Message);
+                RunBar.ShowError(Loc.Get("Anonymizer_Failed"), ex.Message);
             }
             finally
             {

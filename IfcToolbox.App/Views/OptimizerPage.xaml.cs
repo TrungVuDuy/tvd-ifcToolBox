@@ -1,5 +1,6 @@
 using IfcToolbox.App.Controls;
 using IfcToolbox.App.Models;
+using IfcToolbox.App.Services;
 using IfcToolbox.Tools.Configurations;
 using IfcToolbox.Tools.Processors;
 using Microsoft.UI.Xaml;
@@ -36,6 +37,7 @@ namespace IfcToolbox.App.Views
             Header.Glyph = tool.Glyph;
             Header.TileBrush = new SolidColorBrush(tool.Color);
             SummaryText.Text = tool.Summary;
+            RunBar.ActionText = tool.Action;
 
             if (App.StartupImport != null)
             {
@@ -65,9 +67,7 @@ namespace IfcToolbox.App.Views
             PointListSwitch.IsEnabled = RoundSwitch.IsOn;
             int digits = (int)PrecisionSlider.Value;
             // In the model's length unit: 0.000001 m is a micrometre, 0.001 mm likewise.
-            PrecisionText.Text = $"Coordinates are rounded to {digits} decimal places in the model's length unit " +
-                                 $"({1 / Math.Pow(10, digits):0.############}). Fewer places save more but move geometry; " +
-                                 "for a model in millimetres 3 or more is safe, in metres 6 or more.";
+            PrecisionText.Text = Loc.Format("Optimizer_PrecisionText", digits, 1 / Math.Pow(10, digits));
             UpdateState();
         }
 
@@ -78,10 +78,10 @@ namespace IfcToolbox.App.Views
             int files = ModelZone.Files.Count;
             bool anything = MergeSwitch.IsOn || PointSwitch.IsOn || (RoundSwitch.IsOn && PointListSwitch.IsOn);
             RunBar.CanRun = files > 0 && anything;
-            RunBar.Status = files == 0 ? "Add the IFC models to optimize."
-                : !anything ? "Switch on at least one optimization."
-                : RoundSwitch.IsOn ? "Rounding changes coordinates; the original files are kept."
-                : "Lossless: only exact duplicates are merged. The original files are kept.";
+            RunBar.Status = files == 0 ? Loc.Get("Optimizer_NeedModels")
+                : !anything ? Loc.Get("Optimizer_NeedOption")
+                : RoundSwitch.IsOn ? Loc.Get("Optimizer_ReadyRounding")
+                : Loc.Get("Optimizer_ReadyLossless");
         }
 
         private IConfigOptimize BuildConfig()
@@ -105,7 +105,7 @@ namespace IfcToolbox.App.Views
                 return;
             var config = BuildConfig();
 
-            var token = RunBar.Begin($"Optimizing {Path.GetFileName(paths[0])}…", cancellable: paths.Count > 1);
+            var token = RunBar.Begin(Loc.Format("Optimizer_Running", Path.GetFileName(paths[0])), cancellable: paths.Count > 1);
             var started = DateTime.Now;
             var written = new List<string>();
             var failures = new List<string>();
@@ -118,7 +118,7 @@ namespace IfcToolbox.App.Views
                     token.ThrowIfCancellationRequested();
                     var path = paths[i];
                     if (paths.Count > 1)
-                        RunBar.Status = $"Optimizing {i + 1} of {paths.Count}: {Path.GetFileName(path)}…";
+                        RunBar.Status = Loc.Format("Optimizer_RunningMany", i + 1, paths.Count, Path.GetFileName(path));
                     try
                     {
                         var result = await Task.Run(() => OptimizerProcessor.Process(path, config));
@@ -132,21 +132,21 @@ namespace IfcToolbox.App.Views
                         failures.Add($"{Path.GetFileName(path)}: {ex.Message}");
                     }
                 }
-                outcome = $"Done in {(DateTime.Now - started).TotalSeconds:0.0} s.";
+                outcome = Loc.Format("Common_Done", (DateTime.Now - started).TotalSeconds);
             }
             catch (OperationCanceledException)
             {
-                outcome = "Stopped; the files optimized so far are listed.";
+                outcome = Loc.Get("Optimizer_Stopped");
             }
             finally
             {
                 if (failures.Count > 0)
-                    RunBar.ShowError($"{failures.Count} of {paths.Count} files could not be optimized", string.Join(Environment.NewLine, failures));
+                    RunBar.ShowError(Loc.Format("Optimizer_SomeFailed", failures.Count, paths.Count), string.Join(Environment.NewLine, failures));
                 if (written.Count > 0)
                 {
                     double saved = before == 0 ? 0 : 100.0 * (before - after) / before;
-                    OutputView.Show("Optimization finished", written,
-                        $"{ImportedFile.FormatSize(before)} → {ImportedFile.FormatSize(after)}, {saved:0.#}% smaller.");
+                    OutputView.Show(Loc.Get("Optimizer_Finished"), written,
+                        Loc.Format("Optimizer_Saved", ImportedFile.FormatSize(before), ImportedFile.FormatSize(after), saved));
                     OutputSection.Visibility = Visibility.Visible;
                     OutputSection.IsExpanded = true;
                     Ui.ScrollIntoView(OutputSection);

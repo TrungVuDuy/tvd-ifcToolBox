@@ -15,14 +15,14 @@
                 <controls:PageHeader x:Name="Header" Margin="0,0,0,4" />
                 <TextBlock x:Name="SummaryText" Style="{StaticResource SecondaryTextStyle}" Margin="0,0,0,8" />
 
-                <controls:Section Header="Files to convert">
+                <controls:Section x:Uid="Converter_Files">
                     <StackPanel Spacing="8">
                         <controls:FileDropZone x:Name="ModelZone" AllowMultiple="True" FilesChanged="OnFilesChanged" />
-                        <InfoBar x:Name="SchemaWarning" Severity="Warning" IsOpen="False" IsClosable="False" Title="IFC 4.3 needs a newer IfcConvert" />
+                        <InfoBar x:Name="SchemaWarning" Severity="Warning" IsOpen="False" IsClosable="False" x:Uid="Converter_SchemaWarning" />
                     </StackPanel>
                 </controls:Section>
 
-                <controls:Section Header="Select target format">
+                <controls:Section x:Uid="Converter_Format">
                     <StackPanel Spacing="8">
                         <!-- Tiles are generated from the formats IfcConvert knows. -->
                         <Grid x:Name="FormatGrid" ColumnSpacing="10" RowSpacing="10">
@@ -36,16 +36,15 @@
                     </StackPanel>
                 </controls:Section>
 
-                <controls:Section Header="Filter by IFC types">
+                <controls:Section x:Uid="Converter_Filter">
                     <StackPanel Spacing="8">
-                        <ToggleSwitch x:Name="FilterSwitch" OffContent="Off: everything except openings (and spaces in 3D formats)" OnContent="On: only the ticked classes"
-                                      Toggled="OnFilterToggled" AutomationProperties.Name="Convert only the ticked IFC classes" />
+                        <ToggleSwitch x:Name="FilterSwitch" x:Uid="Converter_FilterSwitch" Toggled="OnFilterToggled" />
                         <ProgressRing x:Name="ClassProgress" Width="20" Height="20" IsActive="False" HorizontalAlignment="Left" />
                         <VariableSizedWrapGrid x:Name="ClassList" Orientation="Horizontal" ItemWidth="250" Visibility="Collapsed" />
                     </StackPanel>
                 </controls:Section>
 
-                <controls:Section Header="Options">
+                <controls:Section x:Uid="Converter_Options">
                     <Grid ColumnSpacing="24" RowSpacing="16">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -56,33 +55,32 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <RadioButtons x:Name="NamingChoice" Header="Naming convention" SelectedIndex="0">
-                            <RadioButton Content="IfcConvert's own ids" />
-                            <RadioButton Content="Element GUIDs (IfcRoot.GlobalId)" />
-                            <RadioButton Content="Element names (IfcRoot.Name)" />
+                        <RadioButtons x:Name="NamingChoice" x:Uid="Converter_Naming" SelectedIndex="0">
+                            <RadioButton x:Uid="Converter_NamingIds" />
+                            <RadioButton x:Uid="Converter_NamingGuids" />
+                            <RadioButton x:Uid="Converter_NamingNames" />
                         </RadioButtons>
-                        <RadioButtons x:Name="PlacementChoice" Grid.Column="1" Header="Coordinate system" SelectedIndex="0">
-                            <RadioButton Content="Global coordinates of the model" />
-                            <RadioButton Content="Site local placement (IfcSite)" />
-                            <RadioButton Content="Building local placement (IfcBuilding)" />
+                        <RadioButtons x:Name="PlacementChoice" x:Uid="Converter_Placement" Grid.Column="1" SelectedIndex="0">
+                            <RadioButton x:Uid="Converter_PlacementGlobal" />
+                            <RadioButton x:Uid="Converter_PlacementSite" />
+                            <RadioButton x:Uid="Converter_PlacementBuilding" />
                         </RadioButtons>
 
                         <StackPanel Grid.Row="1" Spacing="4">
-                            <TextBlock Text="Geometry" />
-                            <CheckBox x:Name="WorldCoordsCheck" Content="Apply placements to the geometry (world coordinates)" />
-                            <CheckBox x:Name="CenterCheck" Content="Move the model to the origin" />
+                            <TextBlock x:Uid="Converter_Geometry" />
+                            <CheckBox x:Name="WorldCoordsCheck" x:Uid="Converter_WorldCoords" />
+                            <CheckBox x:Name="CenterCheck" x:Uid="Converter_Center" />
                         </StackPanel>
-                        <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource SecondaryCaptionStyle}" VerticalAlignment="Top"
-                                   Text="Options a format does not support are left out for that format. Files are written next to the model, with the format's extension." />
+                        <TextBlock x:Uid="Converter_OptionsNote" Grid.Row="1" Grid.Column="1" Style="{StaticResource SecondaryCaptionStyle}" VerticalAlignment="Top" />
                     </Grid>
                 </controls:Section>
 
-                <controls:Section x:Name="OutputSection" Header="Converted files" Visibility="Collapsed">
+                <controls:Section x:Name="OutputSection" x:Uid="Converter_Output" Visibility="Collapsed">
                     <controls:OutputFilesView x:Name="OutputView" />
                 </controls:Section>
             </StackPanel>
         </ScrollViewer>
 
-        <controls:RunBar x:Name="RunBar" Grid.Row="1" ActionText="Convert IFC" Run="OnConvert" />
+        <controls:RunBar x:Name="RunBar" Grid.Row="1" Run="OnConvert" />
     </Grid>
 </Page>

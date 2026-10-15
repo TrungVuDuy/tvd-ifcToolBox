@@ -1,4 +1,5 @@
 using IfcToolbox.App.Models;
+using IfcToolbox.App.Services;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace IfcToolbox.App.Controls
         {
             var files = paths.Where(File.Exists).Distinct().Select(p => new ImportedFile(p)).ToList();
             Summary.Title = title;
-            Summary.Message = message ?? (files.Count == 1 ? "1 file written." : $"{files.Count} files written.");
+            Summary.Message = message ?? Loc.Count("Output_FilesWritten", files.Count);
             Summary.Severity = files.Count > 0 ? InfoBarSeverity.Success : InfoBarSeverity.Warning;
             FileList.ItemsSource = files;
         }

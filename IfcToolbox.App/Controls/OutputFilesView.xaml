@@ -30,11 +30,11 @@
                         <TextBlock Grid.Column="2" VerticalAlignment="Center" Text="{x:Bind Size}" Style="{StaticResource SecondaryTextStyle}" />
                         <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="4">
                             <Button Click="OnOpen" Tag="{x:Bind Path}" Background="Transparent" BorderThickness="0"
-                                    ToolTipService.ToolTip="Open" AutomationProperties.Name="{x:Bind models:ImportedFile.Label('Open', Name)}">
+                                    x:Uid="Row_Open" AutomationProperties.Name="{x:Bind models:ImportedFile.Label('Row_OpenName', Name)}">
                                 <FontIcon Glyph="&#xE8A7;" FontSize="14" />
                             </Button>
                             <Button Click="OnShowInFolder" Tag="{x:Bind Path}" Background="Transparent" BorderThickness="0"
-                                    ToolTipService.ToolTip="Show in folder" AutomationProperties.Name="{x:Bind models:ImportedFile.Label('Show in folder', Name)}">
+                                    x:Uid="Row_ShowInFolder" AutomationProperties.Name="{x:Bind models:ImportedFile.Label('Row_ShowInFolderName', Name)}">
                                 <FontIcon Glyph="&#xE838;" FontSize="14" />
                             </Button>
                         </StackPanel>

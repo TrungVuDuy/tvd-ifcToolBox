@@ -17,11 +17,11 @@
                 <controls:PageHeader x:Name="Header" Margin="0,0,0,4" />
                 <TextBlock x:Name="SummaryText" Style="{StaticResource SecondaryTextStyle}" Margin="0,0,0,8" />
 
-                <controls:Section Header="File to validate">
+                <controls:Section x:Uid="Validator_File">
                     <controls:FileDropZone x:Name="ModelZone" FilesChanged="OnInputChanged" />
                 </controls:Section>
 
-                <controls:Section Header="Requirements">
+                <controls:Section x:Uid="Validator_Requirements">
                     <StackPanel Spacing="12">
                         <Grid ColumnSpacing="12">
                             <Grid.ColumnDefinitions>
@@ -29,41 +29,39 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <RadioButton x:Name="IdsMode" GroupName="RequirementSource" Style="{StaticResource ModeTileStyle}" IsChecked="True" Checked="OnModeChanged"
-                                         AutomationProperties.Name="IDS file">
+                                         x:Uid="Validator_IdsMode">
                                 <StackPanel Spacing="4">
                                     <StackPanel Orientation="Horizontal" Spacing="10">
                                         <FontIcon Glyph="&#xE8A5;" FontSize="16" />
-                                        <TextBlock Text="IDS file" Style="{StaticResource BodyStrongTextBlockStyle}" />
+                                        <TextBlock x:Uid="Validator_IdsModeTitle" Style="{StaticResource BodyStrongTextBlockStyle}" />
                                     </StackPanel>
-                                    <TextBlock Style="{StaticResource SecondaryTextStyle}"
-                                               Text="Requirements in an Information Delivery Specification (IDS 1.0), written in any IDS tool." />
+                                    <TextBlock x:Uid="Validator_IdsModeText" Style="{StaticResource SecondaryTextStyle}" />
                                 </StackPanel>
                             </RadioButton>
                             <RadioButton x:Name="BsddMode" Grid.Column="1" GroupName="RequirementSource" Style="{StaticResource ModeTileStyle}" Checked="OnModeChanged"
-                                         AutomationProperties.Name="bSDD">
+                                         x:Uid="Validator_BsddMode">
                                 <StackPanel Spacing="4">
                                     <StackPanel Orientation="Horizontal" Spacing="10">
                                         <FontIcon Glyph="&#xE774;" FontSize="16" />
                                         <TextBlock Text="buildingSMART Data Dictionary" Style="{StaticResource BodyStrongTextBlockStyle}" />
                                     </StackPanel>
-                                    <TextBlock Style="{StaticResource SecondaryTextStyle}"
-                                               Text="Pick classes and their properties from bSDD. Needs an internet connection." />
+                                    <TextBlock x:Uid="Validator_BsddModeText" Style="{StaticResource SecondaryTextStyle}" />
                                 </StackPanel>
                             </RadioButton>
                         </Grid>
 
                         <!-- IDS file -->
-                        <controls:FileDropZone x:Name="IdsZone" AllowMultiple="True" Prompt="Choose IDS files or drop them here" FilesChanged="OnInputChanged" />
+                        <controls:FileDropZone x:Name="IdsZone" AllowMultiple="True" x:Uid="Validator_IdsZone" FilesChanged="OnInputChanged" />
 
                         <!-- bSDD -->
                         <StackPanel x:Name="BsddPanel" Spacing="12" Visibility="Collapsed">
-                            <InfoBar x:Name="BsddError" Severity="Error" Title="bSDD could not be reached" IsOpen="False" />
+                            <InfoBar x:Name="BsddError" x:Uid="Validator_BsddError" Severity="Error" IsOpen="False" />
 
                             <StackPanel Spacing="6">
-                                <TextBlock Text="Choose a bSDD dictionary" Style="{StaticResource BodyStrongTextBlockStyle}" />
+                                <TextBlock x:Uid="Validator_ChooseDictionary" Style="{StaticResource BodyStrongTextBlockStyle}" />
                                 <StackPanel Orientation="Horizontal" Spacing="12">
-                                    <ComboBox x:Name="DictionaryChoice" MinWidth="420" PlaceholderText="Loading dictionaries…" IsEnabled="False"
-                                              SelectionChanged="OnDictionaryChanged" AutomationProperties.Name="bSDD dictionary">
+                                    <ComboBox x:Name="DictionaryChoice" MinWidth="420" IsEnabled="False" x:Uid="Validator_Dictionary"
+                                              SelectionChanged="OnDictionaryChanged">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate x:DataType="models:DictionaryOption">
                                                 <TextBlock Text="{x:Bind Label}" />
@@ -75,15 +73,15 @@
                             </StackPanel>
 
                             <StackPanel Spacing="6">
-                                <TextBlock Text="Search classifications and properties for validation" Style="{StaticResource BodyStrongTextBlockStyle}" />
+                                <TextBlock x:Uid="Validator_SearchTitle" Style="{StaticResource BodyStrongTextBlockStyle}" />
                                 <StackPanel Orientation="Horizontal" Spacing="12">
-                                    <AutoSuggestBox x:Name="SearchBox" MinWidth="420" PlaceholderText="Search classes, e.g. wall" QueryIcon="Find"
-                                                    QuerySubmitted="OnSearch" AutomationProperties.Name="Search classes" />
-                                    <Button Content="Search" Click="OnSearchClick" AutomationProperties.Name="Search bSDD" />
+                                    <AutoSuggestBox x:Name="SearchBox" MinWidth="420" QueryIcon="Find" x:Uid="Validator_SearchBox"
+                                                    QuerySubmitted="OnSearch" />
+                                    <Button x:Uid="Validator_SearchButton" Click="OnSearchClick" />
                                     <ProgressRing x:Name="SearchProgress" Width="20" Height="20" IsActive="False" />
                                 </StackPanel>
                                 <ListView x:Name="SearchResults" MaxHeight="260" SelectionMode="None" IsItemClickEnabled="True" ItemClick="OnAddClass"
-                                          Visibility="Collapsed" AutomationProperties.Name="Search results">
+                                          Visibility="Collapsed" x:Uid="Validator_SearchResults">
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="bsdd:BsddClassSearchItem">
                                             <Grid Padding="0,6" ColumnSpacing="12">
@@ -108,37 +106,36 @@
 
                             <StackPanel Spacing="6">
                                 <Grid>
-                                    <TextBlock Text="Requirements to check" Style="{StaticResource BodyStrongTextBlockStyle}" VerticalAlignment="Center" />
+                                    <TextBlock x:Uid="Validator_ToCheck" Style="{StaticResource BodyStrongTextBlockStyle}" VerticalAlignment="Center" />
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="4">
-                                        <HyperlinkButton x:Name="SaveIdsButton" Content="Save as IDS…" Click="OnSaveIds" IsEnabled="False" />
-                                        <HyperlinkButton x:Name="ClearClassesButton" Content="Clear" Click="OnClearClasses" IsEnabled="False" />
+                                        <HyperlinkButton x:Name="SaveIdsButton" x:Uid="Validator_SaveIds" Click="OnSaveIds" IsEnabled="False" />
+                                        <HyperlinkButton x:Name="ClearClassesButton" x:Uid="Validator_ClearClasses" Click="OnClearClasses" IsEnabled="False" />
                                     </StackPanel>
                                 </Grid>
-                                <TextBlock x:Name="NoClassesText" Style="{StaticResource SecondaryTextStyle}"
-                                           Text="Search above and pick a class. Its property sets appear here: tick the properties every matching object must have." />
+                                <TextBlock x:Name="NoClassesText" x:Uid="Validator_NoClasses" Style="{StaticResource SecondaryTextStyle}" />
                                 <ProgressRing x:Name="ClassProgress" Width="20" Height="20" IsActive="False" HorizontalAlignment="Left" />
                                 <TreeView x:Name="RequirementTree" SelectionMode="Multiple" Visibility="Collapsed" MaxHeight="420"
-                                          SelectionChanged="OnRequirementSelectionChanged" AutomationProperties.Name="Requirements to check" />
-                                <CheckBox x:Name="AllowedValuesCheck" Content="Also check values against the allowed values listed in bSDD" />
+                                          SelectionChanged="OnRequirementSelectionChanged" x:Uid="Validator_RequirementTree" />
+                                <CheckBox x:Name="AllowedValuesCheck" x:Uid="Validator_AllowedValues" />
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
                 </controls:Section>
 
-                <controls:Section x:Name="ResultsSection" Header="Results" Visibility="Collapsed">
+                <controls:Section x:Name="ResultsSection" x:Uid="Validator_Results" Visibility="Collapsed">
                     <StackPanel Spacing="12">
                         <controls:IdsResultsView x:Name="ResultsView" />
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <Button Click="OnExportCsv">
                                 <StackPanel Orientation="Horizontal" Spacing="8">
                                     <FontIcon Glyph="&#xE9F9;" FontSize="14" />
-                                    <TextBlock Text="Export CSV" />
+                                    <TextBlock x:Uid="Validator_ExportCsv" />
                                 </StackPanel>
                             </Button>
                             <Button Click="OnExportText">
                                 <StackPanel Orientation="Horizontal" Spacing="8">
                                     <FontIcon Glyph="&#xE8A5;" FontSize="14" />
-                                    <TextBlock Text="Export text report" />
+                                    <TextBlock x:Uid="Validator_ExportText" />
                                 </StackPanel>
                             </Button>
                         </StackPanel>
@@ -147,6 +144,6 @@
             </StackPanel>
         </ScrollViewer>
 
-        <controls:RunBar x:Name="RunBar" Grid.Row="1" ActionText="Validate IFC" Run="OnValidate" />
+        <controls:RunBar x:Name="RunBar" Grid.Row="1" Run="OnValidate" />
     </Grid>
 </Page>

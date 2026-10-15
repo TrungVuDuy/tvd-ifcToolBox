@@ -15,11 +15,11 @@
                 <controls:PageHeader x:Name="Header" Margin="0,0,0,4" />
                 <TextBlock x:Name="SummaryText" Style="{StaticResource SecondaryTextStyle}" Margin="0,0,0,8" />
 
-                <controls:Section Header="Files to optimize">
+                <controls:Section x:Uid="Optimizer_Files">
                     <controls:FileDropZone x:Name="ModelZone" AllowMultiple="True" FilesChanged="OnFilesChanged" />
                 </controls:Section>
 
-                <controls:Section Header="Configuration">
+                <controls:Section x:Uid="Optimizer_Configuration">
                     <Grid ColumnSpacing="12" RowSpacing="12">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -32,57 +32,50 @@
 
                         <Border Style="{StaticResource CardStyle}">
                             <StackPanel Spacing="6">
-                                <Border Style="{StaticResource CardTitleStyle}"><TextBlock Text="General" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
-                                <TextBlock Text="Schema support" />
-                                <TextBlock Text="IFC2X3, IFC4 and IFC 4.3" Style="{StaticResource SecondaryCaptionStyle}" Margin="0,0,0,6" />
-                                <ToggleSwitch x:Name="KeepLabelSwitch" Header="Keep the old entity labels"
-                                              AutomationProperties.Name="Keep the old entity labels" />
-                                <TextBlock Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap"
-                                           Text="On: #123 stays #123, handy when comparing with the original. Off: entities are renumbered, which makes the file smaller." />
+                                <Border Style="{StaticResource CardTitleStyle}"><TextBlock x:Uid="Optimizer_General" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
+                                <TextBlock x:Uid="Optimizer_SchemaSupport" />
+                                <TextBlock x:Uid="Optimizer_Schemas" Style="{StaticResource SecondaryCaptionStyle}" Margin="0,0,0,6" />
+                                <ToggleSwitch x:Name="KeepLabelSwitch" x:Uid="Optimizer_KeepLabel" />
+                                <TextBlock x:Uid="Optimizer_KeepLabelNote" Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap" />
                             </StackPanel>
                         </Border>
 
                         <Border Grid.Row="1" Style="{StaticResource CardStyle}">
                             <StackPanel Spacing="6">
-                                <Border Style="{StaticResource CardTitleStyle}"><TextBlock Text="Merge redundancy" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
-                                <ToggleSwitch x:Name="MergeSwitch" Header="Merge duplicate entities (lossless)" IsOn="True" Toggled="OnOptionChanged"
-                                              AutomationProperties.Name="Merge duplicate entities" />
+                                <Border Style="{StaticResource CardTitleStyle}"><TextBlock x:Uid="Optimizer_MergeTitle" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
+                                <ToggleSwitch x:Name="MergeSwitch" x:Uid="Optimizer_Merge" IsOn="True" Toggled="OnOptionChanged" />
                                 <RadioButtons x:Name="MergeChoice" SelectedIndex="1">
-                                    <RadioButton Content="Resource layer entities only" />
-                                    <RadioButton Content="All related entities" />
+                                    <RadioButton x:Uid="Optimizer_MergeResources" />
+                                    <RadioButton x:Uid="Optimizer_MergeAll" />
                                 </RadioButtons>
-                                <TextBlock Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap"
-                                           Text="Resource layer entities (points, directions, colours…) do not reference other entities and are always safe to merge. 'All related' also merges what refers to them, which saves the most." />
+                                <TextBlock x:Uid="Optimizer_MergeNote" Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap" />
                             </StackPanel>
                         </Border>
 
                         <Border Grid.Column="1" Grid.RowSpan="2" Style="{StaticResource CardStyle}">
                             <StackPanel Spacing="6">
-                                <Border Style="{StaticResource CardTitleStyle}"><TextBlock Text="FPR optimization" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
-                                <ToggleSwitch x:Name="RoundSwitch" Header="Round coordinates (floating point rounding)" Toggled="OnOptionChanged"
-                                              AutomationProperties.Name="Round coordinates" />
+                                <Border Style="{StaticResource CardTitleStyle}"><TextBlock x:Uid="Optimizer_FprTitle" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
+                                <ToggleSwitch x:Name="RoundSwitch" x:Uid="Optimizer_Round" Toggled="OnOptionChanged" />
                                 <StackPanel x:Name="PrecisionPanel" Spacing="2">
-                                    <Slider x:Name="PrecisionSlider" Header="Decimal places to keep" Minimum="1" Maximum="12" Value="6" StepFrequency="1"
+                                    <Slider x:Name="PrecisionSlider" x:Uid="Optimizer_Precision" Minimum="1" Maximum="12" Value="6" StepFrequency="1"
                                             TickFrequency="1" TickPlacement="BottomRight" ValueChanged="OnPrecisionChanged" MaxWidth="420" HorizontalAlignment="Left" Width="420" />
                                     <TextBlock x:Name="PrecisionText" Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap" />
                                 </StackPanel>
-                                <ToggleSwitch x:Name="PointSwitch" Header="Optimize points" IsOn="True" Toggled="OnOptionChanged" AutomationProperties.Name="Optimize points" />
-                                <TextBlock Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap"
-                                           Text="Merges coinciding IfcCartesianPoints used by IfcAxis2Placement2D/3D, IfcPolyline, IfcPolyLoop, IfcVertexPoint, IfcBoundingBox, IfcBSplineCurve and IfcBSplineSurface." />
-                                <ToggleSwitch x:Name="PointListSwitch" Header="Optimize point lists (IFC4 and later)" IsOn="True" Toggled="OnOptionChanged" AutomationProperties.Name="Optimize point lists" />
-                                <TextBlock Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap"
-                                           Text="IfcCartesianPointList of IfcIndexedPolyCurve and IfcTessellatedFaceSet. Needs rounding to be on." />
+                                <ToggleSwitch x:Name="PointSwitch" x:Uid="Optimizer_Points" IsOn="True" Toggled="OnOptionChanged" />
+                                <TextBlock x:Uid="Optimizer_PointsNote" Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap" />
+                                <ToggleSwitch x:Name="PointListSwitch" x:Uid="Optimizer_PointLists" IsOn="True" Toggled="OnOptionChanged" />
+                                <TextBlock x:Uid="Optimizer_PointListsNote" Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap" />
                             </StackPanel>
                         </Border>
                     </Grid>
                 </controls:Section>
 
-                <controls:Section x:Name="OutputSection" Header="Optimized files" Visibility="Collapsed">
+                <controls:Section x:Name="OutputSection" x:Uid="Optimizer_Output" Visibility="Collapsed">
                     <controls:OutputFilesView x:Name="OutputView" />
                 </controls:Section>
             </StackPanel>
         </ScrollViewer>
 
-        <controls:RunBar x:Name="RunBar" Grid.Row="1" ActionText="Optimize IFC" Run="OnOptimize" />
+        <controls:RunBar x:Name="RunBar" Grid.Row="1" Run="OnOptimize" />
     </Grid>
 </Page>

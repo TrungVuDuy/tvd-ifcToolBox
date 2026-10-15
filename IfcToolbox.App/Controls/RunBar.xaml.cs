@@ -1,3 +1,4 @@
+using IfcToolbox.App.Services;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -86,7 +87,7 @@ namespace IfcToolbox.App.Controls
         private void OnCancel(object sender, RoutedEventArgs e)
         {
             _cancellation?.Cancel();
-            Status = "Cancelling…";
+            Status = Loc.Get("Run_Cancelling");
         }
     }
 }

@@ -1,0 +1,1579 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About_BsddTerms" xml:space="preserve">
+    <value>bSDD terms of use</value>
+  </data>
+  <data name="About_Continuation.Text" xml:space="preserve">
+    <value>This is a modified continuation of IFC Toolbox by Yousheng Wang, which is no longer maintained. It moves the app from UWP to WinUI 3 and the tools to .NET 8 and xbim 6, and adds IDS 1.0 validation, IFC 4.3 support, glTF output and a new bSDD client.</value>
+  </data>
+  <data name="About_Copyright.Text" xml:space="preserve">
+    <value>Copyright (c) 2021 Yousheng Wang. Modifications from 2026 by their respective contributors.</value>
+  </data>
+  <data name="About_Credit.Text" xml:space="preserve">
+    <value>Credit for the original app, its design and its tools goes to its author and everyone who helped with it. The Microsoft Store app and its releases belong to the original project.</value>
+  </data>
+  <data name="About_Dependencies.Header" xml:space="preserve">
+    <value>Dependencies and References</value>
+  </data>
+  <data name="About_Disclaimer.Header" xml:space="preserve">
+    <value>Disclaimer</value>
+  </data>
+  <data name="About_DisclaimerText.Text" xml:space="preserve">
+    <value>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. Check the files it produces before relying on them. See the GNU General Public License for more details.</value>
+  </data>
+  <data name="About_Header.Title" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="About_License.Header" xml:space="preserve">
+    <value>License</value>
+  </data>
+  <data name="About_Notices.Content" xml:space="preserve">
+    <value>Third-party notices and licences</value>
+  </data>
+  <data name="About_OriginalRepo.Content" xml:space="preserve">
+    <value>Original IFC Toolbox on GitHub</value>
+  </data>
+  <data name="About_Privacy.Header" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
+  <data name="About_PrivacyText.Text" xml:space="preserve">
+    <value>IFC Toolbox works on your files on this computer and does not collect usage data. Only the bSDD features go online: they send what you search for to the buildingSMART Data Dictionary service.</value>
+  </data>
+  <data name="About_ReadLicense.Content" xml:space="preserve">
+    <value>Read the license</value>
+  </data>
+  <data name="About_Tagline.Text" xml:space="preserve">
+    <value>Simple tools for processing IFC files.</value>
+  </data>
+  <data name="About_ThisRepo.Content" xml:space="preserve">
+    <value>This version on GitHub: source code, releases, issues</value>
+  </data>
+  <data name="About_ThisVersion.Header" xml:space="preserve">
+    <value>This version</value>
+  </data>
+  <data name="About_UseBsdd" xml:space="preserve">
+    <value>Classifications and properties</value>
+  </data>
+  <data name="About_UseCsv" xml:space="preserve">
+    <value>CSV reports</value>
+  </data>
+  <data name="About_UseGeometry" xml:space="preserve">
+    <value>Geometry conversion</value>
+  </data>
+  <data name="About_UseIds" xml:space="preserve">
+    <value>IDS 1.0 requirements</value>
+  </data>
+  <data name="About_UseIfcModels" xml:space="preserve">
+    <value>Reading and writing IFC models</value>
+  </data>
+  <data name="About_UseLogging" xml:space="preserve">
+    <value>Logging</value>
+  </data>
+  <data name="About_UseUi" xml:space="preserve">
+    <value>User interface</value>
+  </data>
+  <data name="About_Version" xml:space="preserve">
+    <value>Version {0}</value>
+  </data>
+  <data name="Anonymizer_ActorRoleCheck.Content" xml:space="preserve">
+    <value>Roles (IfcActorRole)</value>
+  </data>
+  <data name="Anonymizer_AddRules.Text" xml:space="preserve">
+    <value>Add rules for the ticked object types</value>
+  </data>
+  <data name="Anonymizer_AddRulesButton.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Add rules for the ticked object types</value>
+  </data>
+  <data name="Anonymizer_ApplicationCheck.Content" xml:space="preserve">
+    <value>Authoring application</value>
+  </data>
+  <data name="Anonymizer_ClearRules.Content" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="Anonymizer_ColumnClass.Text" xml:space="preserve">
+    <value>Class</value>
+  </data>
+  <data name="Anonymizer_ColumnFind.Text" xml:space="preserve">
+    <value>Text to find</value>
+  </data>
+  <data name="Anonymizer_ColumnReplace.Text" xml:space="preserve">
+    <value>Replace with</value>
+  </data>
+  <data name="Anonymizer_Failed" xml:space="preserve">
+    <value>The model could not be anonymized</value>
+  </data>
+  <data name="Anonymizer_File.Header" xml:space="preserve">
+    <value>File to anonymize</value>
+  </data>
+  <data name="Anonymizer_FileNameCheck.Content" xml:space="preserve">
+    <value>File header: name, author, organisation, software, date</value>
+  </data>
+  <data name="Anonymizer_FindBox.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Text to find</value>
+  </data>
+  <data name="Anonymizer_Finished" xml:space="preserve">
+    <value>Anonymization finished</value>
+  </data>
+  <data name="Anonymizer_FinishedNote" xml:space="preserve">
+    <value>The new model, and a log of every value that was changed or removed.</value>
+  </data>
+  <data name="Anonymizer_InNameCheck.Content" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Anonymizer_InObjectTypeCheck.Content" xml:space="preserve">
+    <value>Object type</value>
+  </data>
+  <data name="Anonymizer_InProductPropsCheck.Content" xml:space="preserve">
+    <value>Product properties</value>
+  </data>
+  <data name="Anonymizer_InTypePropsCheck.Content" xml:space="preserve">
+    <value>Type properties</value>
+  </data>
+  <data name="Anonymizer_NeedModel" xml:space="preserve">
+    <value>Add the IFC model to anonymize.</value>
+  </data>
+  <data name="Anonymizer_NeedModelForTypes" xml:space="preserve">
+    <value>Add a model to list its object types.</value>
+  </data>
+  <data name="Anonymizer_NeedOption" xml:space="preserve">
+    <value>Switch on at least one kind of anonymization.</value>
+  </data>
+  <data name="Anonymizer_NeedRules" xml:space="preserve">
+    <value>Tick object types and add them as rules, or switch product replacement off.</value>
+  </data>
+  <data name="Anonymizer_NoTypes" xml:space="preserve">
+    <value>No product in this model has an object type to replace.</value>
+  </data>
+  <data name="Anonymizer_OrganizationCheck.Content" xml:space="preserve">
+    <value>Organisations (IfcOrganization)</value>
+  </data>
+  <data name="Anonymizer_Output.Header" xml:space="preserve">
+    <value>Anonymized file</value>
+  </data>
+  <data name="Anonymizer_PersonAndOrganizationCheck.Content" xml:space="preserve">
+    <value>People in organisations</value>
+  </data>
+  <data name="Anonymizer_PersonCheck.Content" xml:space="preserve">
+    <value>People (IfcPerson)</value>
+  </data>
+  <data name="Anonymizer_PostalCheck.Content" xml:space="preserve">
+    <value>Postal addresses</value>
+  </data>
+  <data name="Anonymizer_ProductNote.Text" xml:space="preserve">
+    <value>Replaces text such as a brand or a product name wherever it appears in products of a class: the name, the object type, and property values of the product and its type.</value>
+  </data>
+  <data name="Anonymizer_Products.Header" xml:space="preserve">
+    <value>Advanced IfcProduct anonymization</value>
+  </data>
+  <data name="Anonymizer_ProductSwitch.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Replace product names and brands</value>
+  </data>
+  <data name="Anonymizer_ProductSwitch.Header" xml:space="preserve">
+    <value>Replace product names and brands</value>
+  </data>
+  <data name="Anonymizer_Ready" xml:space="preserve">
+    <value>Writes a new file and a log of every change; the original is kept.</value>
+  </data>
+  <data name="Anonymizer_RemoveRule.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Remove rule</value>
+  </data>
+  <data name="Anonymizer_RemoveRuleName" xml:space="preserve">
+    <value>Remove rule {0}</value>
+  </data>
+  <data name="Anonymizer_ReplaceBox.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Replace with</value>
+  </data>
+  <data name="Anonymizer_RulesHint.Text" xml:space="preserve">
+    <value>Each rule replaces its text in products of its class. Edit the text to find or the replacement as needed.</value>
+  </data>
+  <data name="Anonymizer_RulesTitle.Text" xml:space="preserve">
+    <value>Replace rules</value>
+  </data>
+  <data name="Anonymizer_Running" xml:space="preserve">
+    <value>Anonymizing {0}…</value>
+  </data>
+  <data name="Anonymizer_TelecomCheck.Content" xml:space="preserve">
+    <value>Phone numbers and e-mail addresses</value>
+  </data>
+  <data name="Anonymizer_TickTypes" xml:space="preserve">
+    <value>Tick the object types to hide, a whole class or single ones, then add them as rules.</value>
+  </data>
+  <data name="Anonymizer_TypesTitle.Text" xml:space="preserve">
+    <value>Object types in the model</value>
+  </data>
+  <data name="Anonymizer_TypeTree.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Object types</value>
+  </data>
+  <data name="Anonymizer_User.Header" xml:space="preserve">
+    <value>User and organisation information</value>
+  </data>
+  <data name="Anonymizer_UserNote.Text" xml:space="preserve">
+    <value>Removes the owner history (who created or changed each object, with which application and when) and the ticked kinds of information.</value>
+  </data>
+  <data name="Anonymizer_UserSwitch.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Remove who made the model</value>
+  </data>
+  <data name="Anonymizer_UserSwitch.Header" xml:space="preserve">
+    <value>Remove who made the model</value>
+  </data>
+  <data name="Combiner_BaseNote.Text" xml:space="preserve">
+    <value>The first file is the base: its project, units, coordinate system and true north are kept. Move a file up to make it the base.</value>
+  </data>
+  <data name="Combiner_ByName.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Merge by name</value>
+  </data>
+  <data name="Combiner_ByName.Header" xml:space="preserve">
+    <value>Merge sites, buildings and storeys with the same name</value>
+  </data>
+  <data name="Combiner_ByNameNote.Text" xml:space="preserve">
+    <value>Elements with the same GlobalId are always merged. Discipline models exported separately share storey names but not GlobalIds; this merges those too. Either way, only elements placed exactly alike are merged, so nothing moves.</value>
+  </data>
+  <data name="Combiner_CannotCombine" xml:space="preserve">
+    <value>These files cannot be combined</value>
+  </data>
+  <data name="Combiner_Configuration.Header" xml:space="preserve">
+    <value>Configuration</value>
+  </data>
+  <data name="Combiner_Failed" xml:space="preserve">
+    <value>The models could not be combined</value>
+  </data>
+  <data name="Combiner_Files.Header" xml:space="preserve">
+    <value>Files to combine</value>
+  </data>
+  <data name="Combiner_FileSchema" xml:space="preserve">
+    <value>{0} is {1}</value>
+  </data>
+  <data name="Combiner_Finished" xml:space="preserve">
+    <value>Combined</value>
+  </data>
+  <data name="Combiner_NeedModels" xml:space="preserve">
+    <value>Add the IFC models to combine.</value>
+  </data>
+  <data name="Combiner_NeedOneMore" xml:space="preserve">
+    <value>Add at least one more model.</value>
+  </data>
+  <data name="Combiner_Output.Header" xml:space="preserve">
+    <value>Combined file</value>
+  </data>
+  <data name="Combiner_Ready" xml:space="preserve">
+    <value>Ready to combine {0} models into {1}.</value>
+  </data>
+  <data name="Combiner_Report" xml:space="preserve">
+    <value>What happened</value>
+  </data>
+  <data name="Combiner_ReportKeptApart" xml:space="preserve">
+    <value>Kept apart, placed differently</value>
+  </data>
+  <data name="Combiner_ReportMerged" xml:space="preserve">
+    <value>Merged</value>
+  </data>
+  <data name="Combiner_ReportMergedNothing" xml:space="preserve">
+    <value>nothing: every site, building and storey was different</value>
+  </data>
+  <data name="Combiner_ReportRenewed" xml:space="preserve">
+    <value>GlobalIds renewed, to keep each one unique</value>
+  </data>
+  <data name="Combiner_ReportSkipped" xml:space="preserve">
+    <value>Copied once, found in an earlier file</value>
+  </data>
+  <data name="Combiner_ReportTypes" xml:space="preserve">
+    <value>Types found in several files, now one</value>
+  </data>
+  <data name="Combiner_ReportUnits" xml:space="preserve">
+    <value>Lengths converted</value>
+  </data>
+  <data name="Combiner_Running" xml:space="preserve">
+    <value>Combining {0} models…</value>
+  </data>
+  <data name="Combiner_SchemasDiffer" xml:space="preserve">
+    <value>Only files of the same IFC schema can be combined: {0}.</value>
+  </data>
+  <data name="Combiner_SchemaWarning.Title" xml:space="preserve">
+    <value>These files cannot be combined</value>
+  </data>
+  <data name="Combiner_SharedTitle.Text" xml:space="preserve">
+    <value>Elements in several files</value>
+  </data>
+  <data name="Combiner_Skip.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Copy shared elements once</value>
+  </data>
+  <data name="Combiner_Skip.Header" xml:space="preserve">
+    <value>Copy an element found in several files once</value>
+  </data>
+  <data name="Combiner_SkipNote.Text" xml:space="preserve">
+    <value>An element with the same GlobalId in two files is the same object, for example a slab the structural model copied from the architectural one. Off: it is copied from each file and given a new GlobalId.</value>
+  </data>
+  <data name="Combiner_SpatialTitle.Text" xml:space="preserve">
+    <value>Spatial structure</value>
+  </data>
+  <data name="Combiner_Summary" xml:space="preserve">
+    <value>{0} elements from {1} files in one model.</value>
+  </data>
+  <data name="Combiner_Units.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Convert length units</value>
+  </data>
+  <data name="Combiner_Units.Header" xml:space="preserve">
+    <value>Convert files in another unit to the base file&apos;s</value>
+  </data>
+  <data name="Combiner_UnitsNote.Text" xml:space="preserve">
+    <value>A file in metres combined with a base file in millimetres has every length multiplied by 1000 first, so it lands in the right place at the right size. The file itself is not changed. Off: such files are refused.</value>
+  </data>
+  <data name="Combiner_UnitsTitle.Text" xml:space="preserve">
+    <value>Length units</value>
+  </data>
+  <data name="Combiner_UnknownSchema" xml:space="preserve">
+    <value>unknown</value>
+  </data>
+  <data name="Common_CancelledNothingWritten" xml:space="preserve">
+    <value>Cancelled; nothing was written.</value>
+  </data>
+  <data name="Common_Done" xml:space="preserve">
+    <value>Done in {0:0.0} s.</value>
+  </data>
+  <data name="Common_ModelUnreadable" xml:space="preserve">
+    <value>The model could not be read</value>
+  </data>
+  <data name="Common_NothingWritten" xml:space="preserve">
+    <value>Nothing was written</value>
+  </data>
+  <data name="Common_Off" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="Common_On" xml:space="preserve">
+    <value>On</value>
+  </data>
+  <data name="Common_Reading" xml:space="preserve">
+    <value>Reading {0}…</value>
+  </data>
+  <data name="Common_Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="Converter_BundledVersion" xml:space="preserve">
+    <value>Using the bundled IfcConvert {0}. Formats it cannot write are greyed out; a newer IfcConvert can be set in Settings.</value>
+  </data>
+  <data name="Converter_CannotRead43" xml:space="preserve">
+    <value>IfcConvert {0} cannot read IFC 4.3 ({1}). Choose IfcConvert 0.8 or newer in Settings, or remove these files.</value>
+  </data>
+  <data name="Converter_Center.Content" xml:space="preserve">
+    <value>Move the model to the origin</value>
+  </data>
+  <data name="Converter_CheckingIfcConvert" xml:space="preserve">
+    <value>Checking IfcConvert…</value>
+  </data>
+  <data name="Converter_CustomVersion" xml:space="preserve">
+    <value>Using IfcConvert {0} chosen in Settings.</value>
+  </data>
+  <data name="Converter_Files.Header" xml:space="preserve">
+    <value>Files to convert</value>
+  </data>
+  <data name="Converter_Filter.Header" xml:space="preserve">
+    <value>Filter by IFC types</value>
+  </data>
+  <data name="Converter_FilterSwitch.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Convert only the ticked IFC classes</value>
+  </data>
+  <data name="Converter_FilterSwitch.OffContent" xml:space="preserve">
+    <value>Off: everything except openings (and spaces in 3D formats)</value>
+  </data>
+  <data name="Converter_FilterSwitch.OnContent" xml:space="preserve">
+    <value>On: only the ticked classes</value>
+  </data>
+  <data name="Converter_Finished" xml:space="preserve">
+    <value>Conversion finished</value>
+  </data>
+  <data name="Converter_Format_DAE" xml:space="preserve">
+    <value>Digital Asset Exchange</value>
+  </data>
+  <data name="Converter_Format_GLB" xml:space="preserve">
+    <value>Binary glTF 2.0, for web viewers and game engines</value>
+  </data>
+  <data name="Converter_Format_H5" xml:space="preserve">
+    <value>Hierarchical Data Format</value>
+  </data>
+  <data name="Converter_Format_IFC" xml:space="preserve">
+    <value>IFC-SPF written back by IfcConvert</value>
+  </data>
+  <data name="Converter_Format_IGS" xml:space="preserve">
+    <value>Initial Graphics Exchange Specification</value>
+  </data>
+  <data name="Converter_Format_JSON" xml:space="preserve">
+    <value>xeokit JSON for the xeokit viewer</value>
+  </data>
+  <data name="Converter_Format_OBJ" xml:space="preserve">
+    <value>Wavefront OBJ</value>
+  </data>
+  <data name="Converter_Format_STP" xml:space="preserve">
+    <value>Standard for the Exchange of Product Data</value>
+  </data>
+  <data name="Converter_Format_SVG" xml:space="preserve">
+    <value>Scalable Vector Graphics, a 2D floor plan</value>
+  </data>
+  <data name="Converter_Format_TTL" xml:space="preserve">
+    <value>RDF Turtle with WKT geometry</value>
+  </data>
+  <data name="Converter_Format_XML" xml:space="preserve">
+    <value>Property definitions and decomposition tree</value>
+  </data>
+  <data name="Converter_Format.Header" xml:space="preserve">
+    <value>Select target format</value>
+  </data>
+  <data name="Converter_Geometry.Text" xml:space="preserve">
+    <value>Geometry</value>
+  </data>
+  <data name="Converter_Naming.Header" xml:space="preserve">
+    <value>Naming convention</value>
+  </data>
+  <data name="Converter_NamingGuids.Content" xml:space="preserve">
+    <value>Element GUIDs (IfcRoot.GlobalId)</value>
+  </data>
+  <data name="Converter_NamingIds.Content" xml:space="preserve">
+    <value>IfcConvert&apos;s own ids</value>
+  </data>
+  <data name="Converter_NamingNames.Content" xml:space="preserve">
+    <value>Element names (IfcRoot.Name)</value>
+  </data>
+  <data name="Converter_NeedClass" xml:space="preserve">
+    <value>Tick at least one IFC class, or switch the filter off.</value>
+  </data>
+  <data name="Converter_NeedModels" xml:space="preserve">
+    <value>Add the IFC models to convert.</value>
+  </data>
+  <data name="Converter_NeedsVersion" xml:space="preserve">
+    <value>Needs IfcConvert {0} or newer</value>
+  </data>
+  <data name="Converter_NothingConverted" xml:space="preserve">
+    <value>Nothing could be converted</value>
+  </data>
+  <data name="Converter_OpenSettings" xml:space="preserve">
+    <value>Open Settings</value>
+  </data>
+  <data name="Converter_Options.Header" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="Converter_OptionsNote.Text" xml:space="preserve">
+    <value>Options a format does not support are left out for that format. Files are written next to the model, with the format&apos;s extension.</value>
+  </data>
+  <data name="Converter_Output.Header" xml:space="preserve">
+    <value>Converted files</value>
+  </data>
+  <data name="Converter_Placement.Header" xml:space="preserve">
+    <value>Coordinate system</value>
+  </data>
+  <data name="Converter_PlacementBuilding.Content" xml:space="preserve">
+    <value>Building local placement (IfcBuilding)</value>
+  </data>
+  <data name="Converter_PlacementGlobal.Content" xml:space="preserve">
+    <value>Global coordinates of the model</value>
+  </data>
+  <data name="Converter_PlacementSite.Content" xml:space="preserve">
+    <value>Site local placement (IfcSite)</value>
+  </data>
+  <data name="Converter_ReadyMany" xml:space="preserve">
+    <value>Ready to write {0} next to each of the {1} models.</value>
+  </data>
+  <data name="Converter_ReadyOne" xml:space="preserve">
+    <value>Ready to write {0} next to the model.</value>
+  </data>
+  <data name="Converter_Running" xml:space="preserve">
+    <value>Converting {0} to {1}…</value>
+  </data>
+  <data name="Converter_RunningMany" xml:space="preserve">
+    <value>Converting {0} of {1}: {2}…</value>
+  </data>
+  <data name="Converter_SchemaWarning.Title" xml:space="preserve">
+    <value>IFC 4.3 needs a newer IfcConvert</value>
+  </data>
+  <data name="Converter_SomeFailed" xml:space="preserve">
+    <value>{0} of {1} files could not be converted</value>
+  </data>
+  <data name="Converter_Stopped" xml:space="preserve">
+    <value>Stopped; the files converted so far are listed.</value>
+  </data>
+  <data name="Converter_Warnings" xml:space="preserve">
+    <value>IfcConvert reported warnings; they are in the .log.txt file.</value>
+  </data>
+  <data name="Converter_WorldCoords.Content" xml:space="preserve">
+    <value>Apply placements to the geometry (world coordinates)</value>
+  </data>
+  <data name="Drop_Caption" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="Drop_Prompt" xml:space="preserve">
+    <value>Choose files or Drop files here</value>
+  </data>
+  <data name="Drop_Release" xml:space="preserve">
+    <value>Drop to import</value>
+  </data>
+  <data name="Drop_Reset.Text" xml:space="preserve">
+    <value>Reset imported files</value>
+  </data>
+  <data name="Drop_Zone.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Choose files or drop files here</value>
+  </data>
+  <data name="File_Unreadable" xml:space="preserve">
+    <value>unreadable</value>
+  </data>
+  <data name="Ids_AllMeet" xml:space="preserve">
+    <value>All {0} matching entities meet the requirements.</value>
+  </data>
+  <data name="Ids_AppliesTo" xml:space="preserve">
+    <value>Applies to {0}</value>
+  </data>
+  <data name="Ids_Failed" xml:space="preserve">
+    <value>Failed</value>
+  </data>
+  <data name="Ids_More" xml:space="preserve">
+    <value>…and {0} more. Export the report to see them all.</value>
+  </data>
+  <data name="Ids_NoEntityFailed" xml:space="preserve">
+    <value>No individual entity failed; see the note above.</value>
+  </data>
+  <data name="Ids_NotApplicable" xml:space="preserve">
+    <value>Not applicable</value>
+  </data>
+  <data name="Ids_NothingMatches" xml:space="preserve">
+    <value>Nothing in the model matches this specification.</value>
+  </data>
+  <data name="Ids_NothingMatchesAllowed" xml:space="preserve">
+    <value>Nothing in the model matches this specification, which is allowed.</value>
+  </data>
+  <data name="Ids_PassCount" xml:space="preserve">
+    <value>{0} / {1} pass</value>
+  </data>
+  <data name="Ids_Passed" xml:space="preserve">
+    <value>Passed</value>
+  </data>
+  <data name="Ids_Skipped" xml:space="preserve">
+    <value>Skipped</value>
+  </data>
+  <data name="Ids_Summary" xml:space="preserve">
+    <value>{0} of {1} specifications passed, {2} failed.</value>
+  </data>
+  <data name="Ids_SummaryWithNotApplicable" xml:space="preserve">
+    <value>{0} of {1} specifications passed, {2} failed, {3} did not apply to anything in the model.</value>
+  </data>
+  <data name="Ids_Unnamed" xml:space="preserve">
+    <value>(unnamed specification)</value>
+  </data>
+  <data name="Ids_VerdictFail" xml:space="preserve">
+    <value>The model does not meet the requirements</value>
+  </data>
+  <data name="Ids_VerdictPass" xml:space="preserve">
+    <value>The model meets the requirements</value>
+  </data>
+  <data name="LanguageTag" xml:space="preserve">
+    <value>en-US</value>
+  </data>
+  <data name="Nav_About.Content" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Nav_Settings.Content" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Nav_Tools.Content" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="Optimizer_Configuration.Header" xml:space="preserve">
+    <value>Configuration</value>
+  </data>
+  <data name="Optimizer_Files.Header" xml:space="preserve">
+    <value>Files to optimize</value>
+  </data>
+  <data name="Optimizer_Finished" xml:space="preserve">
+    <value>Optimization finished</value>
+  </data>
+  <data name="Optimizer_FprTitle.Text" xml:space="preserve">
+    <value>FPR optimization</value>
+  </data>
+  <data name="Optimizer_General.Text" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="Optimizer_KeepLabel.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Keep the old entity labels</value>
+  </data>
+  <data name="Optimizer_KeepLabel.Header" xml:space="preserve">
+    <value>Keep the old entity labels</value>
+  </data>
+  <data name="Optimizer_KeepLabelNote.Text" xml:space="preserve">
+    <value>On: #123 stays #123, handy when comparing with the original. Off: entities are renumbered, which makes the file smaller.</value>
+  </data>
+  <data name="Optimizer_Merge.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Merge duplicate entities</value>
+  </data>
+  <data name="Optimizer_Merge.Header" xml:space="preserve">
+    <value>Merge duplicate entities (lossless)</value>
+  </data>
+  <data name="Optimizer_MergeAll.Content" xml:space="preserve">
+    <value>All related entities</value>
+  </data>
+  <data name="Optimizer_MergeNote.Text" xml:space="preserve">
+    <value>Resource layer entities (points, directions, colours…) do not reference other entities and are always safe to merge. &apos;All related&apos; also merges what refers to them, which saves the most.</value>
+  </data>
+  <data name="Optimizer_MergeResources.Content" xml:space="preserve">
+    <value>Resource layer entities only</value>
+  </data>
+  <data name="Optimizer_MergeTitle.Text" xml:space="preserve">
+    <value>Merge redundancy</value>
+  </data>
+  <data name="Optimizer_NeedModels" xml:space="preserve">
+    <value>Add the IFC models to optimize.</value>
+  </data>
+  <data name="Optimizer_NeedOption" xml:space="preserve">
+    <value>Switch on at least one optimization.</value>
+  </data>
+  <data name="Optimizer_Output.Header" xml:space="preserve">
+    <value>Optimized files</value>
+  </data>
+  <data name="Optimizer_PointLists.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Optimize point lists</value>
+  </data>
+  <data name="Optimizer_PointLists.Header" xml:space="preserve">
+    <value>Optimize point lists (IFC4 and later)</value>
+  </data>
+  <data name="Optimizer_PointListsNote.Text" xml:space="preserve">
+    <value>IfcCartesianPointList of IfcIndexedPolyCurve and IfcTessellatedFaceSet. Needs rounding to be on.</value>
+  </data>
+  <data name="Optimizer_Points.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Optimize points</value>
+  </data>
+  <data name="Optimizer_Points.Header" xml:space="preserve">
+    <value>Optimize points</value>
+  </data>
+  <data name="Optimizer_PointsNote.Text" xml:space="preserve">
+    <value>Merges coinciding IfcCartesianPoints used by IfcAxis2Placement2D/3D, IfcPolyline, IfcPolyLoop, IfcVertexPoint, IfcBoundingBox, IfcBSplineCurve and IfcBSplineSurface.</value>
+  </data>
+  <data name="Optimizer_Precision.Header" xml:space="preserve">
+    <value>Decimal places to keep</value>
+  </data>
+  <data name="Optimizer_PrecisionText" xml:space="preserve">
+    <value>Coordinates are rounded to {0} decimal places in the model&apos;s length unit ({1:0.############}). Fewer places save more but move geometry; for a model in millimetres 3 or more is safe, in metres 6 or more.</value>
+  </data>
+  <data name="Optimizer_ReadyLossless" xml:space="preserve">
+    <value>Lossless: only exact duplicates are merged. The original files are kept.</value>
+  </data>
+  <data name="Optimizer_ReadyRounding" xml:space="preserve">
+    <value>Rounding changes coordinates; the original files are kept.</value>
+  </data>
+  <data name="Optimizer_Round.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Round coordinates</value>
+  </data>
+  <data name="Optimizer_Round.Header" xml:space="preserve">
+    <value>Round coordinates (floating point rounding)</value>
+  </data>
+  <data name="Optimizer_Running" xml:space="preserve">
+    <value>Optimizing {0}…</value>
+  </data>
+  <data name="Optimizer_RunningMany" xml:space="preserve">
+    <value>Optimizing {0} of {1}: {2}…</value>
+  </data>
+  <data name="Optimizer_Saved" xml:space="preserve">
+    <value>{0} → {1}, {2:0.#}% smaller.</value>
+  </data>
+  <data name="Optimizer_Schemas.Text" xml:space="preserve">
+    <value>IFC2X3, IFC4 and IFC 4.3</value>
+  </data>
+  <data name="Optimizer_SchemaSupport.Text" xml:space="preserve">
+    <value>Schema support</value>
+  </data>
+  <data name="Optimizer_SomeFailed" xml:space="preserve">
+    <value>{0} of {1} files could not be optimized</value>
+  </data>
+  <data name="Optimizer_Stopped" xml:space="preserve">
+    <value>Stopped; the files optimized so far are listed.</value>
+  </data>
+  <data name="Output_FilesWritten_Many" xml:space="preserve">
+    <value>{0} files written.</value>
+  </data>
+  <data name="Output_FilesWritten_One" xml:space="preserve">
+    <value>1 file written.</value>
+  </data>
+  <data name="Relocator_ActionGeoref" xml:space="preserve">
+    <value>Georeference IFC</value>
+  </data>
+  <data name="Relocator_ActionUnit" xml:space="preserve">
+    <value>Change unit</value>
+  </data>
+  <data name="Relocator_AlignMode.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Align to another model</value>
+  </data>
+  <data name="Relocator_AlignModeHint.Text" xml:space="preserve">
+    <value>Take the placement from another file</value>
+  </data>
+  <data name="Relocator_AlignModeTitle.Text" xml:space="preserve">
+    <value>Align to another model</value>
+  </data>
+  <data name="Relocator_AlignProject.Content" xml:space="preserve">
+    <value>Take its project coordinate system (IfcSite placement)</value>
+  </data>
+  <data name="Relocator_AlignWorld.Content" xml:space="preserve">
+    <value>Take its world coordinate system (IfcProject)</value>
+  </data>
+  <data name="Relocator_AlreadyInUnit" xml:space="preserve">
+    <value>The model is already in {0}.</value>
+  </data>
+  <data name="Relocator_Crs.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Projected CRS</value>
+  </data>
+  <data name="Relocator_Crs.Header" xml:space="preserve">
+    <value>Projected CRS, e.g. EPSG:25832</value>
+  </data>
+  <data name="Relocator_Eastings.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Eastings</value>
+  </data>
+  <data name="Relocator_Eastings.Header" xml:space="preserve">
+    <value>Eastings of the origin</value>
+  </data>
+  <data name="Relocator_Enh" xml:space="preserve">
+    <value>Eastings, Northings, Height</value>
+  </data>
+  <data name="Relocator_Factor.Header" xml:space="preserve">
+    <value>Scale factor, IFC 4.3 only</value>
+  </data>
+  <data name="Relocator_Factor.PlaceholderText" xml:space="preserve">
+    <value>none</value>
+  </data>
+  <data name="Relocator_Factors" xml:space="preserve">
+    <value>factors {0}</value>
+  </data>
+  <data name="Relocator_Failed" xml:space="preserve">
+    <value>The model could not be relocated</value>
+  </data>
+  <data name="Relocator_File.Header" xml:space="preserve">
+    <value>File to relocate</value>
+  </data>
+  <data name="Relocator_Finished" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="Relocator_FromEast" xml:space="preserve">
+    <value>of the x axis from east</value>
+  </data>
+  <data name="Relocator_GeorefCard" xml:space="preserve">
+    <value>Georeferencing</value>
+  </data>
+  <data name="Relocator_GeorefHint" xml:space="preserve">
+    <value>Projected CRS and map conversion</value>
+  </data>
+  <data name="Relocator_GeorefIfc4Only" xml:space="preserve">
+    <value>IFC4 and IFC 4.3 models only</value>
+  </data>
+  <data name="Relocator_GeorefMode.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Georeference</value>
+  </data>
+  <data name="Relocator_GeorefModeHint.Text" xml:space="preserve">
+    <value>Projected CRS and map conversion</value>
+  </data>
+  <data name="Relocator_GeorefModeTitle.Text" xml:space="preserve">
+    <value>Georeference</value>
+  </data>
+  <data name="Relocator_Height.Header" xml:space="preserve">
+    <value>Orthogonal height</value>
+  </data>
+  <data name="Relocator_Ifc2x3NoMap" xml:space="preserve">
+    <value>IFC2X3 has no IfcMapConversion</value>
+  </data>
+  <data name="Relocator_InUnit" xml:space="preserve">
+    <value>in {0}</value>
+  </data>
+  <data name="Relocator_ManualMode.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Enter placement</value>
+  </data>
+  <data name="Relocator_ManualModeHint.Text" xml:space="preserve">
+    <value>Type the new origin and rotation</value>
+  </data>
+  <data name="Relocator_ManualModeTitle.Text" xml:space="preserve">
+    <value>Enter placement</value>
+  </data>
+  <data name="Relocator_MapNote.Text" xml:space="preserve">
+    <value>Where the model&apos;s local origin lies on a projected map (IfcProjectedCRS and IfcMapConversion). The model&apos;s geometry is not moved.</value>
+  </data>
+  <data name="Relocator_MapRotation.Header" xml:space="preserve">
+    <value>Rotation of x from east, degrees</value>
+  </data>
+  <data name="Relocator_MapTitle.Text" xml:space="preserve">
+    <value>Map conversion</value>
+  </data>
+  <data name="Relocator_NeedCrs" xml:space="preserve">
+    <value>Name the projected CRS, normally its EPSG code.</value>
+  </data>
+  <data name="Relocator_NeedEastingsNorthings" xml:space="preserve">
+    <value>Fill in the eastings and northings of the origin.</value>
+  </data>
+  <data name="Relocator_NeedModel" xml:space="preserve">
+    <value>Add the IFC model to relocate.</value>
+  </data>
+  <data name="Relocator_NeedReference" xml:space="preserve">
+    <value>Add the model to align to.</value>
+  </data>
+  <data name="Relocator_NeedScale" xml:space="preserve">
+    <value>The scale has to be greater than 0.</value>
+  </data>
+  <data name="Relocator_NeedSystem" xml:space="preserve">
+    <value>Tick the coordinate system to change.</value>
+  </data>
+  <data name="Relocator_NeedValues" xml:space="preserve">
+    <value>Fill in every coordinate and rotation.</value>
+  </data>
+  <data name="Relocator_NoContext" xml:space="preserve">
+    <value>No 3D model context</value>
+  </data>
+  <data name="Relocator_NoMapConversion" xml:space="preserve">
+    <value>no IfcMapConversion</value>
+  </data>
+  <data name="Relocator_Northings.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Northings</value>
+  </data>
+  <data name="Relocator_Northings.Header" xml:space="preserve">
+    <value>Northings of the origin</value>
+  </data>
+  <data name="Relocator_NoSite" xml:space="preserve">
+    <value>No site directly under the project</value>
+  </data>
+  <data name="Relocator_NoSiteTag" xml:space="preserve">
+    <value>no IfcSite</value>
+  </data>
+  <data name="Relocator_NotGeoreferenced" xml:space="preserve">
+    <value>Not georeferenced</value>
+  </data>
+  <data name="Relocator_NotGiven" xml:space="preserve">
+    <value>not given</value>
+  </data>
+  <data name="Relocator_NothingToTake" xml:space="preserve">
+    <value>Nothing to take: tick a coordinate system that both models have.</value>
+  </data>
+  <data name="Relocator_Output.Header" xml:space="preserve">
+    <value>Relocated file</value>
+  </data>
+  <data name="Relocator_PlacementXyz" xml:space="preserve">
+    <value>Placement X, Y, Z</value>
+  </data>
+  <data name="Relocator_ProjectCard" xml:space="preserve">
+    <value>Project coordinates location</value>
+  </data>
+  <data name="Relocator_ProjectCheck.Content" xml:space="preserve">
+    <value>Change the site placement</value>
+  </data>
+  <data name="Relocator_ProjectedCrs" xml:space="preserve">
+    <value>Projected CRS</value>
+  </data>
+  <data name="Relocator_ProjectRotation.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Project rotation</value>
+  </data>
+  <data name="Relocator_ProjectRotation.Header" xml:space="preserve">
+    <value>Rotation about Z, degrees anti-clockwise</value>
+  </data>
+  <data name="Relocator_ProjectTitle.Text" xml:space="preserve">
+    <value>Project coordinates location</value>
+  </data>
+  <data name="Relocator_ProjectX.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Project X</value>
+  </data>
+  <data name="Relocator_ProjectX.Header" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="Relocator_ProjectY.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Project Y</value>
+  </data>
+  <data name="Relocator_ProjectY.Header" xml:space="preserve">
+    <value>Y</value>
+  </data>
+  <data name="Relocator_ProjectZ.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Project Z</value>
+  </data>
+  <data name="Relocator_ProjectZ.Header" xml:space="preserve">
+    <value>Z</value>
+  </data>
+  <data name="Relocator_ReadyGeoref" xml:space="preserve">
+    <value>Writes a new, georeferenced file; the geometry is not moved.</value>
+  </data>
+  <data name="Relocator_ReadyMove" xml:space="preserve">
+    <value>Writes a new file with the moved coordinate systems; the original is kept.</value>
+  </data>
+  <data name="Relocator_ReadyUnit" xml:space="preserve">
+    <value>Writes a new file with every length in the chosen unit; the original is kept.</value>
+  </data>
+  <data name="Relocator_ReferenceModel" xml:space="preserve">
+    <value>Model to align to</value>
+  </data>
+  <data name="Relocator_ReferenceUnreadable" xml:space="preserve">
+    <value>The model to align to could not be read</value>
+  </data>
+  <data name="Relocator_ReferenceZone.Prompt" xml:space="preserve">
+    <value>Choose the model to align to, or drop it here</value>
+  </data>
+  <data name="Relocator_Rescaled" xml:space="preserve">
+    <value>{0:N0} lengths rescaled.</value>
+  </data>
+  <data name="Relocator_RescaledOwnUnit" xml:space="preserve">
+    <value>{0:N0} lengths rescaled; {1} with a unit of their own left as they are.</value>
+  </data>
+  <data name="Relocator_ResultModel" xml:space="preserve">
+    <value>Result</value>
+  </data>
+  <data name="Relocator_ResultTitle.Text" xml:space="preserve">
+    <value>Placement of the new file</value>
+  </data>
+  <data name="Relocator_RotationLabel" xml:space="preserve">
+    <value>Rotation</value>
+  </data>
+  <data name="Relocator_RotationX" xml:space="preserve">
+    <value>rotation of axis X</value>
+  </data>
+  <data name="Relocator_RotationZ" xml:space="preserve">
+    <value>rotation of axis Z</value>
+  </data>
+  <data name="Relocator_Scale.Header" xml:space="preserve">
+    <value>Scale (model unit to map unit)</value>
+  </data>
+  <data name="Relocator_ScaleHint" xml:space="preserve">
+    <value>The model is in {0}, so a CRS in metres needs a scale of {1}. Eastings, northings and height are in the CRS unit.</value>
+  </data>
+  <data name="Relocator_ScaleLabel" xml:space="preserve">
+    <value>Scale</value>
+  </data>
+  <data name="Relocator_SiteCount" xml:space="preserve">
+    <value>{0} sites</value>
+  </data>
+  <data name="Relocator_SitesMovedAlike" xml:space="preserve">
+    <value>all are moved alike</value>
+  </data>
+  <data name="Relocator_Target.Header" xml:space="preserve">
+    <value>Get target placement</value>
+  </data>
+  <data name="Relocator_ThisModel" xml:space="preserve">
+    <value>This model</value>
+  </data>
+  <data name="Relocator_TrueNorth" xml:space="preserve">
+    <value>True north</value>
+  </data>
+  <data name="Relocator_UnitChoice.Header" xml:space="preserve">
+    <value>Convert every length to</value>
+  </data>
+  <data name="Relocator_UnitCm.Content" xml:space="preserve">
+    <value>Centimetres (cm)</value>
+  </data>
+  <data name="Relocator_UnitFailed" xml:space="preserve">
+    <value>The unit could not be changed</value>
+  </data>
+  <data name="Relocator_UnitHint" xml:space="preserve">
+    <value>The model measures lengths in {0}.</value>
+  </data>
+  <data name="Relocator_UnitM.Content" xml:space="preserve">
+    <value>Metres (m)</value>
+  </data>
+  <data name="Relocator_UnitMm.Content" xml:space="preserve">
+    <value>Millimetres (mm)</value>
+  </data>
+  <data name="Relocator_UnitMode.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Change length unit</value>
+  </data>
+  <data name="Relocator_UnitModeHint.Text" xml:space="preserve">
+    <value>Millimetres, centimetres or metres</value>
+  </data>
+  <data name="Relocator_UnitModeTitle.Text" xml:space="preserve">
+    <value>Change length unit</value>
+  </data>
+  <data name="Relocator_UnitNoteText.Text" xml:space="preserve">
+    <value>Coordinates, thicknesses, elevations, length properties and quantities are rescaled, so the model keeps its size and place; areas, volumes and angles have units of their own and stay. Values that state a unit of their own are left as they are, and a map conversion keeps the model where it was on the map.</value>
+  </data>
+  <data name="Relocator_UnitTitle.Text" xml:space="preserve">
+    <value>Length unit</value>
+  </data>
+  <data name="Relocator_Unnamed" xml:space="preserve">
+    <value>unnamed</value>
+  </data>
+  <data name="Relocator_WorldCard" xml:space="preserve">
+    <value>World coordinates location</value>
+  </data>
+  <data name="Relocator_WorldCheck.Content" xml:space="preserve">
+    <value>Change the world coordinate system</value>
+  </data>
+  <data name="Relocator_WorldRotation.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>World rotation</value>
+  </data>
+  <data name="Relocator_WorldRotation.Header" xml:space="preserve">
+    <value>Rotation about Z, degrees anti-clockwise</value>
+  </data>
+  <data name="Relocator_WorldTitle.Text" xml:space="preserve">
+    <value>World coordinates location</value>
+  </data>
+  <data name="Relocator_WorldX.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>World X</value>
+  </data>
+  <data name="Relocator_WorldX.Header" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="Relocator_WorldY.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>World Y</value>
+  </data>
+  <data name="Relocator_WorldY.Header" xml:space="preserve">
+    <value>Y</value>
+  </data>
+  <data name="Relocator_WorldZ.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>World Z</value>
+  </data>
+  <data name="Relocator_WorldZ.Header" xml:space="preserve">
+    <value>Z</value>
+  </data>
+  <data name="Relocator_Writing" xml:space="preserve">
+    <value>Writing {0}…</value>
+  </data>
+  <data name="Row_MoveUp.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Move up</value>
+  </data>
+  <data name="Row_MoveUpName" xml:space="preserve">
+    <value>Move up {0}</value>
+  </data>
+  <data name="Row_Open.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="Row_OpenName" xml:space="preserve">
+    <value>Open {0}</value>
+  </data>
+  <data name="Row_Remove.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="Row_RemoveName" xml:space="preserve">
+    <value>Remove {0}</value>
+  </data>
+  <data name="Row_ShowInFolder.[using:Microsoft.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Show in folder</value>
+  </data>
+  <data name="Row_ShowInFolderName" xml:space="preserve">
+    <value>Show {0} in folder</value>
+  </data>
+  <data name="Run_Cancel.Content" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Run_Cancelling" xml:space="preserve">
+    <value>Cancelling…</value>
+  </data>
+  <data name="Settings_BundledIfcConvert.Content" xml:space="preserve">
+    <value>Use the bundled one</value>
+  </data>
+  <data name="Settings_CacheEmpty" xml:space="preserve">
+    <value>The cache is empty.</value>
+  </data>
+  <data name="Settings_CacheFreed" xml:space="preserve">
+    <value>Freed {0}.</value>
+  </data>
+  <data name="Settings_CacheSize" xml:space="preserve">
+    <value>{0} in the cache.</value>
+  </data>
+  <data name="Settings_CheckingIfcConvert" xml:space="preserve">
+    <value>Checking the IfcConvert version…</value>
+  </data>
+  <data name="Settings_ClearCache.Content" xml:space="preserve">
+    <value>Clear cache files</value>
+  </data>
+  <data name="Settings_Header.Title" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Settings_Help.Header" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="Settings_HelpDocs.Content" xml:space="preserve">
+    <value>Help documents</value>
+  </data>
+  <data name="Settings_IfcConvert.Header" xml:space="preserve">
+    <value>IfcConvert</value>
+  </data>
+  <data name="Settings_IfcConvertBundled" xml:space="preserve">
+    <value>In use: the bundled IfcConvert {0}</value>
+  </data>
+  <data name="Settings_IfcConvertCustom" xml:space="preserve">
+    <value>In use: IfcConvert {0} at {1}</value>
+  </data>
+  <data name="Settings_IfcConvertError.Title" xml:space="preserve">
+    <value>That file is not a usable IfcConvert</value>
+  </data>
+  <data name="Settings_IfcConvertIntro.Text" xml:space="preserve">
+    <value>The IFC Converter runs IfcOpenShell&apos;s IfcConvert. The bundled version 0.6 cannot read IFC 4.3 models or write xeokit JSON, Turtle and HDF5; pick a newer IfcConvert (0.8 or later) to get them.</value>
+  </data>
+  <data name="Settings_IfcConvertNoVersion" xml:space="preserve">
+    <value>{0} did not report an IfcConvert version.</value>
+  </data>
+  <data name="Settings_Language.Header" xml:space="preserve">
+    <value>Interface language</value>
+  </data>
+  <data name="Settings_Languages.Header" xml:space="preserve">
+    <value>Languages</value>
+  </data>
+  <data name="Settings_LanguageWindows" xml:space="preserve">
+    <value>Windows display language</value>
+  </data>
+  <data name="Settings_OpenFolder.Content" xml:space="preserve">
+    <value>Open the settings folder</value>
+  </data>
+  <data name="Settings_PickIfcConvert.Content" xml:space="preserve">
+    <value>Use another IfcConvert…</value>
+  </data>
+  <data name="Settings_RestartNote.Text" xml:space="preserve">
+    <value>The new language shows after the app restarts.</value>
+  </data>
+  <data name="Settings_RestartNow.Content" xml:space="preserve">
+    <value>Restart now</value>
+  </data>
+  <data name="Settings_Storage.Header" xml:space="preserve">
+    <value>Storage</value>
+  </data>
+  <data name="Settings_ThemeDark.Content" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="Settings_ThemeLight.Content" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="Settings_Themes.Header" xml:space="preserve">
+    <value>Themes</value>
+  </data>
+  <data name="Settings_ThemeSystem.Content" xml:space="preserve">
+    <value>System default</value>
+  </data>
+  <data name="Splitter_Buildings_Many" xml:space="preserve">
+    <value>{0} buildings in this model</value>
+  </data>
+  <data name="Splitter_Buildings_One" xml:space="preserve">
+    <value>1 building in this model</value>
+  </data>
+  <data name="Splitter_ByBuilding.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Split by building</value>
+  </data>
+  <data name="Splitter_ByBuildingHint" xml:space="preserve">
+    <value>Spatial element: IfcBuilding</value>
+  </data>
+  <data name="Splitter_ByBuildingStorey.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Split by level</value>
+  </data>
+  <data name="Splitter_ByBuildingStoreyHint" xml:space="preserve">
+    <value>Spatial element: IfcBuildingStorey</value>
+  </data>
+  <data name="Splitter_ByBuildingStoreyTitle.Text" xml:space="preserve">
+    <value>Split by level</value>
+  </data>
+  <data name="Splitter_ByBuildingTitle.Text" xml:space="preserve">
+    <value>Split by building</value>
+  </data>
+  <data name="Splitter_ByFacility.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Split by facility</value>
+  </data>
+  <data name="Splitter_ByFacilityHint" xml:space="preserve">
+    <value>IFC 4.3: road, railway, bridge, marine</value>
+  </data>
+  <data name="Splitter_ByFacilityPart.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Split by facility part</value>
+  </data>
+  <data name="Splitter_ByFacilityPartHint" xml:space="preserve">
+    <value>IFC 4.3: carriageway, track, deck…</value>
+  </data>
+  <data name="Splitter_ByFacilityPartTitle.Text" xml:space="preserve">
+    <value>Split by facility part</value>
+  </data>
+  <data name="Splitter_ByFacilityTitle.Text" xml:space="preserve">
+    <value>Split by facility</value>
+  </data>
+  <data name="Splitter_ByObjectType.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Split by type</value>
+  </data>
+  <data name="Splitter_ByObjectTypeHint" xml:space="preserve">
+    <value>Products by object type</value>
+  </data>
+  <data name="Splitter_ByObjectTypeTitle.Text" xml:space="preserve">
+    <value>Split by type</value>
+  </data>
+  <data name="Splitter_ByProduct.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Split by object</value>
+  </data>
+  <data name="Splitter_ByProductHint.Text" xml:space="preserve">
+    <value>The products you pick</value>
+  </data>
+  <data name="Splitter_ByProductTitle.Text" xml:space="preserve">
+    <value>Split by object</value>
+  </data>
+  <data name="Splitter_BySite.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Split by site</value>
+  </data>
+  <data name="Splitter_BySiteHint" xml:space="preserve">
+    <value>Spatial element: IfcSite</value>
+  </data>
+  <data name="Splitter_BySiteTitle.Text" xml:space="preserve">
+    <value>Split by site</value>
+  </data>
+  <data name="Splitter_DataOnly.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Split data only</value>
+  </data>
+  <data name="Splitter_DataOnlyHint.Text" xml:space="preserve">
+    <value>Everything except the geometry</value>
+  </data>
+  <data name="Splitter_DataOnlyTitle.Text" xml:space="preserve">
+    <value>Split data only</value>
+  </data>
+  <data name="Splitter_EmptyPicks_Many" xml:space="preserve">
+    <value>{0} picks contain no elements and were skipped.</value>
+  </data>
+  <data name="Splitter_EmptyPicks_One" xml:space="preserve">
+    <value>1 pick contains no elements and was skipped.</value>
+  </data>
+  <data name="Splitter_Facilities_Many" xml:space="preserve">
+    <value>{0} facilities in this model</value>
+  </data>
+  <data name="Splitter_Facilities_One" xml:space="preserve">
+    <value>1 facility in this model</value>
+  </data>
+  <data name="Splitter_FacilityParts_Many" xml:space="preserve">
+    <value>{0} facility parts in this model</value>
+  </data>
+  <data name="Splitter_FacilityParts_One" xml:space="preserve">
+    <value>1 facility part in this model</value>
+  </data>
+  <data name="Splitter_Failed" xml:space="preserve">
+    <value>The model could not be split</value>
+  </data>
+  <data name="Splitter_File.Header" xml:space="preserve">
+    <value>File to split</value>
+  </data>
+  <data name="Splitter_Finished" xml:space="preserve">
+    <value>Split finished</value>
+  </data>
+  <data name="Splitter_Levels_Many" xml:space="preserve">
+    <value>{0} levels in this model</value>
+  </data>
+  <data name="Splitter_Levels_One" xml:space="preserve">
+    <value>1 level in this model</value>
+  </data>
+  <data name="Splitter_Mode.Header" xml:space="preserve">
+    <value>Choose split mode</value>
+  </data>
+  <data name="Splitter_NeedModel" xml:space="preserve">
+    <value>Add the IFC model to split.</value>
+  </data>
+  <data name="Splitter_NeedModelToPick" xml:space="preserve">
+    <value>Add a model to see what it contains.</value>
+  </data>
+  <data name="Splitter_NeedPick" xml:space="preserve">
+    <value>Tick at least one item to extract.</value>
+  </data>
+  <data name="Splitter_NoBuildings" xml:space="preserve">
+    <value>No IfcBuilding in this model</value>
+  </data>
+  <data name="Splitter_NoFacilities" xml:space="preserve">
+    <value>IFC 4.3 models with facilities</value>
+  </data>
+  <data name="Splitter_NoFacilityParts" xml:space="preserve">
+    <value>IFC 4.3 models with facility parts</value>
+  </data>
+  <data name="Splitter_NoLevels" xml:space="preserve">
+    <value>No IfcBuildingStorey in this model</value>
+  </data>
+  <data name="Splitter_NoObjectTypes" xml:space="preserve">
+    <value>No object types in this model</value>
+  </data>
+  <data name="Splitter_NoSites" xml:space="preserve">
+    <value>No IfcSite in this model</value>
+  </data>
+  <data name="Splitter_NothingToWrite" xml:space="preserve">
+    <value>What you picked contains no elements, so there was nothing to write.</value>
+  </data>
+  <data name="Splitter_Output.Header" xml:space="preserve">
+    <value>Split files</value>
+  </data>
+  <data name="Splitter_Pick.Header" xml:space="preserve">
+    <value>Pick what to extract</value>
+  </data>
+  <data name="Splitter_PickBuildings" xml:space="preserve">
+    <value>Tick the buildings to extract. Each one becomes a file of its own.</value>
+  </data>
+  <data name="Splitter_PickDataOnly" xml:space="preserve">
+    <value>Writes the whole model without its geometry: properties, relationships and structure only. Nothing to pick.</value>
+  </data>
+  <data name="Splitter_Picked_Many" xml:space="preserve">
+    <value>{0} items picked.</value>
+  </data>
+  <data name="Splitter_Picked_One" xml:space="preserve">
+    <value>1 item picked.</value>
+  </data>
+  <data name="Splitter_PickFacilities" xml:space="preserve">
+    <value>Tick the facilities to extract: a road, a railway, a bridge… Each one becomes a file of its own.</value>
+  </data>
+  <data name="Splitter_PickFacilityParts" xml:space="preserve">
+    <value>Tick the facility parts to extract, such as a carriageway or a track. Each one becomes a file of its own.</value>
+  </data>
+  <data name="Splitter_PickLevels" xml:space="preserve">
+    <value>Tick the levels to extract. Each one becomes a file of its own.</value>
+  </data>
+  <data name="Splitter_PickObjectTypes" xml:space="preserve">
+    <value>Tick the object types to extract; every product of that type goes into the file.</value>
+  </data>
+  <data name="Splitter_PickProducts" xml:space="preserve">
+    <value>Tick the products to extract, or a whole storey or class. The spatial structure above them comes along.</value>
+  </data>
+  <data name="Splitter_PickSites" xml:space="preserve">
+    <value>Tick the sites to extract. Each one becomes a file of its own.</value>
+  </data>
+  <data name="Splitter_PickTree.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>What to extract</value>
+  </data>
+  <data name="Splitter_ReadyDataOnly" xml:space="preserve">
+    <value>Ready to write the model without geometry.</value>
+  </data>
+  <data name="Splitter_Running" xml:space="preserve">
+    <value>Splitting {0}…</value>
+  </data>
+  <data name="Splitter_Sites_Many" xml:space="preserve">
+    <value>{0} sites in this model</value>
+  </data>
+  <data name="Splitter_Sites_One" xml:space="preserve">
+    <value>1 site in this model</value>
+  </data>
+  <data name="Tool_anonymizer_Action" xml:space="preserve">
+    <value>Anonymize IFC</value>
+  </data>
+  <data name="Tool_anonymizer_Summary" xml:space="preserve">
+    <value>Remove people, organisations and chosen product information before sharing a model.</value>
+  </data>
+  <data name="Tool_anonymizer_Title" xml:space="preserve">
+    <value>IFC Anonymizer</value>
+  </data>
+  <data name="Tool_combiner_Action" xml:space="preserve">
+    <value>Combine IFC</value>
+  </data>
+  <data name="Tool_combiner_Summary" xml:space="preserve">
+    <value>Combine models into one file with one project, merging the storeys they share and converting length units.</value>
+  </data>
+  <data name="Tool_combiner_Title" xml:space="preserve">
+    <value>IFC Combiner</value>
+  </data>
+  <data name="Tool_converter_Action" xml:space="preserve">
+    <value>Convert IFC</value>
+  </data>
+  <data name="Tool_converter_Summary" xml:space="preserve">
+    <value>Convert to glTF, OBJ, Collada, STEP, IGES, XML, SVG and more with IfcOpenShell.</value>
+  </data>
+  <data name="Tool_converter_Title" xml:space="preserve">
+    <value>IFC Converter</value>
+  </data>
+  <data name="Tool_optimizer_Action" xml:space="preserve">
+    <value>Optimize IFC</value>
+  </data>
+  <data name="Tool_optimizer_Summary" xml:space="preserve">
+    <value>Reduce file size by merging duplicate instances and rounding away floating point noise.</value>
+  </data>
+  <data name="Tool_optimizer_Title" xml:space="preserve">
+    <value>IFC Optimizer</value>
+  </data>
+  <data name="Tool_relocator_Action" xml:space="preserve">
+    <value>Relocate IFC</value>
+  </data>
+  <data name="Tool_relocator_Summary" xml:space="preserve">
+    <value>Move the world and project coordinate systems, align two models, georeference to a projected CRS.</value>
+  </data>
+  <data name="Tool_relocator_Title" xml:space="preserve">
+    <value>IFC Relocator</value>
+  </data>
+  <data name="Tool_splitter_Action" xml:space="preserve">
+    <value>Split IFC</value>
+  </data>
+  <data name="Tool_splitter_Summary" xml:space="preserve">
+    <value>Split a model by type, site, building, level, IFC 4.3 facility or facility part, or by picked objects.</value>
+  </data>
+  <data name="Tool_splitter_Title" xml:space="preserve">
+    <value>IFC Splitter</value>
+  </data>
+  <data name="Tool_validator_Action" xml:space="preserve">
+    <value>Validate IFC</value>
+  </data>
+  <data name="Tool_validator_Summary" xml:space="preserve">
+    <value>Check a model against an IDS 1.0 file or requirements taken from the buildingSMART Data Dictionary.</value>
+  </data>
+  <data name="Tool_validator_Title" xml:space="preserve">
+    <value>IFC Validator</value>
+  </data>
+  <data name="Tools_Header.Title" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="Tools_Intro.Text" xml:space="preserve">
+    <value>Simple tools for processing IFC files. IFC2X3, IFC4 and IFC 4.3 models are supported.</value>
+  </data>
+  <data name="Tree_Entities_Many" xml:space="preserve">
+    <value>{0} entities</value>
+  </data>
+  <data name="Tree_Entities_One" xml:space="preserve">
+    <value>1 entity</value>
+  </data>
+  <data name="Validator_AllowedValues.Content" xml:space="preserve">
+    <value>Also check values against the allowed values listed in bSDD</value>
+  </data>
+  <data name="Validator_BsddError.Title" xml:space="preserve">
+    <value>bSDD could not be reached</value>
+  </data>
+  <data name="Validator_BsddMode.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>bSDD</value>
+  </data>
+  <data name="Validator_BsddModeText.Text" xml:space="preserve">
+    <value>Pick classes and their properties from bSDD. Needs an internet connection.</value>
+  </data>
+  <data name="Validator_Cancelled" xml:space="preserve">
+    <value>Validation cancelled.</value>
+  </data>
+  <data name="Validator_ChooseDictionary.Text" xml:space="preserve">
+    <value>Choose a bSDD dictionary</value>
+  </data>
+  <data name="Validator_ChooseDictionaryPlaceholder" xml:space="preserve">
+    <value>Choose a dictionary</value>
+  </data>
+  <data name="Validator_ClearClasses.Content" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="Validator_CsvType" xml:space="preserve">
+    <value>CSV</value>
+  </data>
+  <data name="Validator_DictionariesFailed" xml:space="preserve">
+    <value>Dictionaries could not be loaded</value>
+  </data>
+  <data name="Validator_Dictionary.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>bSDD dictionary</value>
+  </data>
+  <data name="Validator_Dictionary.PlaceholderText" xml:space="preserve">
+    <value>Loading dictionaries…</value>
+  </data>
+  <data name="Validator_Done" xml:space="preserve">
+    <value>Checked in {0:0.0} s.</value>
+  </data>
+  <data name="Validator_ExportCsv.Text" xml:space="preserve">
+    <value>Export CSV</value>
+  </data>
+  <data name="Validator_ExportText.Text" xml:space="preserve">
+    <value>Export text report</value>
+  </data>
+  <data name="Validator_Failed" xml:space="preserve">
+    <value>Validation failed</value>
+  </data>
+  <data name="Validator_File.Header" xml:space="preserve">
+    <value>File to validate</value>
+  </data>
+  <data name="Validator_IdsFileName" xml:space="preserve">
+    <value>bSDD requirements</value>
+  </data>
+  <data name="Validator_IdsFileType" xml:space="preserve">
+    <value>Information Delivery Specification</value>
+  </data>
+  <data name="Validator_IdsMode.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>IDS file</value>
+  </data>
+  <data name="Validator_IdsModeText.Text" xml:space="preserve">
+    <value>Requirements in an Information Delivery Specification (IDS 1.0), written in any IDS tool.</value>
+  </data>
+  <data name="Validator_IdsModeTitle.Text" xml:space="preserve">
+    <value>IDS file</value>
+  </data>
+  <data name="Validator_IdsSaved" xml:space="preserve">
+    <value>Saved {0}. Open it with the IDS file option, or share it.</value>
+  </data>
+  <data name="Validator_IdsUnreadable" xml:space="preserve">
+    <value>An IDS file cannot be read</value>
+  </data>
+  <data name="Validator_IdsZone.Prompt" xml:space="preserve">
+    <value>Choose IDS files or drop them here</value>
+  </data>
+  <data name="Validator_NeedIds" xml:space="preserve">
+    <value>Add an IDS file with the requirements.</value>
+  </data>
+  <data name="Validator_NeedModel" xml:space="preserve">
+    <value>Add the IFC model to validate.</value>
+  </data>
+  <data name="Validator_NeedProperty" xml:space="preserve">
+    <value>Pick at least one property from bSDD.</value>
+  </data>
+  <data name="Validator_NoClasses.Text" xml:space="preserve">
+    <value>Search above and pick a class. Its property sets appear here: tick the properties every matching object must have.</value>
+  </data>
+  <data name="Validator_NoMatch" xml:space="preserve">
+    <value>No class matches “{0}” in {1}.</value>
+  </data>
+  <data name="Validator_ReportFailed" xml:space="preserve">
+    <value>The report could not be saved</value>
+  </data>
+  <data name="Validator_ReportSaved" xml:space="preserve">
+    <value>Report saved to {0}.</value>
+  </data>
+  <data name="Validator_Requirements.Header" xml:space="preserve">
+    <value>Requirements</value>
+  </data>
+  <data name="Validator_RequirementTree.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Requirements to check</value>
+  </data>
+  <data name="Validator_Results.Header" xml:space="preserve">
+    <value>Results</value>
+  </data>
+  <data name="Validator_Retry" xml:space="preserve">
+    <value>Retry</value>
+  </data>
+  <data name="Validator_Running" xml:space="preserve">
+    <value>Validating {0}…</value>
+  </data>
+  <data name="Validator_SaveIds.Content" xml:space="preserve">
+    <value>Save as IDS…</value>
+  </data>
+  <data name="Validator_SearchBox.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Search classes</value>
+  </data>
+  <data name="Validator_SearchBox.PlaceholderText" xml:space="preserve">
+    <value>Search classes, e.g. wall</value>
+  </data>
+  <data name="Validator_SearchButton.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Search bSDD</value>
+  </data>
+  <data name="Validator_SearchButton.Content" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Validator_SearchResults.[using:Microsoft.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Search results</value>
+  </data>
+  <data name="Validator_SearchTitle.Text" xml:space="preserve">
+    <value>Search classifications and properties for validation</value>
+  </data>
+  <data name="Validator_Specifications_Many" xml:space="preserve">
+    <value>{0} specifications</value>
+  </data>
+  <data name="Validator_Specifications_One" xml:space="preserve">
+    <value>1 specification</value>
+  </data>
+  <data name="Validator_TextType" xml:space="preserve">
+    <value>Text report</value>
+  </data>
+  <data name="Validator_Timeout" xml:space="preserve">
+    <value>The request timed out. Check the internet connection and try again.</value>
+  </data>
+  <data name="Validator_ToCheck.Text" xml:space="preserve">
+    <value>Requirements to check</value>
+  </data>
+</root>

@@ -80,6 +80,8 @@ It needs no installation: download `IfcToolbox-app-win-x64.zip` from [Releases](
 
 Settings are kept in `%LOCALAPPDATA%\IfcToolbox\settings.json`; if the app crashes it describes why in `crash.log` beside them. Converting IFC 4.3 models needs a newer IfcConvert, which can be chosen under Settings.
 
+The interface is in English and Vietnamese (Tiếng Việt). It follows the Windows display language, or the one chosen under Settings > Languages. Messages that come from the IFC engine itself, such as IDS failure details, stay in English. To add a language, copy `IfcToolbox.App/Strings/en-US/Resources.resw` to a folder named after the language (for example `de-DE`), translate the values, and add the language to `Loc.Languages` in `IfcToolbox.App/Services/Loc.cs`; the tests check that every key is there and every `{0}` is kept.
+
 ## The original app in the Microsoft Store
 
 The original IFC Toolbox app by Yousheng Wang, version 1.2.1, which this repository does not maintain. It was **designed for No-Code users and to provide a better user experience.**

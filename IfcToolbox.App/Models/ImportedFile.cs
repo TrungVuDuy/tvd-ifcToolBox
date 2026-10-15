@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using IfcToolbox.App.Services;
 using IfcToolbox.Core.Convert;
 using System;
 using System.Globalization;
@@ -50,7 +51,7 @@ namespace IfcToolbox.App.Models
             }
             catch (Exception e)
             {
-                Badge = "unreadable";
+                Badge = Loc.Get("File_Unreadable");
                 Problem = e.Message;
             }
         }
@@ -67,8 +68,8 @@ namespace IfcToolbox.App.Models
             };
         }
 
-        /// <summary>Screen reader name for a per-row button, e.g. "Remove House.ifc".</summary>
-        public static string Label(string action, string name) => $"{action} {name}";
+        /// <summary>Screen reader name for a per-row button, e.g. "Remove House.ifc": the resource <paramref name="key"/> with the name as {0}.</summary>
+        public static string Label(string key, string name) => Loc.Format(key, name);
 
         public static string FormatSize(long bytes)
         {

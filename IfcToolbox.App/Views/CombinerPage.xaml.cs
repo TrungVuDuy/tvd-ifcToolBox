@@ -1,5 +1,6 @@
 using IfcToolbox.App.Controls;
 using IfcToolbox.App.Models;
+using IfcToolbox.App.Services;
 using IfcToolbox.Core.Convert;
 using IfcToolbox.Core.Editors;
 using Microsoft.UI.Xaml;
@@ -31,6 +32,7 @@ namespace IfcToolbox.App.Views
             Header.Glyph = tool.Glyph;
             Header.TileBrush = new SolidColorBrush(tool.Color);
             SummaryText.Text = tool.Summary;
+            RunBar.ActionText = tool.Action;
             if (App.StartupImport != null)
             {
                 ModelZone.Import(new[] { App.StartupImport }.Concat(App.StartupMoreImports));
@@ -55,20 +57,20 @@ namespace IfcToolbox.App.Views
             if (RunBar.IsBusy)
                 return;
             var schemas = ModelZone.Files
-                .Select(f => (f.Name, Schema: IfcConvert.ReadFileSchema(f.Path) ?? "unknown"))
+                .Select(f => (f.Name, Schema: IfcConvert.ReadFileSchema(f.Path) ?? Loc.Get("Combiner_UnknownSchema")))
                 .ToList();
             var distinct = schemas.Select(s => s.Schema).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
             SchemaWarning.IsOpen = distinct.Count > 1;
             if (SchemaWarning.IsOpen)
-                SchemaWarning.Message = "Only files of the same IFC schema can be combined: " +
-                                        string.Join(", ", schemas.Select(s => $"{s.Name} is {s.Schema}")) + ".";
+                SchemaWarning.Message = Loc.Format("Combiner_SchemasDiffer",
+                    string.Join(", ", schemas.Select(s => Loc.Format("Combiner_FileSchema", s.Name, s.Schema))));
 
             int count = ModelZone.Files.Count;
             RunBar.CanRun = count >= 2 && !SchemaWarning.IsOpen;
-            RunBar.Status = count == 0 ? "Add the IFC models to combine."
-                : count == 1 ? "Add at least one more model."
+            RunBar.Status = count == 0 ? Loc.Get("Combiner_NeedModels")
+                : count == 1 ? Loc.Get("Combiner_NeedOneMore")
                 : SchemaWarning.IsOpen ? string.Empty
-                : $"Ready to combine {count} models into {Path.GetFileNameWithoutExtension(ModelZone.Files[0].Name)}_Combined.ifc.";
+                : Loc.Format("Combiner_Ready", count, Path.GetFileNameWithoutExtension(ModelZone.Files[0].Name) + "_Combined.ifc");
         }
 
         private async void OnCombine(object sender, EventArgs e)
@@ -79,31 +81,31 @@ namespace IfcToolbox.App.Views
             var output = Path.Combine(Path.GetDirectoryName(paths[0]) ?? ".", Path.GetFileNameWithoutExtension(paths[0]) + "_Combined.ifc");
             var options = new CombineOptions { MergeSpatialByName = ByNameSwitch.IsOn, SkipDuplicateElements = SkipSwitch.IsOn, ConvertUnits = UnitsSwitch.IsOn };
 
-            var token = RunBar.Begin($"Combining {paths.Count} models…");
+            var token = RunBar.Begin(Loc.Format("Combiner_Running", paths.Count));
             var started = DateTime.Now;
             string outcome = string.Empty;
             try
             {
                 var result = await Task.Run(() => ModelCombiner.Combine(paths, output, options, token), token);
-                OutputView.Show("Combined", new[] { result.OutputPath },
-                    $"{result.ElementsCopied} elements from {paths.Count} files in one model.");
+                OutputView.Show(Loc.Get("Combiner_Finished"), new[] { result.OutputPath },
+                    Loc.Format("Combiner_Summary", result.ElementsCopied, paths.Count));
                 ShowReport(result);
                 OutputSection.Visibility = Visibility.Visible;
                 OutputSection.IsExpanded = true;
                 Ui.ScrollIntoView(OutputSection);
-                outcome = $"Done in {(DateTime.Now - started).TotalSeconds:0.0} s.";
+                outcome = Loc.Format("Common_Done", (DateTime.Now - started).TotalSeconds);
             }
             catch (OperationCanceledException)
             {
-                outcome = "Cancelled; nothing was written.";
+                outcome = Loc.Get("Common_CancelledNothingWritten");
             }
             catch (CombineException ex)
             {
-                RunBar.ShowError("These files cannot be combined", ex.Message);
+                RunBar.ShowError(Loc.Get("Combiner_CannotCombine"), ex.Message);
             }
             catch (Exception ex)
             {
-                RunBar.ShowError("The models could not be combined", ex.Message);
+                RunBar.ShowError(Loc.Get("Combiner_Failed"), ex.Message);
             }
             finally
             {
@@ -118,24 +120,24 @@ namespace IfcToolbox.App.Views
             ReportPanel.Children.Add(new Border
             {
                 Style = StyleOf("CardTitleStyle"),
-                Child = new TextBlock { Text = "What happened", Style = StyleOf("SubtitleTextBlockStyle"), FontSize = 18 },
+                Child = new TextBlock { Text = Loc.Get("Combiner_Report"), Style = StyleOf("SubtitleTextBlockStyle"), FontSize = 18 },
             });
 
             foreach (var converted in result.UnitsConverted)
-                AddLine("Lengths converted", converted);
-            AddLine("Merged", result.SpatialMerged.Count == 0 ? "nothing: every site, building and storey was different" : Join(result.SpatialMerged));
+                AddLine(Loc.Get("Combiner_ReportUnits"), converted);
+            AddLine(Loc.Get("Combiner_ReportMerged"), result.SpatialMerged.Count == 0 ? Loc.Get("Combiner_ReportMergedNothing") : Join(result.SpatialMerged));
             if (result.SpatialKeptApart.Count > 0)
-                AddLine("Kept apart, placed differently", Join(result.SpatialKeptApart));
+                AddLine(Loc.Get("Combiner_ReportKeptApart"), Join(result.SpatialKeptApart));
             if (result.ElementsSkipped > 0)
-                AddLine("Copied once, found in an earlier file",
+                AddLine(Loc.Get("Combiner_ReportSkipped"),
                     $"{result.ElementsSkipped}: " + string.Join(", ", result.SkippedByClass.Select(c => $"{c.Key} {c.Value}")));
             if (result.TypesMerged.Count > 0)
-                AddLine("Types found in several files, now one", Join(result.TypesMerged));
+                AddLine(Loc.Get("Combiner_ReportTypes"), Join(result.TypesMerged));
             if (result.GlobalIdsRenewed > 0)
-                AddLine("GlobalIds renewed, to keep each one unique",
+                AddLine(Loc.Get("Combiner_ReportRenewed"),
                     $"{result.GlobalIdsRenewed}: " + string.Join(", ", result.RenewedByClass.Select(c => $"{c.Key} {c.Value}")));
             foreach (var warning in result.Warnings)
-                AddLine("Warning", warning, critical: true);
+                AddLine(Loc.Get("Common_Warning"), warning, critical: true);
         }
 
         private void AddLine(string label, string text, bool critical = false)

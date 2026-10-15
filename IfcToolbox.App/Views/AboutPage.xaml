@@ -17,34 +17,27 @@
 
     <ScrollViewer>
         <StackPanel Padding="36,28" Spacing="12" MaxWidth="1000" HorizontalAlignment="Left">
-            <controls:PageHeader Title="About" Glyph="&#xE946;" TileBrush="{StaticResource HeaderTileBrush}" Margin="0,0,0,12" />
+            <controls:PageHeader x:Uid="About_Header" Glyph="&#xE946;" TileBrush="{StaticResource HeaderTileBrush}" Margin="0,0,0,12" />
 
             <StackPanel Orientation="Horizontal" Spacing="16" Margin="0,0,0,12">
                 <Image Source="ms-appx:///Assets/AppLogo.png" Width="64" Height="64" />
                 <StackPanel VerticalAlignment="Center" Spacing="2">
                     <TextBlock Text="IFC Toolbox" Style="{StaticResource SubtitleTextBlockStyle}" />
                     <TextBlock x:Name="VersionText" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                    <TextBlock Text="Simple tools for processing IFC files." Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                    <TextBlock x:Uid="About_Tagline" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                 </StackPanel>
             </StackPanel>
 
-            <controls:Section Header="This version">
+            <controls:Section x:Uid="About_ThisVersion">
                 <StackPanel Spacing="8">
-                    <TextBlock TextWrapping="Wrap">
-                        This is a modified continuation of IFC Toolbox by Yousheng Wang, which is no longer maintained.
-                        It moves the app from UWP to WinUI 3 and the tools to .NET 8 and xbim 6, and adds IDS 1.0
-                        validation, IFC 4.3 support, glTF output and a new bSDD client.
-                    </TextBlock>
-                    <TextBlock TextWrapping="Wrap" Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                        Credit for the original app, its design and its tools goes to its author and everyone who helped with it.
-                        The Microsoft Store app and its releases belong to the original project.
-                    </TextBlock>
-                    <HyperlinkButton Content="This version on GitHub: source code, releases, issues" NavigateUri="https://github.com/TrungVuDuy/tvd-ifcToolBox" Padding="0" />
-                    <HyperlinkButton Content="Original IFC Toolbox on GitHub" NavigateUri="https://github.com/youshengCode/IfcToolbox" Padding="0" />
+                    <TextBlock x:Uid="About_Continuation" TextWrapping="Wrap" />
+                    <TextBlock x:Uid="About_Credit" TextWrapping="Wrap" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                    <HyperlinkButton x:Uid="About_ThisRepo" NavigateUri="https://github.com/TrungVuDuy/tvd-ifcToolBox" Padding="0" />
+                    <HyperlinkButton x:Uid="About_OriginalRepo" NavigateUri="https://github.com/youshengCode/IfcToolbox" Padding="0" />
                 </StackPanel>
             </controls:Section>
 
-            <controls:Section Header="Dependencies and References">
+            <controls:Section x:Uid="About_Dependencies">
                 <Grid x:Name="DependencyGrid" ColumnSpacing="24" RowSpacing="6">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -54,28 +47,21 @@
                 </Grid>
             </controls:Section>
 
-            <controls:Section Header="Privacy">
-                <TextBlock TextWrapping="Wrap">
-                    IFC Toolbox works on your files on this computer and does not collect usage data. Only the bSDD features go
-                    online: they send what you search for to the buildingSMART Data Dictionary service.
-                </TextBlock>
+            <controls:Section x:Uid="About_Privacy">
+                <TextBlock x:Uid="About_PrivacyText" TextWrapping="Wrap" />
             </controls:Section>
 
-            <controls:Section Header="Disclaimer">
-                <TextBlock TextWrapping="Wrap">
-                    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
-                    implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. Check the files it produces before
-                    relying on them. See the GNU General Public License for more details.
-                </TextBlock>
+            <controls:Section x:Uid="About_Disclaimer">
+                <TextBlock x:Uid="About_DisclaimerText" TextWrapping="Wrap" />
             </controls:Section>
 
-            <controls:Section Header="License">
+            <controls:Section x:Uid="About_License">
                 <StackPanel Spacing="4">
                     <TextBlock Text="GNU General Public License v3.0" />
-                    <TextBlock Text="Copyright (c) 2021 Yousheng Wang. Modifications from 2026 by their respective contributors." TextWrapping="Wrap"
+                    <TextBlock x:Uid="About_Copyright" TextWrapping="Wrap"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                    <HyperlinkButton Content="Read the license" Click="OnOpenLicense" Tag="LICENSE.txt" Padding="0" />
-                    <HyperlinkButton Content="Third-party notices and licences" Click="OnOpenLicense" Tag="THIRD-PARTY-NOTICES.md" Padding="0" />
+                    <HyperlinkButton x:Uid="About_ReadLicense" Click="OnOpenLicense" Tag="LICENSE.txt" Padding="0" />
+                    <HyperlinkButton x:Uid="About_Notices" Click="OnOpenLicense" Tag="THIRD-PARTY-NOTICES.md" Padding="0" />
                 </StackPanel>
             </controls:Section>
         </StackPanel>

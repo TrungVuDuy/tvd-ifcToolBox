@@ -47,6 +47,8 @@ namespace IfcToolbox.App.Views
             Header.Glyph = tool.Glyph;
             Header.TileBrush = new SolidColorBrush(tool.Color);
             SummaryText.Text = tool.Summary;
+            RunBar.ActionText = tool.Action;
+            ShowModes();
 
             if (App.StartupImport != null)
             {
@@ -73,7 +75,7 @@ namespace IfcToolbox.App.Views
             // A newer file may arrive while this one is read; only the latest one counts.
             int run = ++_analysisRun;
             AnalysisProgress.IsActive = true;
-            PickHint.Text = $"Reading {Path.GetFileName(path)}…";
+            PickHint.Text = Loc.Format("Common_Reading", Path.GetFileName(path));
             try
             {
                 var analysis = await Task.Run(() => SplitAnalysis.Read(path));
@@ -86,7 +88,7 @@ namespace IfcToolbox.App.Views
             {
                 if (run != _analysisRun)
                     return;
-                RunBar.ShowError("The model could not be read", ex.Message);
+                RunBar.ShowError(Loc.Get("Common_ModelUnreadable"), ex.Message);
             }
             finally
             {
@@ -109,12 +111,12 @@ namespace IfcToolbox.App.Views
         private void ShowModes()
         {
             var a = _analysis;
-            Enable(ByObjectType, ByObjectTypeHint, a == null || a.ObjectTypes > 0, "Products by object type", "No object types in this model");
-            Enable(BySite, BySiteHint, a == null || a.Sites > 0, Count(a?.Sites, "site", "sites", "Spatial element: IfcSite"), "No IfcSite in this model");
-            Enable(ByBuilding, ByBuildingHint, a == null || a.Buildings > 0, Count(a?.Buildings, "building", "buildings", "Spatial element: IfcBuilding"), "No IfcBuilding in this model");
-            Enable(ByBuildingStorey, ByBuildingStoreyHint, a == null || a.Storeys > 0, Count(a?.Storeys, "level", "levels", "Spatial element: IfcBuildingStorey"), "No IfcBuildingStorey in this model");
-            Enable(ByFacility, ByFacilityHint, a == null || a.Facilities > 0, Count(a?.Facilities, "facility", "facilities", "IFC 4.3: road, railway, bridge, marine"), "IFC 4.3 models with facilities");
-            Enable(ByFacilityPart, ByFacilityPartHint, a == null || a.FacilityParts.Count > 0, Count(a?.FacilityParts.Count, "facility part", "facility parts", "IFC 4.3: carriageway, track, deck…"), "IFC 4.3 models with facility parts");
+            Enable(ByObjectType, ByObjectTypeHint, a == null || a.ObjectTypes > 0, Loc.Get("Splitter_ByObjectTypeHint"), Loc.Get("Splitter_NoObjectTypes"));
+            Enable(BySite, BySiteHint, a == null || a.Sites > 0, Count(a?.Sites, "Splitter_Sites", "Splitter_BySiteHint"), Loc.Get("Splitter_NoSites"));
+            Enable(ByBuilding, ByBuildingHint, a == null || a.Buildings > 0, Count(a?.Buildings, "Splitter_Buildings", "Splitter_ByBuildingHint"), Loc.Get("Splitter_NoBuildings"));
+            Enable(ByBuildingStorey, ByBuildingStoreyHint, a == null || a.Storeys > 0, Count(a?.Storeys, "Splitter_Levels", "Splitter_ByBuildingStoreyHint"), Loc.Get("Splitter_NoLevels"));
+            Enable(ByFacility, ByFacilityHint, a == null || a.Facilities > 0, Count(a?.Facilities, "Splitter_Facilities", "Splitter_ByFacilityHint"), Loc.Get("Splitter_NoFacilities"));
+            Enable(ByFacilityPart, ByFacilityPartHint, a == null || a.FacilityParts.Count > 0, Count(a?.FacilityParts.Count, "Splitter_FacilityParts", "Splitter_ByFacilityPartHint"), Loc.Get("Splitter_NoFacilityParts"));
 
             // The mode in use may just have become unavailable.
             if (ModeTiles.First(t => t.IsChecked == true).IsEnabled == false)
@@ -127,8 +129,9 @@ namespace IfcToolbox.App.Views
             hint.Text = enabled ? text : reason;
         }
 
-        private static string Count(int? count, string noun, string plural, string fallback) =>
-            count == null ? fallback : count == 1 ? $"1 {noun} in this model" : $"{count} {plural} in this model";
+        /// <summary>"3 sites in this model" from the counted resource <paramref name="key"/>, or the <paramref name="fallback"/> resource before a model is read.</summary>
+        private static string Count(int? count, string key, string fallback) =>
+            count == null ? Loc.Get(fallback) : Loc.Count(key, count.Value);
 
         /// <summary>Fills the tree with what the current mode can extract.</summary>
         private void ShowPicker()
@@ -140,7 +143,7 @@ namespace IfcToolbox.App.Views
                 _selection.Clear();
                 PickTree.Visibility = Visibility.Collapsed;
                 if (!AnalysisProgress.IsActive)
-                    PickHint.Text = "Add a model to see what it contains.";
+                    PickHint.Text = Loc.Get("Splitter_NeedModelToPick");
                 UpdateState();
                 return;
             }
@@ -152,36 +155,36 @@ namespace IfcToolbox.App.Views
             switch (strategy)
             {
                 case SplitStrategy.ByProduct:
-                    PickHint.Text = "Tick the products to extract, or a whole storey or class. The spatial structure above them comes along.";
+                    PickHint.Text = Loc.Get("Splitter_PickProducts");
                     // Open the spatial structure, keep the per class product lists closed.
                     _selection.Show(trees.FullNodes, leaves, Label, (n, depth) => n.IsComposition && !n.IsTypeGroup && depth < 6);
                     break;
                 case SplitStrategy.ByObjectType:
-                    PickHint.Text = "Tick the object types to extract; every product of that type goes into the file.";
+                    PickHint.Text = Loc.Get("Splitter_PickObjectTypes");
                     _selection.Show(trees.TypedNodes, leaves, Label, (_, _) => false);
                     break;
                 case SplitStrategy.DataOnly:
                     _selection.Clear();
-                    PickHint.Text = "Writes the whole model without its geometry: properties, relationships and structure only. Nothing to pick.";
+                    PickHint.Text = Loc.Get("Splitter_PickDataOnly");
                     break;
                 case SplitStrategy.BySite:
-                    PickHint.Text = "Tick the sites to extract. Each one becomes a file of its own.";
+                    PickHint.Text = Loc.Get("Splitter_PickSites");
                     _selection.Show(trees.SiteNodes, leaves, Label, (n, _) => n.IsComposition);
                     break;
                 case SplitStrategy.ByBuilding:
-                    PickHint.Text = "Tick the buildings to extract. Each one becomes a file of its own.";
+                    PickHint.Text = Loc.Get("Splitter_PickBuildings");
                     _selection.Show(trees.BuildingNodes, leaves, Label, (n, _) => n.IsComposition);
                     break;
                 case SplitStrategy.ByBuildingStorey:
-                    PickHint.Text = "Tick the levels to extract. Each one becomes a file of its own.";
+                    PickHint.Text = Loc.Get("Splitter_PickLevels");
                     _selection.Show(trees.LevelNodes, leaves, Label, (n, _) => n.IsComposition);
                     break;
                 case SplitStrategy.ByFacility:
-                    PickHint.Text = "Tick the facilities to extract: a road, a railway, a bridge… Each one becomes a file of its own.";
+                    PickHint.Text = Loc.Get("Splitter_PickFacilities");
                     _selection.Show(trees.FacilityNodes, leaves, Label, (n, _) => n.IsComposition);
                     break;
                 case SplitStrategy.ByFacilityPart:
-                    PickHint.Text = "Tick the facility parts to extract, such as a carriageway or a track. Each one becomes a file of its own.";
+                    PickHint.Text = Loc.Get("Splitter_PickFacilityParts");
                     _selection.Show(trees.FacilityPartNodes, n => _analysis.FacilityParts.ContainsKey(n.Id ?? "") ? n.Id : null,
                         PartLabel, (_, _) => true);
                     break;
@@ -189,11 +192,8 @@ namespace IfcToolbox.App.Views
             UpdateState();
         }
 
-        private static string Files(int count) => count == 1 ? "1 file" : $"{count} files";
-
         /// <summary>"Ground Floor · IfcBuildingStorey", "IfcWall · 3 entities".</summary>
-        private static string Label(HierarchyNode node) =>
-            string.IsNullOrEmpty(node.Description) ? node.Name : $"{node.Name}  ·  {node.Description}";
+        private static string Label(HierarchyNode node) => Ui.NodeLabel(node);
 
         private string PartLabel(HierarchyNode node) =>
             _analysis.FacilityParts.TryGetValue(node.Id ?? "", out var usage) && !string.IsNullOrEmpty(usage)
@@ -209,11 +209,11 @@ namespace IfcToolbox.App.Views
             int picked = needsPick && _analysis != null ? _selection.SelectedValues().Count : 0;
 
             RunBar.CanRun = hasModel && _analysis != null && (!needsPick || picked > 0);
-            RunBar.Status = !hasModel ? "Add the IFC model to split."
+            RunBar.Status = !hasModel ? Loc.Get("Splitter_NeedModel")
                 : _analysis == null ? string.Empty
-                : !needsPick ? "Ready to write the model without geometry."
-                : picked == 0 ? "Tick at least one item to extract."
-                : picked == 1 ? "1 item picked." : $"{picked} items picked.";
+                : !needsPick ? Loc.Get("Splitter_ReadyDataOnly")
+                : picked == 0 ? Loc.Get("Splitter_NeedPick")
+                : Loc.Count("Splitter_Picked", picked);
         }
 
         private async void OnSplit(object sender, EventArgs e)
@@ -228,7 +228,7 @@ namespace IfcToolbox.App.Views
             config.Suffix = config.SplitStrategy.ToString();
 
             // Splitting cannot be interrupted half way through a file.
-            RunBar.Begin($"Splitting {Path.GetFileName(model)}…", cancellable: false);
+            RunBar.Begin(Loc.Format("Splitter_Running", Path.GetFileName(model)), cancellable: false);
             var started = DateTime.Now;
             string outcome = string.Empty;
             try
@@ -240,19 +240,18 @@ namespace IfcToolbox.App.Views
                 bool filePerPick = config.SplitStrategy is SplitStrategy.BySite or SplitStrategy.ByBuilding
                     or SplitStrategy.ByBuildingStorey or SplitStrategy.ByFacility or SplitStrategy.ByFacilityPart;
                 int empty = filePerPick ? config.SelectedItems.Count() - written.Count : 0;
-                string message = written.Count == 0 ? "What you picked contains no elements, so there was nothing to write."
-                    : empty == 1 ? $"{Files(written.Count)} written. 1 pick contains no elements and was skipped."
-                    : empty > 1 ? $"{Files(written.Count)} written. {empty} picks contain no elements and were skipped."
+                string message = written.Count == 0 ? Loc.Get("Splitter_NothingToWrite")
+                    : empty > 0 ? Loc.Count("Output_FilesWritten", written.Count) + " " + Loc.Count("Splitter_EmptyPicks", empty)
                     : null;
-                OutputView.Show(written.Count > 0 ? "Split finished" : "Nothing was written", written, message);
+                OutputView.Show(Loc.Get(written.Count > 0 ? "Splitter_Finished" : "Common_NothingWritten"), written, message);
                 OutputSection.Visibility = Visibility.Visible;
                 OutputSection.IsExpanded = true;
                 Ui.ScrollIntoView(OutputSection, 0);
-                outcome = $"Done in {(DateTime.Now - started).TotalSeconds:0.0} s.";
+                outcome = Loc.Format("Common_Done", (DateTime.Now - started).TotalSeconds);
             }
             catch (Exception ex)
             {
-                RunBar.ShowError("The model could not be split", ex.Message);
+                RunBar.ShowError(Loc.Get("Splitter_Failed"), ex.Message);
             }
             finally
             {

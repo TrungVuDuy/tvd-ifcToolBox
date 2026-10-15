@@ -21,7 +21,10 @@
     <EnableMsixTooling>true</EnableMsixTooling>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
     <SelfContained>true</SelfContained>
-    <!-- The interface is English only for now; skip the runtime's resources for other languages. -->
+    <!--
+      The app's own text is in Strings\{language}\Resources.resw and goes into IfcToolbox.pri, not
+      into .NET satellite assemblies; this only keeps the libraries' satellite assemblies out.
+    -->
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
     <!-- LICENSE, THIRD-PARTY-NOTICES.md and licenses beside the exe (Directory.Build.targets). -->
     <IfcToolboxShipsNotices>true</IfcToolboxShipsNotices>

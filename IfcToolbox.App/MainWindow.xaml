@@ -31,7 +31,7 @@
                         OpenPaneLength="260"
                         SelectionChanged="OnSelectionChanged">
             <NavigationView.MenuItems>
-                <NavigationViewItem Content="Tools" Tag="tools">
+                <NavigationViewItem x:Uid="Nav_Tools" Tag="tools">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE90F;" />
                     </NavigationViewItem.Icon>
@@ -39,12 +39,12 @@
                 <NavigationViewItemSeparator />
             </NavigationView.MenuItems>
             <NavigationView.FooterMenuItems>
-                <NavigationViewItem Content="About" Tag="about">
+                <NavigationViewItem x:Uid="Nav_About" Tag="about">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE946;" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
-                <NavigationViewItem Content="Settings" Tag="settings">
+                <NavigationViewItem x:Uid="Nav_Settings" Tag="settings">
                     <NavigationViewItem.Icon>
                         <FontIcon Glyph="&#xE713;" />
                     </NavigationViewItem.Icon>

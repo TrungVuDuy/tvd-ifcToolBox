@@ -20,11 +20,11 @@
                 <controls:PageHeader x:Name="Header" Margin="0,0,0,4" />
                 <TextBlock x:Name="SummaryText" Style="{StaticResource SecondaryTextStyle}" Margin="0,0,0,8" />
 
-                <controls:Section Header="File to split">
+                <controls:Section x:Uid="Splitter_File">
                     <controls:FileDropZone x:Name="ModelZone" FilesChanged="OnModelChanged" />
                 </controls:Section>
 
-                <controls:Section Header="Choose split mode">
+                <controls:Section x:Uid="Splitter_Mode">
                     <Grid x:Name="ModeGrid" ColumnSpacing="10" RowSpacing="10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -37,73 +37,73 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
 
-                        <RadioButton x:Name="ByProduct" Tag="ByProduct" GroupName="SplitMode" Style="{StaticResource ModeTileStyle}" IsChecked="True" Checked="OnModeChanged" AutomationProperties.Name="Split by object">
+                        <RadioButton x:Name="ByProduct" Tag="ByProduct" GroupName="SplitMode" Style="{StaticResource ModeTileStyle}" IsChecked="True" Checked="OnModeChanged" x:Uid="Splitter_ByProduct">
                             <Grid ColumnSpacing="12"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
                                 <FontIcon Glyph="&#xE8FD;" FontSize="18" VerticalAlignment="Center" />
-                                <StackPanel Grid.Column="1"><TextBlock Text="Split by object" Style="{StaticResource TileTitleStyle}" /><TextBlock Text="The products you pick" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
+                                <StackPanel Grid.Column="1"><TextBlock x:Uid="Splitter_ByProductTitle" Style="{StaticResource TileTitleStyle}" /><TextBlock x:Uid="Splitter_ByProductHint" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
                             </Grid>
                         </RadioButton>
-                        <RadioButton x:Name="ByObjectType" Grid.Column="1" Tag="ByObjectType" GroupName="SplitMode" Style="{StaticResource ModeTileStyle}" Checked="OnModeChanged" AutomationProperties.Name="Split by type">
+                        <RadioButton x:Name="ByObjectType" Grid.Column="1" Tag="ByObjectType" GroupName="SplitMode" Style="{StaticResource ModeTileStyle}" Checked="OnModeChanged" x:Uid="Splitter_ByObjectType">
                             <Grid ColumnSpacing="12"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
                                 <FontIcon Glyph="&#xE8F1;" FontSize="18" VerticalAlignment="Center" />
-                                <StackPanel Grid.Column="1"><TextBlock Text="Split by type" Style="{StaticResource TileTitleStyle}" /><TextBlock x:Name="ByObjectTypeHint" Text="Products by object type" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
+                                <StackPanel Grid.Column="1"><TextBlock x:Uid="Splitter_ByObjectTypeTitle" Style="{StaticResource TileTitleStyle}" /><TextBlock x:Name="ByObjectTypeHint" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
                             </Grid>
                         </RadioButton>
-                        <RadioButton x:Name="DataOnly" Grid.Column="2" Tag="DataOnly" GroupName="SplitMode" Style="{StaticResource ModeTileStyle}" Checked="OnModeChanged" AutomationProperties.Name="Split data only">
+                        <RadioButton x:Name="DataOnly" Grid.Column="2" Tag="DataOnly" GroupName="SplitMode" Style="{StaticResource ModeTileStyle}" Checked="OnModeChanged" x:Uid="Splitter_DataOnly">
                             <Grid ColumnSpacing="12"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
                                 <FontIcon Glyph="&#xE8A5;" FontSize="18" VerticalAlignment="Center" />
-                                <StackPanel Grid.Column="1"><TextBlock Text="Split data only" Style="{StaticResource TileTitleStyle}" /><TextBlock Text="Everything except the geometry" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
+                                <StackPanel Grid.Column="1"><TextBlock x:Uid="Splitter_DataOnlyTitle" Style="{StaticResource TileTitleStyle}" /><TextBlock x:Uid="Splitter_DataOnlyHint" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
                             </Grid>
                         </RadioButton>
 
-                        <RadioButton x:Name="BySite" Grid.Row="1" Tag="BySite" GroupName="SplitMode" Style="{StaticResource ModeTileStyle}" Checked="OnModeChanged" AutomationProperties.Name="Split by site">
+                        <RadioButton x:Name="BySite" Grid.Row="1" Tag="BySite" GroupName="SplitMode" Style="{StaticResource ModeTileStyle}" Checked="OnModeChanged" x:Uid="Splitter_BySite">
                             <Grid ColumnSpacing="12"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
                                 <FontIcon Glyph="&#xE909;" FontSize="18" VerticalAlignment="Center" />
-                                <StackPanel Grid.Column="1"><TextBlock Text="Split by site" Style="{StaticResource TileTitleStyle}" /><TextBlock x:Name="BySiteHint" Text="Spatial element: IfcSite" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
+                                <StackPanel Grid.Column="1"><TextBlock x:Uid="Splitter_BySiteTitle" Style="{StaticResource TileTitleStyle}" /><TextBlock x:Name="BySiteHint" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
                             </Grid>
                         </RadioButton>
-                        <RadioButton x:Name="ByBuilding" Grid.Row="1" Grid.Column="1" Tag="ByBuilding" GroupName="SplitMode" Style="{StaticResource ModeTileStyle}" Checked="OnModeChanged" AutomationProperties.Name="Split by building">
+                        <RadioButton x:Name="ByBuilding" Grid.Row="1" Grid.Column="1" Tag="ByBuilding" GroupName="SplitMode" Style="{StaticResource ModeTileStyle}" Checked="OnModeChanged" x:Uid="Splitter_ByBuilding">
                             <Grid ColumnSpacing="12"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
                                 <FontIcon Glyph="&#xE80F;" FontSize="18" VerticalAlignment="Center" />
-                                <StackPanel Grid.Column="1"><TextBlock Text="Split by building" Style="{StaticResource TileTitleStyle}" /><TextBlock x:Name="ByBuildingHint" Text="Spatial element: IfcBuilding" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
+                                <StackPanel Grid.Column="1"><TextBlock x:Uid="Splitter_ByBuildingTitle" Style="{StaticResource TileTitleStyle}" /><TextBlock x:Name="ByBuildingHint" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
                             </Grid>
                         </RadioButton>
-                        <RadioButton x:Name="ByBuildingStorey" Grid.Row="1" Grid.Column="2" Tag="ByBuildingStorey" GroupName="SplitMode" Style="{StaticResource ModeTileStyle}" Checked="OnModeChanged" AutomationProperties.Name="Split by level">
+                        <RadioButton x:Name="ByBuildingStorey" Grid.Row="1" Grid.Column="2" Tag="ByBuildingStorey" GroupName="SplitMode" Style="{StaticResource ModeTileStyle}" Checked="OnModeChanged" x:Uid="Splitter_ByBuildingStorey">
                             <Grid ColumnSpacing="12"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
                                 <FontIcon Glyph="&#xE81E;" FontSize="18" VerticalAlignment="Center" />
-                                <StackPanel Grid.Column="1"><TextBlock Text="Split by level" Style="{StaticResource TileTitleStyle}" /><TextBlock x:Name="ByBuildingStoreyHint" Text="Spatial element: IfcBuildingStorey" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
+                                <StackPanel Grid.Column="1"><TextBlock x:Uid="Splitter_ByBuildingStoreyTitle" Style="{StaticResource TileTitleStyle}" /><TextBlock x:Name="ByBuildingStoreyHint" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
                             </Grid>
                         </RadioButton>
 
-                        <RadioButton x:Name="ByFacility" Grid.Row="2" Tag="ByFacility" GroupName="SplitMode" Style="{StaticResource ModeTileStyle}" Checked="OnModeChanged" AutomationProperties.Name="Split by facility">
+                        <RadioButton x:Name="ByFacility" Grid.Row="2" Tag="ByFacility" GroupName="SplitMode" Style="{StaticResource ModeTileStyle}" Checked="OnModeChanged" x:Uid="Splitter_ByFacility">
                             <Grid ColumnSpacing="12"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
                                 <FontIcon Glyph="&#xE804;" FontSize="18" VerticalAlignment="Center" />
-                                <StackPanel Grid.Column="1"><TextBlock Text="Split by facility" Style="{StaticResource TileTitleStyle}" /><TextBlock x:Name="ByFacilityHint" Text="IFC 4.3: road, railway, bridge, marine" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
+                                <StackPanel Grid.Column="1"><TextBlock x:Uid="Splitter_ByFacilityTitle" Style="{StaticResource TileTitleStyle}" /><TextBlock x:Name="ByFacilityHint" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
                             </Grid>
                         </RadioButton>
-                        <RadioButton x:Name="ByFacilityPart" Grid.Row="2" Grid.Column="1" Tag="ByFacilityPart" GroupName="SplitMode" Style="{StaticResource ModeTileStyle}" Checked="OnModeChanged" AutomationProperties.Name="Split by facility part">
+                        <RadioButton x:Name="ByFacilityPart" Grid.Row="2" Grid.Column="1" Tag="ByFacilityPart" GroupName="SplitMode" Style="{StaticResource ModeTileStyle}" Checked="OnModeChanged" x:Uid="Splitter_ByFacilityPart">
                             <Grid ColumnSpacing="12"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
                                 <FontIcon Glyph="&#xE8A9;" FontSize="18" VerticalAlignment="Center" />
-                                <StackPanel Grid.Column="1"><TextBlock Text="Split by facility part" Style="{StaticResource TileTitleStyle}" /><TextBlock x:Name="ByFacilityPartHint" Text="IFC 4.3: carriageway, track, deck…" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
+                                <StackPanel Grid.Column="1"><TextBlock x:Uid="Splitter_ByFacilityPartTitle" Style="{StaticResource TileTitleStyle}" /><TextBlock x:Name="ByFacilityPartHint" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
                             </Grid>
                         </RadioButton>
                     </Grid>
                 </controls:Section>
 
-                <controls:Section x:Name="PickSection" Header="Pick what to extract">
+                <controls:Section x:Name="PickSection" x:Uid="Splitter_Pick">
                     <StackPanel Spacing="8">
                         <TextBlock x:Name="PickHint" Style="{StaticResource SecondaryTextStyle}" />
                         <ProgressRing x:Name="AnalysisProgress" Width="24" Height="24" IsActive="False" HorizontalAlignment="Left" />
-                        <TreeView x:Name="PickTree" SelectionMode="Multiple" MaxHeight="520" AutomationProperties.Name="What to extract" />
+                        <TreeView x:Name="PickTree" SelectionMode="Multiple" MaxHeight="520" x:Uid="Splitter_PickTree" />
                     </StackPanel>
                 </controls:Section>
 
-                <controls:Section x:Name="OutputSection" Header="Split files" Visibility="Collapsed">
+                <controls:Section x:Name="OutputSection" x:Uid="Splitter_Output" Visibility="Collapsed">
                     <controls:OutputFilesView x:Name="OutputView" />
                 </controls:Section>
             </StackPanel>
         </ScrollViewer>
 
-        <controls:RunBar x:Name="RunBar" Grid.Row="1" ActionText="Split IFC" Run="OnSplit" />
+        <controls:RunBar x:Name="RunBar" Grid.Row="1" Run="OnSplit" />
     </Grid>
 </Page>

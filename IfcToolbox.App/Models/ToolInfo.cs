@@ -1,3 +1,4 @@
+using IfcToolbox.App.Services;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.UI;
@@ -7,14 +8,15 @@ namespace IfcToolbox.App.Models
     /// <summary>One tool in the box, as the menu, the Tools page and the tool page header show it.</summary>
     public sealed class ToolInfo
     {
-        public ToolInfo(string key, string title, string glyph, Color color, string summary, string action)
+        /// <summary>The title, summary and action label are Tool_{key}_Title, _Summary and _Action in the string resources.</summary>
+        public ToolInfo(string key, string glyph, Color color)
         {
             Key = key;
-            Title = title;
             Glyph = glyph;
             Color = color;
-            Summary = summary;
-            Action = action;
+            Title = Loc.Get($"Tool_{key}_Title");
+            Summary = Loc.Get($"Tool_{key}_Summary");
+            Action = Loc.Get($"Tool_{key}_Action");
         }
 
         /// <summary>Navigation tag and the --page name, e.g. "validator".</summary>
@@ -33,28 +35,14 @@ namespace IfcToolbox.App.Models
         // Same order as the original app's menu.
         public static IReadOnlyList<ToolInfo> All { get; } = new[]
         {
-            new ToolInfo("optimizer", "IFC Optimizer", "", Color.FromArgb(255, 0x2E, 0x7D, 0x32),
-                "Reduce file size by merging duplicate instances and rounding away floating point noise.",
-                "Optimize IFC"),
-            new ToolInfo("relocator", "IFC Relocator", "", Color.FromArgb(255, 0x15, 0x65, 0xC0),
-                "Move the world and project coordinate systems, align two models, georeference to a projected CRS.",
-                "Relocate IFC"),
-            new ToolInfo("splitter", "IFC Splitter", "", Color.FromArgb(255, 0xE0, 0x6C, 0x00),
-                "Split a model by type, site, building, level, IFC 4.3 facility or facility part, or by picked objects.",
-                "Split IFC"),
+            new ToolInfo("optimizer", "", Color.FromArgb(255, 0x2E, 0x7D, 0x32)),
+            new ToolInfo("relocator", "", Color.FromArgb(255, 0x15, 0x65, 0xC0)),
+            new ToolInfo("splitter", "", Color.FromArgb(255, 0xE0, 0x6C, 0x00)),
             // Not in the original app: the counterpart of the Splitter.
-            new ToolInfo("combiner", "IFC Combiner", "", Color.FromArgb(255, 0x00, 0x79, 0x6B),
-                "Combine models into one file with one project, merging the storeys they share and converting length units.",
-                "Combine IFC"),
-            new ToolInfo("converter", "IFC Converter", "", Color.FromArgb(255, 0x6A, 0x1B, 0x9A),
-                "Convert to glTF, OBJ, Collada, STEP, IGES, XML, SVG and more with IfcOpenShell.",
-                "Convert IFC"),
-            new ToolInfo("anonymizer", "IFC Anonymizer", "", Color.FromArgb(255, 0x45, 0x5A, 0x64),
-                "Remove people, organisations and chosen product information before sharing a model.",
-                "Anonymize IFC"),
-            new ToolInfo("validator", "IFC Validator", "", Color.FromArgb(255, 0x94, 0x24, 0x1E),
-                "Check a model against an IDS 1.0 file or requirements taken from the buildingSMART Data Dictionary.",
-                "Validate IFC"),
+            new ToolInfo("combiner", "", Color.FromArgb(255, 0x00, 0x79, 0x6B)),
+            new ToolInfo("converter", "", Color.FromArgb(255, 0x6A, 0x1B, 0x9A)),
+            new ToolInfo("anonymizer", "", Color.FromArgb(255, 0x45, 0x5A, 0x64)),
+            new ToolInfo("validator", "", Color.FromArgb(255, 0x94, 0x24, 0x1E)),
         };
 
         public static ToolInfo Find(string key) => All.FirstOrDefault(t => t.Key == key);

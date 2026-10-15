@@ -19,19 +19,20 @@ namespace IfcToolbox.App.Views
     /// <summary>IFC Converter: runs IfcOpenShell's IfcConvert on one or more models.</summary>
     public sealed partial class ConverterPage : Page
     {
+        // Built when the page type is first used, after the interface language is set.
         private static readonly (ConvertTargetFormat Format, string Title, string Detail, string Glyph)[] Formats =
         {
-            (ConvertTargetFormat.GLB, "glTF (.glb)", "Binary glTF 2.0, for web viewers and game engines", ""),
-            (ConvertTargetFormat.OBJ, "OBJ (.obj)", "Wavefront OBJ", ""),
-            (ConvertTargetFormat.DAE, "Collada (.dae)", "Digital Asset Exchange", ""),
-            (ConvertTargetFormat.STP, "STEP (.stp)", "Standard for the Exchange of Product Data", ""),
-            (ConvertTargetFormat.IGS, "IGES (.igs)", "Initial Graphics Exchange Specification", ""),
-            (ConvertTargetFormat.XML, "XML (.xml)", "Property definitions and decomposition tree", ""),
-            (ConvertTargetFormat.SVG, "SVG (.svg)", "Scalable Vector Graphics, a 2D floor plan", ""),
-            (ConvertTargetFormat.IFC, "IFC (.ifc)", "IFC-SPF written back by IfcConvert", ""),
-            (ConvertTargetFormat.JSON, "xeokit (.json)", "xeokit JSON for the xeokit viewer", ""),
-            (ConvertTargetFormat.TTL, "Turtle (.ttl)", "RDF Turtle with WKT geometry", ""),
-            (ConvertTargetFormat.H5, "HDF5 (.h5)", "Hierarchical Data Format", ""),
+            (ConvertTargetFormat.GLB, "glTF (.glb)", Loc.Get("Converter_Format_GLB"), ""),
+            (ConvertTargetFormat.OBJ, "OBJ (.obj)", Loc.Get("Converter_Format_OBJ"), ""),
+            (ConvertTargetFormat.DAE, "Collada (.dae)", Loc.Get("Converter_Format_DAE"), ""),
+            (ConvertTargetFormat.STP, "STEP (.stp)", Loc.Get("Converter_Format_STP"), ""),
+            (ConvertTargetFormat.IGS, "IGES (.igs)", Loc.Get("Converter_Format_IGS"), ""),
+            (ConvertTargetFormat.XML, "XML (.xml)", Loc.Get("Converter_Format_XML"), ""),
+            (ConvertTargetFormat.SVG, "SVG (.svg)", Loc.Get("Converter_Format_SVG"), ""),
+            (ConvertTargetFormat.IFC, "IFC (.ifc)", Loc.Get("Converter_Format_IFC"), ""),
+            (ConvertTargetFormat.JSON, "xeokit (.json)", Loc.Get("Converter_Format_JSON"), ""),
+            (ConvertTargetFormat.TTL, "Turtle (.ttl)", Loc.Get("Converter_Format_TTL"), ""),
+            (ConvertTargetFormat.H5, "HDF5 (.h5)", Loc.Get("Converter_Format_H5"), ""),
         };
 
         /// <summary>Classes the default filter leaves out; unticked when the filter is switched on.</summary>
@@ -44,7 +45,7 @@ namespace IfcToolbox.App.Views
         {
             InitializeComponent();
             BuildFormatTiles();
-            SchemaWarning.ActionButton = new Button { Content = "Open Settings" };
+            SchemaWarning.ActionButton = new Button { Content = Loc.Get("Converter_OpenSettings") };
             SchemaWarning.ActionButton.Click += (_, _) => App.MainWindow.NavigateTo("settings");
         }
 
@@ -59,6 +60,7 @@ namespace IfcToolbox.App.Views
             Header.Glyph = tool.Glyph;
             Header.TileBrush = new SolidColorBrush(tool.Color);
             SummaryText.Text = tool.Summary;
+            RunBar.ActionText = tool.Action;
 
             if (App.StartupImport != null)
             {
@@ -68,11 +70,11 @@ namespace IfcToolbox.App.Views
             UpdateState();
 
             // Asking IfcConvert its version starts the executable, so off the UI thread.
-            VersionText.Text = "Checking IfcConvert…";
+            VersionText.Text = Loc.Get("Converter_CheckingIfcConvert");
             _version = await Task.Run(() => IfcConvert.GetVersion(IfcConvert.ResolveExecutable()));
             VersionText.Text = string.IsNullOrEmpty(IfcConvert.ExecutablePathOverride)
-                ? $"Using the bundled IfcConvert {_version}. Formats it cannot write are greyed out; a newer IfcConvert can be set in Settings."
-                : $"Using IfcConvert {_version} chosen in Settings.";
+                ? Loc.Format("Converter_BundledVersion", _version)
+                : Loc.Format("Converter_CustomVersion", _version);
             UpdateFormats();
             UpdateState();
         }
@@ -119,7 +121,7 @@ namespace IfcToolbox.App.Views
                 var format = (ConvertTargetFormat)tile.Tag;
                 bool supported = ConvertFormatInfo.IsSupportedBy(format, _version);
                 tile.IsEnabled = supported;
-                ToolTipService.SetToolTip(tile, supported ? null : $"Needs IfcConvert {ConvertFormatInfo.GetMinimumVersion(format)} or newer");
+                ToolTipService.SetToolTip(tile, supported ? null : Loc.Format("Converter_NeedsVersion", ConvertFormatInfo.GetMinimumVersion(format)));
             }
             if (FormatGrid.Children.OfType<RadioButton>().First(t => t.IsChecked == true).IsEnabled == false)
                 FormatGrid.Children.OfType<RadioButton>().First().IsChecked = true;
@@ -184,7 +186,7 @@ namespace IfcToolbox.App.Views
             catch (Exception ex)
             {
                 if (run == _classRun)
-                    RunBar.ShowError("The model could not be read", ex.Message);
+                    RunBar.ShowError(Loc.Get("Common_ModelUnreadable"), ex.Message);
             }
             finally
             {
@@ -206,10 +208,10 @@ namespace IfcToolbox.App.Views
             int files = ModelZone.Files.Count;
             bool filterReady = !FilterSwitch.IsOn || (ClassList.Children.Count > 0 && TickedClasses.Count > 0);
             RunBar.CanRun = files > 0 && _version != null && filterReady && !SchemaWarning.IsOpen;
-            RunBar.Status = files == 0 ? "Add the IFC models to convert."
+            RunBar.Status = files == 0 ? Loc.Get("Converter_NeedModels")
                 : SchemaWarning.IsOpen ? string.Empty
-                : !filterReady ? "Tick at least one IFC class, or switch the filter off."
-                : files == 1 ? $"Ready to write {Format} next to the model." : $"Ready to write {Format} next to each of the {files} models.";
+                : !filterReady ? Loc.Get("Converter_NeedClass")
+                : files == 1 ? Loc.Format("Converter_ReadyOne", Format) : Loc.Format("Converter_ReadyMany", Format, files);
         }
 
         /// <summary>The bundled IfcConvert 0.6 predates IFC 4.3 and cannot read those models.</summary>
@@ -224,8 +226,7 @@ namespace IfcToolbox.App.Views
             SchemaWarning.IsOpen = unreadable.Count > 0;
             if (unreadable.Count > 0)
             {
-                SchemaWarning.Message = $"IfcConvert {_version} cannot read IFC 4.3 ({string.Join(", ", unreadable)}). " +
-                                        "Choose IfcConvert 0.8 or newer in Settings, or remove these files.";
+                SchemaWarning.Message = Loc.Format("Converter_CannotRead43", _version, string.Join(", ", unreadable));
             }
         }
 
@@ -256,7 +257,7 @@ namespace IfcToolbox.App.Views
             var config = ConfigFactory.CreateConfigConvert(BuildOptions(format), format);
 
             // IfcConvert cannot be stopped half way through a model; between models it can.
-            var token = RunBar.Begin($"Converting {Path.GetFileName(paths[0])} to {format}…", cancellable: paths.Count > 1);
+            var token = RunBar.Begin(Loc.Format("Converter_Running", Path.GetFileName(paths[0]), format), cancellable: paths.Count > 1);
             var started = DateTime.Now;
             var written = new List<string>();
             var failures = new List<string>();
@@ -268,8 +269,8 @@ namespace IfcToolbox.App.Views
                     token.ThrowIfCancellationRequested();
                     var path = paths[i];
                     RunBar.Status = paths.Count == 1
-                        ? $"Converting {Path.GetFileName(path)} to {format}…"
-                        : $"Converting {i + 1} of {paths.Count}: {Path.GetFileName(path)}…";
+                        ? Loc.Format("Converter_Running", Path.GetFileName(path), format)
+                        : Loc.Format("Converter_RunningMany", i + 1, paths.Count, Path.GetFileName(path));
                     try
                     {
                         var result = await Task.Run(() => ConverterProcessor.Process(path, config));
@@ -280,24 +281,24 @@ namespace IfcToolbox.App.Views
                         failures.Add($"{Path.GetFileName(path)}: {ex.Message}");
                     }
                 }
-                outcome = $"Done in {(DateTime.Now - started).TotalSeconds:0.0} s.";
+                outcome = Loc.Format("Common_Done", (DateTime.Now - started).TotalSeconds);
             }
             catch (OperationCanceledException)
             {
-                outcome = "Stopped; the files converted so far are listed.";
+                outcome = Loc.Get("Converter_Stopped");
             }
             finally
             {
                 if (failures.Count > 0)
                 {
-                    RunBar.ShowError(failures.Count == paths.Count ? "Nothing could be converted" : $"{failures.Count} of {paths.Count} files could not be converted",
+                    RunBar.ShowError(failures.Count == paths.Count ? Loc.Get("Converter_NothingConverted") : Loc.Format("Converter_SomeFailed", failures.Count, paths.Count),
                         string.Join(Environment.NewLine, failures));
                 }
                 if (written.Count > 0)
                 {
-                    OutputView.Show("Conversion finished", written,
+                    OutputView.Show(Loc.Get("Converter_Finished"), written,
                         written.Any(p => p.EndsWith(".log.txt", StringComparison.OrdinalIgnoreCase))
-                            ? "IfcConvert reported warnings; they are in the .log.txt file."
+                            ? Loc.Get("Converter_Warnings")
                             : null);
                     OutputSection.Visibility = Visibility.Visible;
                     OutputSection.IsExpanded = true;

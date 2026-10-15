@@ -48,6 +48,7 @@ namespace IfcToolbox.App.Views
             Header.Glyph = tool.Glyph;
             Header.TileBrush = new SolidColorBrush(tool.Color);
             SummaryText.Text = tool.Summary;
+            RunBar.ActionText = tool.Action;
 
             if (App.StartupImport != null)
             {
@@ -85,13 +86,13 @@ namespace IfcToolbox.App.Views
                 if (run != _modelRun)
                     return;
                 _model = analysis;
-                ShowPlacements(CurrentPanel, analysis, "This model");
+                ShowPlacements(CurrentPanel, analysis, Loc.Get("Relocator_ThisModel"));
                 FillInputs(analysis);
             }
             catch (Exception ex)
             {
                 if (run == _modelRun)
-                    RunBar.ShowError("The model could not be read", ex.Message);
+                    RunBar.ShowError(Loc.Get("Common_ModelUnreadable"), ex.Message);
             }
             finally
             {
@@ -121,12 +122,12 @@ namespace IfcToolbox.App.Views
                 if (run != _referenceRun)
                     return;
                 _reference = analysis;
-                ShowPlacements(ReferencePanel, analysis, "Model to align to");
+                ShowPlacements(ReferencePanel, analysis, Loc.Get("Relocator_ReferenceModel"));
             }
             catch (Exception ex)
             {
                 if (run == _referenceRun)
-                    RunBar.ShowError("The model to align to could not be read", ex.Message);
+                    RunBar.ShowError(Loc.Get("Relocator_ReferenceUnreadable"), ex.Message);
             }
             finally
             {
@@ -151,44 +152,44 @@ namespace IfcToolbox.App.Views
             panel.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
             panel.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 
-            var unit = $"in {a.UnitName}";
-            var world = Card($"World coordinates location", $"#{a.ProjectLabel} IfcProject", whose);
+            var unit = Loc.Format("Relocator_InUnit", a.UnitName);
+            var world = Card(Loc.Get("Relocator_WorldCard"), $"#{a.ProjectLabel} IfcProject", whose);
             if (a.World == null)
-                AddRow(world, "No 3D model context", string.Empty);
+                AddRow(world, Loc.Get("Relocator_NoContext"), string.Empty);
             else
             {
-                AddRow(world, "Placement X, Y, Z", Format(a.World.LocationXYZ), unit);
-                AddRow(world, "RefDirection", Format(a.World.RotationX), "rotation of axis X");
-                AddRow(world, "Axis", Format(a.World.RotationZ), "rotation of axis Z");
-                AddRow(world, "True north", a.TrueNorth == null ? "not given" : Format(new[] { a.TrueNorth.Value.X, a.TrueNorth.Value.Y }));
+                AddRow(world, Loc.Get("Relocator_PlacementXyz"), Format(a.World.LocationXYZ), unit);
+                AddRow(world, "RefDirection", Format(a.World.RotationX), Loc.Get("Relocator_RotationX"));
+                AddRow(world, "Axis", Format(a.World.RotationZ), Loc.Get("Relocator_RotationZ"));
+                AddRow(world, Loc.Get("Relocator_TrueNorth"), a.TrueNorth == null ? Loc.Get("Relocator_NotGiven") : Format(new[] { a.TrueNorth.Value.X, a.TrueNorth.Value.Y }));
             }
             panel.Children.Add(world.Card);
 
             var site = a.Sites.FirstOrDefault();
-            var project = Card("Project coordinates location", site.Label == 0 ? "no IfcSite" : $"#{site.Label} IfcSite", whose);
+            var project = Card(Loc.Get("Relocator_ProjectCard"), site.Label == 0 ? Loc.Get("Relocator_NoSiteTag") : $"#{site.Label} IfcSite", whose);
             if (site.Label == 0)
-                AddRow(project, "No site directly under the project", string.Empty);
+                AddRow(project, Loc.Get("Relocator_NoSite"), string.Empty);
             else
             {
-                AddRow(project, "Placement X, Y, Z", Format(site.Placement.LocationXYZ), unit);
-                AddRow(project, "RefDirection", Format(site.Placement.RotationX), "rotation of axis X");
-                AddRow(project, "Axis", Format(site.Placement.RotationZ), "rotation of axis Z");
+                AddRow(project, Loc.Get("Relocator_PlacementXyz"), Format(site.Placement.LocationXYZ), unit);
+                AddRow(project, "RefDirection", Format(site.Placement.RotationX), Loc.Get("Relocator_RotationX"));
+                AddRow(project, "Axis", Format(site.Placement.RotationZ), Loc.Get("Relocator_RotationZ"));
                 if (a.Sites.Count > 1)
-                    AddRow(project, $"{a.Sites.Count} sites", "all are moved alike");
+                    AddRow(project, Loc.Format("Relocator_SiteCount", a.Sites.Count), Loc.Get("Relocator_SitesMovedAlike"));
             }
             Grid.SetColumn(project.Card, 1);
             panel.Children.Add(project.Card);
 
-            var map = Card("Georeferencing", a.Schema, whose);
+            var map = Card(Loc.Get("Relocator_GeorefCard"), a.Schema, whose);
             if (a.MapConversion == null)
-                AddRow(map, a.IsIfc2x3 ? "IFC2X3 has no IfcMapConversion" : "Not georeferenced", "no IfcMapConversion");
+                AddRow(map, Loc.Get(a.IsIfc2x3 ? "Relocator_Ifc2x3NoMap" : "Relocator_NotGeoreferenced"), Loc.Get("Relocator_NoMapConversion"));
             else
             {
                 var p = a.MapConversion.Parameters;
-                AddRow(map, "Projected CRS", a.MapConversion.TargetCrs?.Name ?? "unnamed");
-                AddRow(map, "Eastings, Northings, Height", Format(new[] { p.Eastings ?? 0, p.Northings ?? 0, p.OrthogonalHeight ?? 0 }));
-                AddRow(map, "Rotation", $"{MapConversionService.RotationDegrees(p).ToString("0.######", CultureInfo.InvariantCulture)}°", "of the x axis from east");
-                AddRow(map, "Scale", (p.Scale ?? 1).ToString("G6", CultureInfo.InvariantCulture), p.FactorX.HasValue ? $"factors {Format(new[] { p.FactorX ?? 1, p.FactorY ?? 1, p.FactorZ ?? 1 })}" : null);
+                AddRow(map, Loc.Get("Relocator_ProjectedCrs"), a.MapConversion.TargetCrs?.Name ?? Loc.Get("Relocator_Unnamed"));
+                AddRow(map, Loc.Get("Relocator_Enh"), Format(new[] { p.Eastings ?? 0, p.Northings ?? 0, p.OrthogonalHeight ?? 0 }));
+                AddRow(map, Loc.Get("Relocator_RotationLabel"), $"{MapConversionService.RotationDegrees(p).ToString("0.######", CultureInfo.InvariantCulture)}°", Loc.Get("Relocator_FromEast"));
+                AddRow(map, Loc.Get("Relocator_ScaleLabel"), (p.Scale ?? 1).ToString("G6", CultureInfo.InvariantCulture), p.FactorX.HasValue ? Loc.Format("Relocator_Factors", Format(new[] { p.FactorX ?? 1, p.FactorY ?? 1, p.FactorZ ?? 1 })) : null);
             }
             Grid.SetRow(map.Card, 1);
             Grid.SetColumnSpan(map.Card, 2);
@@ -255,7 +256,7 @@ namespace IfcToolbox.App.Views
                 ProjectCheck.IsChecked = false;
 
             GeorefMode.IsEnabled = !a.IsIfc2x3;
-            GeorefHint.Text = a.IsIfc2x3 ? "IFC4 and IFC 4.3 models only" : "Projected CRS and map conversion";
+            GeorefHint.Text = Loc.Get(a.IsIfc2x3 ? "Relocator_GeorefIfc4Only" : "Relocator_GeorefHint");
             if (a.IsIfc2x3 && GeorefMode.IsChecked == true)
                 AlignMode.IsChecked = true;
             FactorBox.IsEnabled = a.IsIfc4x3;
@@ -268,9 +269,8 @@ namespace IfcToolbox.App.Views
             MapRotationBox.Value = map == null ? 0 : Math.Round(MapConversionService.RotationDegrees(map.Parameters), 9);
             ScaleBox.Value = map?.Parameters.Scale ?? a.UnitInMetres;
             FactorBox.Value = map?.Parameters.FactorX ?? double.NaN;
-            UnitHint.Text = $"The model measures lengths in {a.UnitName}.";
-            ScaleHint.Text = $"The model is in {a.UnitName}, so a CRS in metres needs a scale of {a.UnitInMetres.ToString("G6", CultureInfo.InvariantCulture)}. " +
-                             "Eastings, northings and height are in the CRS unit.";
+            UnitHint.Text = Loc.Format("Relocator_UnitHint", a.UnitName);
+            ScaleHint.Text = Loc.Format("Relocator_ScaleHint", a.UnitName, a.UnitInMetres.ToString("G6", CultureInfo.InvariantCulture));
         }
 
         private void OnModeChanged(object sender, RoutedEventArgs e)
@@ -281,7 +281,9 @@ namespace IfcToolbox.App.Views
             ManualPanel.Visibility = ManualMode.IsChecked == true ? Visibility.Visible : Visibility.Collapsed;
             GeorefPanel.Visibility = GeorefMode.IsChecked == true ? Visibility.Visible : Visibility.Collapsed;
             UnitPanel.Visibility = UnitMode.IsChecked == true ? Visibility.Visible : Visibility.Collapsed;
-            RunBar.ActionText = GeorefMode.IsChecked == true ? "Georeference IFC" : UnitMode.IsChecked == true ? "Change unit" : "Relocate IFC";
+            RunBar.ActionText = GeorefMode.IsChecked == true ? Loc.Get("Relocator_ActionGeoref")
+                : UnitMode.IsChecked == true ? Loc.Get("Relocator_ActionUnit")
+                : ToolCatalog.Find("relocator").Action;
             UpdateState();
         }
 
@@ -315,7 +317,7 @@ namespace IfcToolbox.App.Views
             var (unit, _) = ChosenUnit;
             var output = Path.Combine(Path.GetDirectoryName(path) ?? ".", Path.GetFileNameWithoutExtension(path) + "_" + unit + ".ifc");
 
-            RunBar.Begin($"Writing {Path.GetFileName(output)}…", cancellable: false);
+            RunBar.Begin(Loc.Format("Relocator_Writing", Path.GetFileName(output)), cancellable: false);
             var started = DateTime.Now;
             string outcome = string.Empty;
             try
@@ -332,18 +334,20 @@ namespace IfcToolbox.App.Views
                     Core.Utilities.ToolboxFiles.Save(model, output);
                     return result;
                 });
-                OutputView.Show("Done", new[] { output },
-                    $"{conversion.ValuesScaled:N0} lengths rescaled" + (conversion.ValuesWithOwnUnit > 0 ? $"; {conversion.ValuesWithOwnUnit} with a unit of their own left as they are." : "."));
+                OutputView.Show(Loc.Get("Relocator_Finished"), new[] { output },
+                    conversion.ValuesWithOwnUnit > 0
+                        ? Loc.Format("Relocator_RescaledOwnUnit", conversion.ValuesScaled, conversion.ValuesWithOwnUnit)
+                        : Loc.Format("Relocator_Rescaled", conversion.ValuesScaled));
                 OutputSection.Visibility = Visibility.Visible;
                 OutputSection.IsExpanded = true;
                 var after = await Task.Run(() => RelocateAnalysis.Read(output));
-                ShowPlacements(ResultPanel, after, "Result");
+                ShowPlacements(ResultPanel, after, Loc.Get("Relocator_ResultModel"));
                 Ui.ScrollIntoView(OutputSection);
-                outcome = $"Done in {(DateTime.Now - started).TotalSeconds:0.0} s.";
+                outcome = Loc.Format("Common_Done", (DateTime.Now - started).TotalSeconds);
             }
             catch (Exception ex)
             {
-                RunBar.ShowError("The unit could not be changed", ex.Message);
+                RunBar.ShowError(Loc.Get("Relocator_UnitFailed"), ex.Message);
             }
             finally
             {
@@ -357,39 +361,39 @@ namespace IfcToolbox.App.Views
         private string Missing()
         {
             if (ModelZone.Files.Count == 0)
-                return "Add the IFC model to relocate.";
+                return Loc.Get("Relocator_NeedModel");
             if (_model == null)
                 return string.Empty;
             if (UnitMode.IsChecked == true)
             {
                 var (_, metres) = ChosenUnit;
-                return Math.Abs(metres - _model.UnitInMetres) < metres * 1e-9 ? $"The model is already in {_model.UnitName}." : null;
+                return Math.Abs(metres - _model.UnitInMetres) < metres * 1e-9 ? Loc.Format("Relocator_AlreadyInUnit", _model.UnitName) : null;
             }
             if (AlignMode.IsChecked == true)
             {
                 if (ReferenceZone.Files.Count == 0)
-                    return "Add the model to align to.";
+                    return Loc.Get("Relocator_NeedReference");
                 if (_reference == null)
                     return string.Empty;
                 bool world = AlignWorldCheck.IsChecked == true && _reference.World != null && _model.World != null;
                 bool project = AlignProjectCheck.IsChecked == true && _reference.Sites.Count > 0 && _model.Sites.Count > 0;
-                return world || project ? null : "Nothing to take: tick a coordinate system that both models have.";
+                return world || project ? null : Loc.Get("Relocator_NothingToTake");
             }
             if (ManualMode.IsChecked == true)
             {
                 if (WorldCheck.IsChecked != true && ProjectCheck.IsChecked != true)
-                    return "Tick the coordinate system to change.";
+                    return Loc.Get("Relocator_NeedSystem");
                 var boxes = new List<NumberBox>();
                 if (WorldCheck.IsChecked == true) boxes.AddRange(new[] { WorldX, WorldY, WorldZ, WorldRotation });
                 if (ProjectCheck.IsChecked == true) boxes.AddRange(new[] { ProjectX, ProjectY, ProjectZ, ProjectRotation });
-                return boxes.Any(b => double.IsNaN(b.Value)) ? "Fill in every coordinate and rotation." : null;
+                return boxes.Any(b => double.IsNaN(b.Value)) ? Loc.Get("Relocator_NeedValues") : null;
             }
             if (string.IsNullOrWhiteSpace(CrsBox.Text))
-                return "Name the projected CRS, normally its EPSG code.";
+                return Loc.Get("Relocator_NeedCrs");
             if (double.IsNaN(EastingsBox.Value) || double.IsNaN(NorthingsBox.Value))
-                return "Fill in the eastings and northings of the origin.";
+                return Loc.Get("Relocator_NeedEastingsNorthings");
             if (double.IsNaN(ScaleBox.Value) || ScaleBox.Value <= 0)
-                return "The scale has to be greater than 0.";
+                return Loc.Get("Relocator_NeedScale");
             return null;
         }
 
@@ -400,10 +404,10 @@ namespace IfcToolbox.App.Views
             var missing = Missing();
             RunBar.CanRun = missing == null;
             RunBar.Status = missing ?? (GeorefMode.IsChecked == true
-                ? "Writes a new, georeferenced file; the geometry is not moved."
+                ? Loc.Get("Relocator_ReadyGeoref")
                 : UnitMode.IsChecked == true
-                    ? "Writes a new file with every length in the chosen unit; the original is kept."
-                    : "Writes a new file with the moved coordinate systems; the original is kept.");
+                    ? Loc.Get("Relocator_ReadyUnit")
+                    : Loc.Get("Relocator_ReadyMove"));
         }
 
         private static IGeoPlacement Placement(IGeoPlacement from, int siteLabel) =>
@@ -476,25 +480,25 @@ namespace IfcToolbox.App.Views
             }
             var config = BuildConfig();
 
-            RunBar.Begin($"Writing {Path.GetFileNameWithoutExtension(path)}_{config.Suffix}.ifc…", cancellable: false);
+            RunBar.Begin(Loc.Format("Relocator_Writing", $"{Path.GetFileNameWithoutExtension(path)}_{config.Suffix}.ifc"), cancellable: false);
             var started = DateTime.Now;
             string outcome = string.Empty;
             try
             {
                 var result = await Task.Run(() => RelocatorProcessor.Process(path, config));
                 var output = result.FilePaths.Single();
-                OutputView.Show("Done", new[] { output });
+                OutputView.Show(Loc.Get("Relocator_Finished"), new[] { output });
                 OutputSection.Visibility = Visibility.Visible;
                 OutputSection.IsExpanded = true;
                 // Read the result back, so the user sees where the model ended up.
                 var after = await Task.Run(() => RelocateAnalysis.Read(output));
-                ShowPlacements(ResultPanel, after, "Result");
+                ShowPlacements(ResultPanel, after, Loc.Get("Relocator_ResultModel"));
                 Ui.ScrollIntoView(OutputSection);
-                outcome = $"Done in {(DateTime.Now - started).TotalSeconds:0.0} s.";
+                outcome = Loc.Format("Common_Done", (DateTime.Now - started).TotalSeconds);
             }
             catch (Exception ex)
             {
-                RunBar.ShowError("The model could not be relocated", ex.Message);
+                RunBar.ShowError(Loc.Get("Relocator_Failed"), ex.Message);
             }
             finally
             {

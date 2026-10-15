@@ -7,9 +7,8 @@
 
     <ScrollViewer>
         <StackPanel Padding="36,28" Spacing="12">
-            <controls:PageHeader Title="Tools" Glyph="&#xE90F;" TileBrush="{StaticResource HeaderTileBrush}" />
-            <TextBlock TextWrapping="Wrap" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,8"
-                       Text="Simple tools for processing IFC files. IFC2X3, IFC4 and IFC 4.3 models are supported." />
+            <controls:PageHeader x:Uid="Tools_Header" Glyph="&#xE90F;" TileBrush="{StaticResource HeaderTileBrush}" />
+            <TextBlock x:Uid="Tools_Intro" TextWrapping="Wrap" Foreground="{ThemeResource TextFillColorSecondaryBrush}" Margin="0,0,0,8" />
 
             <ItemsRepeater x:Name="ToolList">
                 <ItemsRepeater.Layout>

@@ -1,3 +1,4 @@
+using IfcToolbox.App.Services;
 using IfcToolbox.Core.Ids.Validation;
 using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
@@ -31,9 +32,10 @@ namespace IfcToolbox.App.Controls
             int notApplicable = all.Count(s => s.Status == IdsStatus.NotApplicable);
 
             Verdict.Severity = failed > 0 ? InfoBarSeverity.Error : InfoBarSeverity.Success;
-            Verdict.Title = failed > 0 ? "The model does not meet the requirements" : "The model meets the requirements";
-            Verdict.Message = $"{passed} of {all.Count} specifications passed, {failed} failed" +
-                              (notApplicable > 0 ? $", {notApplicable} did not apply to anything in the model." : ".");
+            Verdict.Title = Loc.Get(failed > 0 ? "Ids_VerdictFail" : "Ids_VerdictPass");
+            Verdict.Message = notApplicable > 0
+                ? Loc.Format("Ids_SummaryWithNotApplicable", passed, all.Count, failed, notApplicable)
+                : Loc.Format("Ids_Summary", passed, all.Count, failed);
 
             foreach (var result in results)
             {
@@ -56,10 +58,10 @@ namespace IfcToolbox.App.Controls
         {
             var (glyph, iconStyle, label) = specification.Status switch
             {
-                IdsStatus.Pass => ("", "SuccessIconStyle", "Passed"),
-                IdsStatus.Fail => ("", "CriticalIconStyle", "Failed"),
-                IdsStatus.NotApplicable => ("", "NeutralIconStyle", "Not applicable"),
-                _ => ("", "NeutralIconStyle", "Skipped"),
+                IdsStatus.Pass => ("", "SuccessIconStyle", Loc.Get("Ids_Passed")),
+                IdsStatus.Fail => ("", "CriticalIconStyle", Loc.Get("Ids_Failed")),
+                IdsStatus.NotApplicable => ("", "NeutralIconStyle", Loc.Get("Ids_NotApplicable")),
+                _ => ("", "NeutralIconStyle", Loc.Get("Ids_Skipped")),
             };
 
             var header = new Grid { ColumnSpacing = 12, Padding = new Thickness(0, 6, 0, 6) };
@@ -74,7 +76,7 @@ namespace IfcToolbox.App.Controls
             var title = new StackPanel();
             title.Children.Add(new TextBlock
             {
-                Text = specification.Specification?.Name ?? "(unnamed specification)",
+                Text = specification.Specification?.Name ?? Loc.Get("Ids_Unnamed"),
                 FontWeight = FontWeights.SemiBold,
                 TextTrimming = TextTrimming.CharacterEllipsis,
             });
@@ -83,7 +85,7 @@ namespace IfcToolbox.App.Controls
             {
                 title.Children.Add(new TextBlock
                 {
-                    Text = "Applies to " + string.Join(", ", applicability),
+                    Text = Loc.Format("Ids_AppliesTo", string.Join(", ", applicability)),
                     Style = StyleOf("SecondaryCaptionStyle"),
                     TextTrimming = TextTrimming.CharacterEllipsis,
                 });
@@ -95,7 +97,7 @@ namespace IfcToolbox.App.Controls
             {
                 Text = specification.Status == IdsStatus.NotApplicable || specification.ApplicableCount == 0
                     ? label
-                    : $"{specification.PassedCount} / {specification.ApplicableCount} pass",
+                    : Loc.Format("Ids_PassCount", specification.PassedCount, specification.ApplicableCount),
                 VerticalAlignment = VerticalAlignment.Center,
                 Style = StyleOf("SecondaryTextStyle"),
             };
@@ -131,10 +133,10 @@ namespace IfcToolbox.App.Controls
                 {
                     Text = specification.Status switch
                     {
-                        IdsStatus.NotApplicable => "Nothing in the model matches this specification.",
-                        IdsStatus.Pass when specification.ApplicableCount == 0 => "Nothing in the model matches this specification, which is allowed.",
-                        IdsStatus.Pass => $"All {specification.ApplicableCount} matching entities meet the requirements.",
-                        _ => "No individual entity failed; see the note above.",
+                        IdsStatus.NotApplicable => Loc.Get("Ids_NothingMatches"),
+                        IdsStatus.Pass when specification.ApplicableCount == 0 => Loc.Get("Ids_NothingMatchesAllowed"),
+                        IdsStatus.Pass => Loc.Format("Ids_AllMeet", specification.ApplicableCount),
+                        _ => Loc.Get("Ids_NoEntityFailed"),
                     },
                     Style = StyleOf("SecondaryTextStyle"),
                 });
@@ -166,7 +168,7 @@ namespace IfcToolbox.App.Controls
             {
                 panel.Children.Add(new TextBlock
                 {
-                    Text = $"…and {failures.Count - MaxEntitiesShown} more. Export the report to see them all.",
+                    Text = Loc.Format("Ids_More", failures.Count - MaxEntitiesShown),
                     Style = StyleOf("SecondaryTextStyle"),
                 });
             }

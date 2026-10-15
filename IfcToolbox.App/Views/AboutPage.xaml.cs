@@ -1,3 +1,4 @@
+using IfcToolbox.App.Services;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -10,14 +11,14 @@ namespace IfcToolbox.App.Views
         // Name, what it does here, licence, link.
         private static readonly (string Name, string Use, string License, string Url)[] Dependencies =
         {
-            ("xbim Essentials", "Reading and writing IFC models", "CDDL-1.0", "https://github.com/xBimTeam/XbimEssentials"),
-            ("IfcOpenShell IfcConvert", "Geometry conversion", "LGPL-3.0", "https://ifcopenshell.org/"),
-            ("buildingSMART Data Dictionary", "Classifications and properties", "bSDD terms of use", "https://www.buildingsmart.org/users/services/buildingsmart-data-dictionary/"),
-            ("Information Delivery Specification", "IDS 1.0 requirements", "buildingSMART", "https://github.com/buildingSMART/IDS"),
-            ("Windows App SDK / WinUI 3", "User interface", "MIT", "https://github.com/microsoft/WindowsAppSDK"),
-            ("CommunityToolkit.Mvvm", "User interface", "MIT", "https://github.com/CommunityToolkit/dotnet"),
-            ("Serilog", "Logging", "Apache-2.0", "https://serilog.net/"),
-            ("CsvHelper", "CSV reports", "MS-PL / Apache-2.0", "https://joshclose.github.io/CsvHelper/"),
+            ("xbim Essentials", Loc.Get("About_UseIfcModels"), "CDDL-1.0", "https://github.com/xBimTeam/XbimEssentials"),
+            ("IfcOpenShell IfcConvert", Loc.Get("About_UseGeometry"), "LGPL-3.0", "https://ifcopenshell.org/"),
+            ("buildingSMART Data Dictionary", Loc.Get("About_UseBsdd"), Loc.Get("About_BsddTerms"), "https://www.buildingsmart.org/users/services/buildingsmart-data-dictionary/"),
+            ("Information Delivery Specification", Loc.Get("About_UseIds"), "buildingSMART", "https://github.com/buildingSMART/IDS"),
+            ("Windows App SDK / WinUI 3", Loc.Get("About_UseUi"), "MIT", "https://github.com/microsoft/WindowsAppSDK"),
+            ("CommunityToolkit.Mvvm", Loc.Get("About_UseUi"), "MIT", "https://github.com/CommunityToolkit/dotnet"),
+            ("Serilog", Loc.Get("About_UseLogging"), "Apache-2.0", "https://serilog.net/"),
+            ("CsvHelper", Loc.Get("About_UseCsv"), "MS-PL / Apache-2.0", "https://joshclose.github.io/CsvHelper/"),
         };
 
         public AboutPage()
@@ -27,7 +28,7 @@ namespace IfcToolbox.App.Views
             var version = typeof(App).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "";
             // Drop the "+commit" build metadata the SDK appends.
             int plus = version.IndexOf('+');
-            VersionText.Text = "Version " + (plus < 0 ? version : version[..plus]);
+            VersionText.Text = Loc.Format("About_Version", plus < 0 ? version : version[..plus]);
 
             for (int i = 0; i < Dependencies.Length; i++)
             {

@@ -12,16 +12,9 @@ namespace IfcToolbox.App.Views
 {
     public sealed partial class SettingsPage : Page
     {
-        private sealed record LanguageOption(string Tag, string Name);
-
-        // The translations of the original app (en, de, fr, pt, zh) are not brought over yet,
-        // so English is the only choice that does anything today.
-        private static readonly LanguageOption[] Languages =
-        {
-            new("en-US", "English"),
-        };
-
         private readonly bool _loading;
+        /// <summary>The language choice when the page opened, to tell whether a restart is needed.</summary>
+        private readonly int _languageAtStart;
 
         public SettingsPage()
         {
@@ -35,10 +28,11 @@ namespace IfcToolbox.App.Views
                 AppTheme.Dark => 1,
                 _ => 2,
             };
-            LanguageChoice.ItemsSource = Languages.Select(l => l.Name).ToList();
-            LanguageChoice.SelectedIndex = System.Math.Max(0, System.Array.FindIndex(Languages, l => l.Tag == settings.Language));
-            CustomLanguageSwitch.IsOn = settings.UseCustomLanguage;
-            LanguageChoice.IsEnabled = settings.UseCustomLanguage;
+            // First the Windows display language, then each translation under its own name.
+            LanguageChoice.ItemsSource = Loc.Languages.Select(l => l.NativeName).Prepend(Loc.Get("Settings_LanguageWindows")).ToList();
+            int chosen = settings.UseCustomLanguage ? Loc.Languages.ToList().FindIndex(l => l.Tag == settings.Language) : -1;
+            _languageAtStart = chosen + 1;
+            LanguageChoice.SelectedIndex = _languageAtStart;
             _loading = false;
 
             ShowCacheSize();
@@ -49,7 +43,7 @@ namespace IfcToolbox.App.Views
         {
             bool custom = !string.IsNullOrEmpty(IfcConvert.ExecutablePathOverride);
             BundledIfcConvertButton.IsEnabled = custom;
-            IfcConvertText.Text = "Checking the IfcConvert version…";
+            IfcConvertText.Text = Loc.Get("Settings_CheckingIfcConvert");
             // Starts IfcConvert to ask its version, so off the UI thread.
             var (path, version) = await Task.Run(() =>
             {
@@ -57,8 +51,8 @@ namespace IfcToolbox.App.Views
                 return (executable, IfcConvert.GetVersion(executable));
             });
             IfcConvertText.Text = custom
-                ? $"In use: IfcConvert {version} at {path}"
-                : $"In use: the bundled IfcConvert {version}";
+                ? Loc.Format("Settings_IfcConvertCustom", version, path)
+                : Loc.Format("Settings_IfcConvertBundled", version);
         }
 
         private async void OnPickIfcConvert(object sender, RoutedEventArgs e)
@@ -71,7 +65,7 @@ namespace IfcToolbox.App.Views
             var version = await Task.Run(() => IfcConvert.GetVersion(path));
             if (version.IsUnknown)
             {
-                IfcConvertError.Message = $"{Path.GetFileName(path)} did not report an IfcConvert version.";
+                IfcConvertError.Message = Loc.Format("Settings_IfcConvertNoVersion", Path.GetFileName(path));
                 IfcConvertError.IsOpen = true;
                 return;
             }
@@ -107,34 +101,32 @@ namespace IfcToolbox.App.Views
             App.MainWindow.ApplyTheme(AppSettings.Current.Theme);
         }
 
-        private void OnCustomLanguageToggled(object sender, RoutedEventArgs e)
-        {
-            LanguageChoice.IsEnabled = CustomLanguageSwitch.IsOn;
-            if (_loading || CustomLanguageSwitch.IsOn == AppSettings.Current.UseCustomLanguage)
-                return;
-            AppSettings.Current.UseCustomLanguage = CustomLanguageSwitch.IsOn;
-            AppSettings.Current.Save();
-        }
-
         private void OnLanguageChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (_loading || LanguageChoice.SelectedIndex < 0 || Languages[LanguageChoice.SelectedIndex].Tag == AppSettings.Current.Language)
+            if (_loading || LanguageChoice.SelectedIndex < 0)
                 return;
-            AppSettings.Current.Language = Languages[LanguageChoice.SelectedIndex].Tag;
+            int index = LanguageChoice.SelectedIndex;
+            AppSettings.Current.UseCustomLanguage = index > 0;
+            if (index > 0)
+                AppSettings.Current.Language = Loc.Languages[index - 1].Tag;
             AppSettings.Current.Save();
+            // The text is loaded once at start-up, so a new language shows after a restart.
+            RestartPanel.Visibility = index == _languageAtStart ? Visibility.Collapsed : Visibility.Visible;
         }
+
+        private void OnRestart(object sender, RoutedEventArgs e) => App.Restart("settings");
 
         private void OnClearCache(object sender, RoutedEventArgs e)
         {
             long freed = AppSettings.ClearCache();
-            CacheText.Text = $"Freed {ImportedFile.FormatSize(freed)}.";
+            CacheText.Text = Loc.Format("Settings_CacheFreed", ImportedFile.FormatSize(freed));
             ClearCacheButton.IsEnabled = false;
         }
 
         private void ShowCacheSize()
         {
             long size = AppSettings.CacheSize();
-            CacheText.Text = size == 0 ? "The cache is empty." : $"{ImportedFile.FormatSize(size)} in the cache.";
+            CacheText.Text = size == 0 ? Loc.Get("Settings_CacheEmpty") : Loc.Format("Settings_CacheSize", ImportedFile.FormatSize(size));
             ClearCacheButton.IsEnabled = size > 0;
         }
 

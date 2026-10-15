@@ -6,49 +6,49 @@
 
     <ScrollViewer>
         <StackPanel Padding="36,28" Spacing="12">
-            <controls:PageHeader Title="Settings" Glyph="&#xE713;" TileBrush="{StaticResource HeaderTileBrush}" Margin="0,0,0,12" />
+            <controls:PageHeader x:Uid="Settings_Header" Glyph="&#xE713;" TileBrush="{StaticResource HeaderTileBrush}" Margin="0,0,0,12" />
 
-            <controls:Section Header="Themes">
+            <controls:Section x:Uid="Settings_Themes">
                 <RadioButtons x:Name="ThemeChoice" SelectionChanged="OnThemeChanged">
-                    <x:String>Light</x:String>
-                    <x:String>Dark</x:String>
-                    <x:String>System default</x:String>
+                    <RadioButton x:Uid="Settings_ThemeLight" />
+                    <RadioButton x:Uid="Settings_ThemeDark" />
+                    <RadioButton x:Uid="Settings_ThemeSystem" />
                 </RadioButtons>
             </controls:Section>
 
-            <controls:Section Header="Languages">
+            <controls:Section x:Uid="Settings_Languages">
                 <StackPanel Spacing="8">
-                    <ToggleSwitch x:Name="CustomLanguageSwitch" Header="Use Custom Language" Toggled="OnCustomLanguageToggled" />
-                    <ComboBox x:Name="LanguageChoice" MinWidth="240" SelectionChanged="OnLanguageChanged" />
-                    <TextBlock x:Name="LanguageNote" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                               Text="Restart is required. The interface is in English only for now; translations follow in a later stage." TextWrapping="Wrap" />
+                    <ComboBox x:Name="LanguageChoice" x:Uid="Settings_Language" MinWidth="240" SelectionChanged="OnLanguageChanged" />
+                    <StackPanel x:Name="RestartPanel" Orientation="Horizontal" Spacing="12" Visibility="Collapsed">
+                        <TextBlock x:Uid="Settings_RestartNote" VerticalAlignment="Center" Style="{StaticResource SecondaryTextStyle}" />
+                        <Button x:Uid="Settings_RestartNow" Click="OnRestart" />
+                    </StackPanel>
                 </StackPanel>
             </controls:Section>
 
-            <controls:Section Header="IfcConvert">
+            <controls:Section x:Uid="Settings_IfcConvert">
                 <StackPanel Spacing="8">
-                    <TextBlock Style="{StaticResource SecondaryTextStyle}"
-                               Text="The IFC Converter runs IfcOpenShell's IfcConvert. The bundled version 0.6 cannot read IFC 4.3 models or write xeokit JSON, Turtle and HDF5; pick a newer IfcConvert (0.8 or later) to get them." />
+                    <TextBlock x:Uid="Settings_IfcConvertIntro" Style="{StaticResource SecondaryTextStyle}" />
                     <TextBlock x:Name="IfcConvertText" TextWrapping="Wrap" IsTextSelectionEnabled="True" />
                     <StackPanel Orientation="Horizontal" Spacing="8">
-                        <Button Content="Use another IfcConvert…" Click="OnPickIfcConvert" />
-                        <Button x:Name="BundledIfcConvertButton" Content="Use the bundled one" Click="OnBundledIfcConvert" />
+                        <Button x:Uid="Settings_PickIfcConvert" Click="OnPickIfcConvert" />
+                        <Button x:Name="BundledIfcConvertButton" x:Uid="Settings_BundledIfcConvert" Click="OnBundledIfcConvert" />
                     </StackPanel>
-                    <InfoBar x:Name="IfcConvertError" Severity="Error" IsOpen="False" Title="That file is not a usable IfcConvert" />
+                    <InfoBar x:Name="IfcConvertError" x:Uid="Settings_IfcConvertError" Severity="Error" IsOpen="False" />
                 </StackPanel>
             </controls:Section>
 
-            <controls:Section Header="Storage">
+            <controls:Section x:Uid="Settings_Storage">
                 <StackPanel Orientation="Horizontal" Spacing="16">
-                    <Button x:Name="ClearCacheButton" Content="Clear cache files" Click="OnClearCache" />
+                    <Button x:Name="ClearCacheButton" x:Uid="Settings_ClearCache" Click="OnClearCache" />
                     <TextBlock x:Name="CacheText" VerticalAlignment="Center" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                 </StackPanel>
             </controls:Section>
 
-            <controls:Section Header="Help">
+            <controls:Section x:Uid="Settings_Help">
                 <StackPanel HorizontalAlignment="Left">
-                    <HyperlinkButton Content="Help documents" NavigateUri="https://youshengcode.github.io/IfcToolbox.Doc/#/" />
-                    <HyperlinkButton x:Name="SettingsFolderLink" Content="Open the settings folder" Click="OnOpenSettingsFolder" />
+                    <HyperlinkButton x:Uid="Settings_HelpDocs" NavigateUri="https://youshengcode.github.io/IfcToolbox.Doc/#/" />
+                    <HyperlinkButton x:Name="SettingsFolderLink" x:Uid="Settings_OpenFolder" Click="OnOpenSettingsFolder" />
                 </StackPanel>
             </controls:Section>
         </StackPanel>

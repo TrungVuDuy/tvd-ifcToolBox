@@ -27,7 +27,7 @@
                 <controls:PageHeader x:Name="Header" Margin="0,0,0,4" />
                 <TextBlock x:Name="SummaryText" Style="{StaticResource SecondaryTextStyle}" Margin="0,0,0,8" />
 
-                <controls:Section Header="File to relocate">
+                <controls:Section x:Uid="Relocator_File">
                     <StackPanel Spacing="12">
                         <controls:FileDropZone x:Name="ModelZone" FilesChanged="OnModelChanged" />
                         <ProgressRing x:Name="AnalysisProgress" Width="24" Height="24" IsActive="False" HorizontalAlignment="Left" />
@@ -36,7 +36,7 @@
                     </StackPanel>
                 </controls:Section>
 
-                <controls:Section x:Name="TargetSection" Header="Get target placement">
+                <controls:Section x:Name="TargetSection" x:Uid="Relocator_Target">
                     <StackPanel Spacing="12">
                         <Grid ColumnSpacing="10">
                             <Grid.ColumnDefinitions>
@@ -45,28 +45,28 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <RadioButton x:Name="AlignMode" GroupName="Target" Style="{StaticResource ModeTileStyle}" IsChecked="True" Checked="OnModeChanged" AutomationProperties.Name="Align to another model">
+                            <RadioButton x:Name="AlignMode" GroupName="Target" Style="{StaticResource ModeTileStyle}" IsChecked="True" Checked="OnModeChanged" x:Uid="Relocator_AlignMode">
                                 <Grid ColumnSpacing="12"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
                                     <FontIcon Glyph="&#xE8AB;" FontSize="18" VerticalAlignment="Center" />
-                                    <StackPanel Grid.Column="1"><TextBlock Text="Align to another model" Style="{StaticResource BodyStrongTextBlockStyle}" /><TextBlock Text="Take the placement from another file" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
+                                    <StackPanel Grid.Column="1"><TextBlock x:Uid="Relocator_AlignModeTitle" Style="{StaticResource BodyStrongTextBlockStyle}" /><TextBlock x:Uid="Relocator_AlignModeHint" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
                                 </Grid>
                             </RadioButton>
-                            <RadioButton x:Name="ManualMode" Grid.Column="1" GroupName="Target" Style="{StaticResource ModeTileStyle}" Checked="OnModeChanged" AutomationProperties.Name="Enter placement">
+                            <RadioButton x:Name="ManualMode" Grid.Column="1" GroupName="Target" Style="{StaticResource ModeTileStyle}" Checked="OnModeChanged" x:Uid="Relocator_ManualMode">
                                 <Grid ColumnSpacing="12"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
                                     <FontIcon Glyph="&#xE70F;" FontSize="18" VerticalAlignment="Center" />
-                                    <StackPanel Grid.Column="1"><TextBlock Text="Enter placement" Style="{StaticResource BodyStrongTextBlockStyle}" /><TextBlock Text="Type the new origin and rotation" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
+                                    <StackPanel Grid.Column="1"><TextBlock x:Uid="Relocator_ManualModeTitle" Style="{StaticResource BodyStrongTextBlockStyle}" /><TextBlock x:Uid="Relocator_ManualModeHint" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
                                 </Grid>
                             </RadioButton>
-                            <RadioButton x:Name="GeorefMode" Grid.Column="2" GroupName="Target" Style="{StaticResource ModeTileStyle}" Checked="OnModeChanged" AutomationProperties.Name="Georeference">
+                            <RadioButton x:Name="GeorefMode" Grid.Column="2" GroupName="Target" Style="{StaticResource ModeTileStyle}" Checked="OnModeChanged" x:Uid="Relocator_GeorefMode">
                                 <Grid ColumnSpacing="12"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
                                     <FontIcon Glyph="&#xE909;" FontSize="18" VerticalAlignment="Center" />
-                                    <StackPanel Grid.Column="1"><TextBlock Text="Georeference" Style="{StaticResource BodyStrongTextBlockStyle}" /><TextBlock x:Name="GeorefHint" Text="Projected CRS and map conversion" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
+                                    <StackPanel Grid.Column="1"><TextBlock x:Uid="Relocator_GeorefModeTitle" Style="{StaticResource BodyStrongTextBlockStyle}" /><TextBlock x:Name="GeorefHint" x:Uid="Relocator_GeorefModeHint" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
                                 </Grid>
                             </RadioButton>
-                            <RadioButton x:Name="UnitMode" Grid.Column="3" GroupName="Target" Style="{StaticResource ModeTileStyle}" Checked="OnModeChanged" AutomationProperties.Name="Change length unit">
+                            <RadioButton x:Name="UnitMode" Grid.Column="3" GroupName="Target" Style="{StaticResource ModeTileStyle}" Checked="OnModeChanged" x:Uid="Relocator_UnitMode">
                                 <Grid ColumnSpacing="12"><Grid.ColumnDefinitions><ColumnDefinition Width="Auto" /><ColumnDefinition Width="*" /></Grid.ColumnDefinitions>
                                     <FontIcon Glyph="&#xE8EF;" FontSize="18" VerticalAlignment="Center" />
-                                    <StackPanel Grid.Column="1"><TextBlock Text="Change length unit" Style="{StaticResource BodyStrongTextBlockStyle}" /><TextBlock Text="Millimetres, centimetres or metres" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
+                                    <StackPanel Grid.Column="1"><TextBlock x:Uid="Relocator_UnitModeTitle" Style="{StaticResource BodyStrongTextBlockStyle}" /><TextBlock x:Uid="Relocator_UnitModeHint" Style="{StaticResource SecondaryCaptionStyle}" /></StackPanel>
                                 </Grid>
                             </RadioButton>
                         </Grid>
@@ -74,25 +74,24 @@
                         <!-- Change length unit -->
                         <Border x:Name="UnitPanel" Style="{StaticResource CardStyle}" Visibility="Collapsed">
                             <StackPanel Spacing="8">
-                                <Border Style="{StaticResource CardTitleStyle}"><TextBlock Text="Length unit" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
+                                <Border Style="{StaticResource CardTitleStyle}"><TextBlock x:Uid="Relocator_UnitTitle" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
                                 <TextBlock x:Name="UnitHint" Style="{StaticResource SecondaryTextStyle}" />
-                                <RadioButtons x:Name="UnitChoice" Header="Convert every length to" SelectedIndex="2" SelectionChanged="OnUnitChanged">
-                                    <x:String>Millimetres (mm)</x:String>
-                                    <x:String>Centimetres (cm)</x:String>
-                                    <x:String>Metres (m)</x:String>
+                                <RadioButtons x:Name="UnitChoice" x:Uid="Relocator_UnitChoice" SelectedIndex="2" SelectionChanged="OnUnitChanged">
+                                    <RadioButton x:Uid="Relocator_UnitMm" />
+                                    <RadioButton x:Uid="Relocator_UnitCm" />
+                                    <RadioButton x:Uid="Relocator_UnitM" />
                                 </RadioButtons>
-                                <TextBlock Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap"
-                                           Text="Coordinates, thicknesses, elevations, length properties and quantities are rescaled, so the model keeps its size and place; areas, volumes and angles have units of their own and stay. Values that state a unit of their own are left as they are, and a map conversion keeps the model where it was on the map." />
+                                <TextBlock x:Uid="Relocator_UnitNoteText" Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap" />
                             </StackPanel>
                         </Border>
 
                         <!-- Align to another model -->
                         <StackPanel x:Name="AlignPanel" Spacing="8">
-                            <controls:FileDropZone x:Name="ReferenceZone" Prompt="Choose the model to align to, or drop it here" FilesChanged="OnReferenceChanged" />
+                            <controls:FileDropZone x:Name="ReferenceZone" x:Uid="Relocator_ReferenceZone" FilesChanged="OnReferenceChanged" />
                             <ProgressRing x:Name="ReferenceProgress" Width="20" Height="20" IsActive="False" HorizontalAlignment="Left" />
                             <Grid x:Name="ReferencePanel" ColumnSpacing="12" RowSpacing="12" Visibility="Collapsed" />
-                            <CheckBox x:Name="AlignWorldCheck" Content="Take its world coordinate system (IfcProject)" IsChecked="True" Checked="OnTargetChanged" Unchecked="OnTargetChanged" />
-                            <CheckBox x:Name="AlignProjectCheck" Content="Take its project coordinate system (IfcSite placement)" IsChecked="True" Checked="OnTargetChanged" Unchecked="OnTargetChanged" />
+                            <CheckBox x:Name="AlignWorldCheck" x:Uid="Relocator_AlignWorld" IsChecked="True" Checked="OnTargetChanged" Unchecked="OnTargetChanged" />
+                            <CheckBox x:Name="AlignProjectCheck" x:Uid="Relocator_AlignProject" IsChecked="True" Checked="OnTargetChanged" Unchecked="OnTargetChanged" />
                         </StackPanel>
 
                         <!-- Enter placement -->
@@ -103,26 +102,26 @@
                             </Grid.ColumnDefinitions>
                             <Border Style="{StaticResource CardStyle}">
                                 <StackPanel Spacing="8">
-                                    <Border Style="{StaticResource CardTitleStyle}"><TextBlock Text="World coordinates location" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
-                                    <CheckBox x:Name="WorldCheck" Content="Change the world coordinate system" Checked="OnTargetChanged" Unchecked="OnTargetChanged" />
+                                    <Border Style="{StaticResource CardTitleStyle}"><TextBlock x:Uid="Relocator_WorldTitle" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
+                                    <CheckBox x:Name="WorldCheck" x:Uid="Relocator_WorldCheck" Checked="OnTargetChanged" Unchecked="OnTargetChanged" />
                                     <StackPanel x:Name="WorldInputs" Orientation="Horizontal" Spacing="8">
-                                        <NumberBox x:Name="WorldX" Header="X" AutomationProperties.Name="World X" Style="{StaticResource CoordinateBoxStyle}" />
-                                        <NumberBox x:Name="WorldY" Header="Y" AutomationProperties.Name="World Y" Style="{StaticResource CoordinateBoxStyle}" />
-                                        <NumberBox x:Name="WorldZ" Header="Z" AutomationProperties.Name="World Z" Style="{StaticResource CoordinateBoxStyle}" />
+                                        <NumberBox x:Name="WorldX" x:Uid="Relocator_WorldX" Style="{StaticResource CoordinateBoxStyle}" />
+                                        <NumberBox x:Name="WorldY" x:Uid="Relocator_WorldY" Style="{StaticResource CoordinateBoxStyle}" />
+                                        <NumberBox x:Name="WorldZ" x:Uid="Relocator_WorldZ" Style="{StaticResource CoordinateBoxStyle}" />
                                     </StackPanel>
-                                    <NumberBox x:Name="WorldRotation" Header="Rotation about Z, degrees anti-clockwise" AutomationProperties.Name="World rotation" Style="{StaticResource CoordinateBoxStyle}" HorizontalAlignment="Left" Width="260" />
+                                    <NumberBox x:Name="WorldRotation" x:Uid="Relocator_WorldRotation" Style="{StaticResource CoordinateBoxStyle}" HorizontalAlignment="Left" Width="260" />
                                 </StackPanel>
                             </Border>
                             <Border Grid.Column="1" Style="{StaticResource CardStyle}">
                                 <StackPanel Spacing="8">
-                                    <Border Style="{StaticResource CardTitleStyle}"><TextBlock Text="Project coordinates location" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
-                                    <CheckBox x:Name="ProjectCheck" Content="Change the site placement" IsChecked="True" Checked="OnTargetChanged" Unchecked="OnTargetChanged" />
+                                    <Border Style="{StaticResource CardTitleStyle}"><TextBlock x:Uid="Relocator_ProjectTitle" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
+                                    <CheckBox x:Name="ProjectCheck" x:Uid="Relocator_ProjectCheck" IsChecked="True" Checked="OnTargetChanged" Unchecked="OnTargetChanged" />
                                     <StackPanel x:Name="ProjectInputs" Orientation="Horizontal" Spacing="8">
-                                        <NumberBox x:Name="ProjectX" Header="X" AutomationProperties.Name="Project X" Style="{StaticResource CoordinateBoxStyle}" />
-                                        <NumberBox x:Name="ProjectY" Header="Y" AutomationProperties.Name="Project Y" Style="{StaticResource CoordinateBoxStyle}" />
-                                        <NumberBox x:Name="ProjectZ" Header="Z" AutomationProperties.Name="Project Z" Style="{StaticResource CoordinateBoxStyle}" />
+                                        <NumberBox x:Name="ProjectX" x:Uid="Relocator_ProjectX" Style="{StaticResource CoordinateBoxStyle}" />
+                                        <NumberBox x:Name="ProjectY" x:Uid="Relocator_ProjectY" Style="{StaticResource CoordinateBoxStyle}" />
+                                        <NumberBox x:Name="ProjectZ" x:Uid="Relocator_ProjectZ" Style="{StaticResource CoordinateBoxStyle}" />
                                     </StackPanel>
-                                    <NumberBox x:Name="ProjectRotation" Header="Rotation about Z, degrees anti-clockwise" AutomationProperties.Name="Project rotation" Style="{StaticResource CoordinateBoxStyle}" HorizontalAlignment="Left" Width="260" />
+                                    <NumberBox x:Name="ProjectRotation" x:Uid="Relocator_ProjectRotation" Style="{StaticResource CoordinateBoxStyle}" HorizontalAlignment="Left" Width="260" />
                                 </StackPanel>
                             </Border>
                         </Grid>
@@ -130,19 +129,18 @@
                         <!-- Georeference -->
                         <Border x:Name="GeorefPanel" Style="{StaticResource CardStyle}" Visibility="Collapsed">
                             <StackPanel Spacing="8">
-                                <Border Style="{StaticResource CardTitleStyle}"><TextBlock Text="Map conversion" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
-                                <TextBlock Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap"
-                                           Text="Where the model's local origin lies on a projected map (IfcProjectedCRS and IfcMapConversion). The model's geometry is not moved." />
-                                <TextBox x:Name="CrsBox" Header="Projected CRS, e.g. EPSG:25832" AutomationProperties.Name="Projected CRS" Width="260" HorizontalAlignment="Left" TextChanged="OnCrsChanged" />
+                                <Border Style="{StaticResource CardTitleStyle}"><TextBlock x:Uid="Relocator_MapTitle" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
+                                <TextBlock x:Uid="Relocator_MapNote" Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap" />
+                                <TextBox x:Name="CrsBox" x:Uid="Relocator_Crs" Width="260" HorizontalAlignment="Left" TextChanged="OnCrsChanged" />
                                 <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <NumberBox x:Name="EastingsBox" Header="Eastings of the origin" AutomationProperties.Name="Eastings" Style="{StaticResource CoordinateBoxStyle}" MinWidth="160" ValueChanged="OnGeorefValueChanged" />
-                                    <NumberBox x:Name="NorthingsBox" Header="Northings of the origin" AutomationProperties.Name="Northings" Style="{StaticResource CoordinateBoxStyle}" MinWidth="160" ValueChanged="OnGeorefValueChanged" />
-                                    <NumberBox x:Name="HeightBox" Header="Orthogonal height" Style="{StaticResource CoordinateBoxStyle}" MinWidth="140" Value="0" />
+                                    <NumberBox x:Name="EastingsBox" x:Uid="Relocator_Eastings" Style="{StaticResource CoordinateBoxStyle}" MinWidth="160" ValueChanged="OnGeorefValueChanged" />
+                                    <NumberBox x:Name="NorthingsBox" x:Uid="Relocator_Northings" Style="{StaticResource CoordinateBoxStyle}" MinWidth="160" ValueChanged="OnGeorefValueChanged" />
+                                    <NumberBox x:Name="HeightBox" x:Uid="Relocator_Height" Style="{StaticResource CoordinateBoxStyle}" MinWidth="140" Value="0" />
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <NumberBox x:Name="MapRotationBox" Header="Rotation of x from east, degrees" Style="{StaticResource CoordinateBoxStyle}" MinWidth="200" Value="0" />
-                                    <NumberBox x:Name="ScaleBox" Header="Scale (model unit to map unit)" Style="{StaticResource CoordinateBoxStyle}" MinWidth="200" />
-                                    <NumberBox x:Name="FactorBox" Header="Scale factor, IFC 4.3 only" Style="{StaticResource CoordinateBoxStyle}" MinWidth="180" PlaceholderText="none" />
+                                    <NumberBox x:Name="MapRotationBox" x:Uid="Relocator_MapRotation" Style="{StaticResource CoordinateBoxStyle}" MinWidth="200" Value="0" />
+                                    <NumberBox x:Name="ScaleBox" x:Uid="Relocator_Scale" Style="{StaticResource CoordinateBoxStyle}" MinWidth="200" />
+                                    <NumberBox x:Name="FactorBox" x:Uid="Relocator_Factor" Style="{StaticResource CoordinateBoxStyle}" MinWidth="180" />
                                 </StackPanel>
                                 <TextBlock x:Name="ScaleHint" Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap" />
                             </StackPanel>
@@ -150,16 +148,16 @@
                     </StackPanel>
                 </controls:Section>
 
-                <controls:Section x:Name="OutputSection" Header="Relocated file" Visibility="Collapsed">
+                <controls:Section x:Name="OutputSection" x:Uid="Relocator_Output" Visibility="Collapsed">
                     <StackPanel Spacing="12">
                         <controls:OutputFilesView x:Name="OutputView" />
-                        <TextBlock Text="Placement of the new file" Style="{StaticResource BodyStrongTextBlockStyle}" />
+                        <TextBlock x:Uid="Relocator_ResultTitle" Style="{StaticResource BodyStrongTextBlockStyle}" />
                         <Grid x:Name="ResultPanel" ColumnSpacing="12" RowSpacing="12" />
                     </StackPanel>
                 </controls:Section>
             </StackPanel>
         </ScrollViewer>
 
-        <controls:RunBar x:Name="RunBar" Grid.Row="1" ActionText="Relocate IFC" Run="OnRelocate" />
+        <controls:RunBar x:Name="RunBar" Grid.Row="1" Run="OnRelocate" />
     </Grid>
 </Page>

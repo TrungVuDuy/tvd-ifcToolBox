@@ -58,6 +58,7 @@ namespace IfcToolbox.App.Views
             Header.Glyph = tool.Glyph;
             Header.TileBrush = new SolidColorBrush(tool.Color);
             SummaryText.Text = tool.Summary;
+            RunBar.ActionText = tool.Action;
 
             if (App.StartupImport != null)
             {
@@ -76,7 +77,7 @@ namespace IfcToolbox.App.Views
         {
             // Throws on a file that is not IDS; the row then shows why.
             int count = IdsReader.Load(path).Specifications.Count;
-            return count == 1 ? "1 specification" : $"{count} specifications";
+            return Loc.Count("Validator_Specifications", count);
         }
 
         #region Requirement source
@@ -107,15 +108,15 @@ namespace IfcToolbox.App.Views
                     options.FirstOrDefault(o => BsddIds.IsIfcDictionary(o.Dictionary.Uri) && o.Dictionary.IsLatestVersion)
                     ?? options.FirstOrDefault();
                 DictionaryChoice.IsEnabled = true;
-                DictionaryChoice.PlaceholderText = "Choose a dictionary";
+                DictionaryChoice.PlaceholderText = Loc.Get("Validator_ChooseDictionaryPlaceholder");
             }
             catch (Exception ex) when (IsNetworkFailure(ex))
             {
                 ShowBsddError(ex);
-                var retry = new Button { Content = "Retry" };
+                var retry = new Button { Content = Loc.Get("Validator_Retry") };
                 retry.Click += async (_, _) => await LoadDictionariesAsync();
                 BsddError.ActionButton = retry;
-                DictionaryChoice.PlaceholderText = "Dictionaries could not be loaded";
+                DictionaryChoice.PlaceholderText = Loc.Get("Validator_DictionariesFailed");
             }
             finally
             {
@@ -148,7 +149,7 @@ namespace IfcToolbox.App.Views
                 var response = await Bsdd.Client.SearchClassesAsync(text, dictionary?.Uri, limit: 100);
                 SearchResults.ItemsSource = response.Classes;
                 SearchResults.Visibility = response.Classes.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
-                SearchEmptyText.Text = $"No class matches “{text}” in {dictionary?.Name ?? "bSDD"}.";
+                SearchEmptyText.Text = Loc.Format("Validator_NoMatch", text, dictionary?.Name ?? "bSDD");
                 SearchEmptyText.Visibility = response.Classes.Count > 0 ? Visibility.Collapsed : Visibility.Visible;
             }
             catch (Exception ex) when (IsNetworkFailure(ex))
@@ -276,11 +277,11 @@ namespace IfcToolbox.App.Views
             var document = BuildBsddDocument();
             if (document == null)
                 return;
-            var path = await Pickers.SaveFileAsync("bSDD requirements", "Information Delivery Specification", ".ids");
+            var path = await Pickers.SaveFileAsync(Loc.Get("Validator_IdsFileName"), Loc.Get("Validator_IdsFileType"), ".ids");
             if (path == null)
                 return;
             IdsWriter.Save(document, path);
-            RunBar.Status = $"Saved {Path.GetFileName(path)}. Open it with the IDS file option, or share it.";
+            RunBar.Status = Loc.Format("Validator_IdsSaved", Path.GetFileName(path));
         }
 
         #endregion
@@ -308,8 +309,8 @@ namespace IfcToolbox.App.Views
             if (RunBar.IsBusy)
                 return;
             RunBar.CanRun = hasModel && hasRequirements;
-            RunBar.Status = !hasModel ? "Add the IFC model to validate."
-                : !hasRequirements ? (bsdd ? "Pick at least one property from bSDD." : "Add an IDS file with the requirements.")
+            RunBar.Status = !hasModel ? Loc.Get("Validator_NeedModel")
+                : !hasRequirements ? Loc.Get(bsdd ? "Validator_NeedProperty" : "Validator_NeedIds")
                 : string.Empty;
         }
 
@@ -323,14 +324,14 @@ namespace IfcToolbox.App.Views
             var unreadable = IdsZone.Files.FirstOrDefault(f => f.Problem != null);
             if (IdsMode.IsChecked == true && unreadable != null)
             {
-                RunBar.ShowError("An IDS file cannot be read", $"{unreadable.Name}: {unreadable.Problem}");
+                RunBar.ShowError(Loc.Get("Validator_IdsUnreadable"), $"{unreadable.Name}: {unreadable.Problem}");
                 return;
             }
 
             var idsPaths = IdsZone.Files.Select(f => f.Path).ToList();
             var document = BsddMode.IsChecked == true ? BuildBsddDocument() : null;
 
-            var token = RunBar.Begin($"Validating {Path.GetFileName(model)}…");
+            var token = RunBar.Begin(Loc.Format("Validator_Running", Path.GetFileName(model)));
             var watch = Stopwatch.StartNew();
             string outcome = string.Empty;
             try
@@ -344,16 +345,16 @@ namespace IfcToolbox.App.Views
                 ResultsView.Show(results);
                 ResultsSection.Visibility = Visibility.Visible;
                 ResultsSection.IsExpanded = true;
-                outcome = $"Checked in {watch.Elapsed.TotalSeconds:0.0} s.";
+                outcome = Loc.Format("Validator_Done", watch.Elapsed.TotalSeconds);
                 Ui.ScrollIntoView(ResultsSection, 0);
             }
             catch (OperationCanceledException)
             {
-                outcome = "Validation cancelled.";
+                outcome = Loc.Get("Validator_Cancelled");
             }
             catch (Exception ex)
             {
-                RunBar.ShowError("Validation failed", ex.Message);
+                RunBar.ShowError(Loc.Get("Validator_Failed"), ex.Message);
             }
             finally
             {
@@ -369,10 +370,10 @@ namespace IfcToolbox.App.Views
         #region Reports
 
         private async void OnExportCsv(object sender, RoutedEventArgs e) =>
-            await ExportAsync("CSV", ".csv", () => IdsReport.ToCsv(_results));
+            await ExportAsync(Loc.Get("Validator_CsvType"), ".csv", () => IdsReport.ToCsv(_results));
 
         private async void OnExportText(object sender, RoutedEventArgs e) =>
-            await ExportAsync("Text report", ".txt", () => string.Join(Environment.NewLine, _results.Select(r => IdsReport.ToText(r))));
+            await ExportAsync(Loc.Get("Validator_TextType"), ".txt", () => string.Join(Environment.NewLine, _results.Select(r => IdsReport.ToText(r))));
 
         private async Task ExportAsync(string typeLabel, string extension, Func<string> render)
         {
@@ -384,11 +385,11 @@ namespace IfcToolbox.App.Views
             try
             {
                 await File.WriteAllTextAsync(path, render(), Encoding.UTF8);
-                RunBar.Status = $"Report saved to {path}.";
+                RunBar.Status = Loc.Format("Validator_ReportSaved", path);
             }
             catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)
             {
-                RunBar.ShowError("The report could not be saved", ex.Message);
+                RunBar.ShowError(Loc.Get("Validator_ReportFailed"), ex.Message);
             }
         }
 
@@ -401,7 +402,7 @@ namespace IfcToolbox.App.Views
         {
             BsddError.ActionButton = null;
             BsddError.Message = e is TaskCanceledException
-                ? "The request timed out. Check the internet connection and try again."
+                ? Loc.Get("Validator_Timeout")
                 : e.Message;
             BsddError.IsOpen = true;
         }

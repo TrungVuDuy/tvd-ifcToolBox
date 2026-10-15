@@ -15,7 +15,7 @@
             <TextBlock x:Name="StatusText" Style="{StaticResource SecondaryTextStyle}" />
             <ProgressBar x:Name="Progress" IsIndeterminate="True" Visibility="Collapsed" />
         </StackPanel>
-        <Button x:Name="CancelButton" Grid.Column="1" Content="Cancel" Click="OnCancel" Visibility="Collapsed" VerticalAlignment="Bottom" />
+        <Button x:Name="CancelButton" x:Uid="Run_Cancel" Grid.Column="1" Click="OnCancel" Visibility="Collapsed" VerticalAlignment="Bottom" />
         <Button x:Name="ActionButton" Grid.Column="2" Padding="28,8" VerticalAlignment="Bottom"
                 Style="{StaticResource AccentButtonStyle}" IsEnabled="False" Click="OnRun" />
     </Grid>

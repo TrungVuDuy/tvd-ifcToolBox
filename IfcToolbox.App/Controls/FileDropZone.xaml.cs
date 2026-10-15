@@ -1,4 +1,5 @@
 using IfcToolbox.App.Models;
+using IfcToolbox.App.Services;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -22,9 +23,7 @@ namespace IfcToolbox.App.Controls
             nameof(AllowMultiple), typeof(bool), typeof(FileDropZone), new PropertyMetadata(false));
 
         public static readonly DependencyProperty PromptProperty = DependencyProperty.Register(
-            nameof(Prompt), typeof(string), typeof(FileDropZone), new PropertyMetadata(DefaultPrompt));
-
-        private const string DefaultPrompt = "Choose files or Drop files here";
+            nameof(Prompt), typeof(string), typeof(FileDropZone), new PropertyMetadata(Loc.Get("Drop_Prompt")));
 
         public FileDropZone()
         {
@@ -119,8 +118,8 @@ namespace IfcToolbox.App.Controls
             if (!e.DataView.Contains(StandardDataFormats.StorageItems))
                 return;
             e.AcceptedOperation = DataPackageOperation.Copy;
-            e.DragUIOverride.Caption = "Import";
-            PromptText.Text = "Drop to import";
+            e.DragUIOverride.Caption = Loc.Get("Drop_Caption");
+            PromptText.Text = Loc.Get("Drop_Release");
         }
 
         private void OnDragLeave(object sender, DragEventArgs e) => PromptText.Text = Prompt;

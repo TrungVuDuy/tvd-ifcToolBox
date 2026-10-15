@@ -15,16 +15,15 @@
                 <controls:PageHeader x:Name="Header" Margin="0,0,0,4" />
                 <TextBlock x:Name="SummaryText" Style="{StaticResource SecondaryTextStyle}" Margin="0,0,0,8" />
 
-                <controls:Section Header="Files to combine">
+                <controls:Section x:Uid="Combiner_Files">
                     <StackPanel Spacing="8">
                         <controls:FileDropZone x:Name="ModelZone" AllowMultiple="True" FilesChanged="OnFilesChanged" />
-                        <TextBlock Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap"
-                                   Text="The first file is the base: its project, units, coordinate system and true north are kept. Move a file up to make it the base." />
-                        <InfoBar x:Name="SchemaWarning" Severity="Error" IsOpen="False" IsClosable="False" Title="These files cannot be combined" />
+                        <TextBlock x:Uid="Combiner_BaseNote" Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap" />
+                        <InfoBar x:Name="SchemaWarning" Severity="Error" IsOpen="False" IsClosable="False" x:Uid="Combiner_SchemaWarning" />
                     </StackPanel>
                 </controls:Section>
 
-                <controls:Section Header="Configuration">
+                <controls:Section x:Uid="Combiner_Configuration">
                     <Grid ColumnSpacing="12" RowSpacing="12">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -36,35 +35,29 @@
                         </Grid.RowDefinitions>
                         <Border Style="{StaticResource CardStyle}">
                             <StackPanel Spacing="6">
-                                <Border Style="{StaticResource CardTitleStyle}"><TextBlock Text="Spatial structure" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
-                                <ToggleSwitch x:Name="ByNameSwitch" Header="Merge sites, buildings and storeys with the same name" IsOn="True"
-                                              AutomationProperties.Name="Merge by name" />
-                                <TextBlock Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap"
-                                           Text="Elements with the same GlobalId are always merged. Discipline models exported separately share storey names but not GlobalIds; this merges those too. Either way, only elements placed exactly alike are merged, so nothing moves." />
+                                <Border Style="{StaticResource CardTitleStyle}"><TextBlock x:Uid="Combiner_SpatialTitle" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
+                                <ToggleSwitch x:Name="ByNameSwitch" x:Uid="Combiner_ByName" IsOn="True" />
+                                <TextBlock x:Uid="Combiner_ByNameNote" Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap" />
                             </StackPanel>
                         </Border>
                         <Border Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource CardStyle}">
                             <StackPanel Spacing="6">
-                                <Border Style="{StaticResource CardTitleStyle}"><TextBlock Text="Length units" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
-                                <ToggleSwitch x:Name="UnitsSwitch" Header="Convert files in another unit to the base file's" IsOn="True"
-                                              AutomationProperties.Name="Convert length units" />
-                                <TextBlock Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap"
-                                           Text="A file in metres combined with a base file in millimetres has every length multiplied by 1000 first, so it lands in the right place at the right size. The file itself is not changed. Off: such files are refused." />
+                                <Border Style="{StaticResource CardTitleStyle}"><TextBlock x:Uid="Combiner_UnitsTitle" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
+                                <ToggleSwitch x:Name="UnitsSwitch" x:Uid="Combiner_Units" IsOn="True" />
+                                <TextBlock x:Uid="Combiner_UnitsNote" Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap" />
                             </StackPanel>
                         </Border>
                         <Border Grid.Column="1" Style="{StaticResource CardStyle}">
                             <StackPanel Spacing="6">
-                                <Border Style="{StaticResource CardTitleStyle}"><TextBlock Text="Elements in several files" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
-                                <ToggleSwitch x:Name="SkipSwitch" Header="Copy an element found in several files once" IsOn="True"
-                                              AutomationProperties.Name="Copy shared elements once" />
-                                <TextBlock Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap"
-                                           Text="An element with the same GlobalId in two files is the same object, for example a slab the structural model copied from the architectural one. Off: it is copied from each file and given a new GlobalId." />
+                                <Border Style="{StaticResource CardTitleStyle}"><TextBlock x:Uid="Combiner_SharedTitle" Style="{StaticResource SubtitleTextBlockStyle}" FontSize="18" /></Border>
+                                <ToggleSwitch x:Name="SkipSwitch" x:Uid="Combiner_Skip" IsOn="True" />
+                                <TextBlock x:Uid="Combiner_SkipNote" Style="{StaticResource SecondaryCaptionStyle}" TextWrapping="Wrap" />
                             </StackPanel>
                         </Border>
                     </Grid>
                 </controls:Section>
 
-                <controls:Section x:Name="OutputSection" Header="Combined file" Visibility="Collapsed">
+                <controls:Section x:Name="OutputSection" x:Uid="Combiner_Output" Visibility="Collapsed">
                     <StackPanel Spacing="12">
                         <controls:OutputFilesView x:Name="OutputView" />
                         <Border Style="{StaticResource CardStyle}">
@@ -75,6 +68,6 @@
             </StackPanel>
         </ScrollViewer>
 
-        <controls:RunBar x:Name="RunBar" Grid.Row="1" ActionText="Combine IFC" Run="OnCombine" />
+        <controls:RunBar x:Name="RunBar" Grid.Row="1" Run="OnCombine" />
     </Grid>
 </Page>
